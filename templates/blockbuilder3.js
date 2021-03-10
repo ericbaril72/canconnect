@@ -78,6 +78,7 @@ function createNode(name,nodeParams) {
         }
     }
 
+    
     var midnode=$('<p/>').html('<h1><p class="text-center align-middle"><br>'+name+'<br></p></h1>');
     newNode.find(".fctcmd").append(midnode);
 
