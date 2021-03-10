@@ -1,0 +1,118 @@
+
+TONInitDelay(IN:=TRUE,PT:=T#3s);
+TONInitDelay2(IN:=act_picture > 0,PT:=T#6s);
+
+LoadTestCode();
+AccessCode();
+
+(*F1 - Operation*)
+IF W_StaticID = TL_Operation THEN
+	F1_Operation();
+(*F2 - Diagnostic*)
+ELSIF W_StaticID =  TL_Diagnostic OR W_StaticID = TL_InputsAnalog OR W_StaticID = TL_InputsDigital OR W_StaticID = TL_OutputsAnalog OR W_StaticID = TL_OutputsDigital OR W_StaticID = TL_Network THEN
+	F2_Diagnostic();
+(*F3 - Configuration*)
+ELSIF W_StaticID = TL_Configuration OR W_StaticID = TL_SpecialConfiguration THEN
+	F3_Configuration();
+(*F4 - Fault*)
+ELSIF W_StaticID = TL_FaultLog OR  W_StaticID = TL_DisplayFaults OR  W_StaticID = TL_MotorFaults OR W_StaticID = TL_ASDEventLog OR W_StaticID = TL_EraseAllEntries THEN
+	F4_Fault();
+(*F5 - Information*)
+ELSIF W_StaticID = TL_Information OR W_StaticID = TL_Motors OR  W_StaticID = TL_SystemStatus OR W_StaticID = TL_History OR W_StaticID = TL_Version THEN
+	F5_Information();
+(* OPTION PAGE*)
+ELSIF W_StaticID = TL_OptionsSetup THEN
+	Options();
+ELSE
+	LEDF1 := TRUE;
+	LEDF2 := TRUE;
+	LEDF3 := TRUE;
+	LEDF4 := TRUE;
+	LEDF5 := TRUE;
+	LEDF6 := TRUE;
+END_IF
+
+
+
+IF TONInitDelay.Q THEN
+	IF page_extern = 0 OR page_extern = 1 (*Init Page*) THEN
+		page_extern := 2; (*Main Menu Page*)
+	END_IF
+	IF B_LoadTestOK THEN
+		page_extern := 100; (*Load Test*)
+	ELSIF (F4_IN AND F5_IN AND F6_IN AND NOT TONInitDelay2.Q) OR B_OptionBypass THEN
+		W_StaticID := TL_OptionsSetup;
+		page_extern := 4; (*STD Page*)
+		B_OptionBypass := FALSE;
+	ELSIF ((F3_IN AND NOT TONInitDelay2.Q) OR B_F3SpecialBypass) AND NOT (W_StaticID = TL_OptionsSetup) THEN
+		W_StaticID := TL_SpecialConfiguration;
+		B_SpecialMenu := TRUE;
+		page_extern := 4; (*STD Page*)
+		ConfigSelectedLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+		B_F3SpecialBypass := FALSE;
+	ELSIF F1 AND NOT (W_StaticID = TL_Operation) AND NOT (W_StaticID = TL_OptionsSetup)  THEN
+		W_StaticID := TL_Operation;
+		page_extern := 4;  (*STD Page*)
+		B_OperationSpecific := FALSE;
+		OperationsSelectedLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+	ELSIF F2 AND NOT (W_StaticID =  TL_Diagnostic) AND NOT (W_StaticID = TL_InputsAnalog) AND NOT (W_StaticID = TL_InputsDigital) AND NOT (W_StaticID = TL_OutputsAnalog) AND NOT (W_StaticID = TL_OutputsDigital) AND NOT (W_StaticID = TL_Network) AND NOT (W_StaticID = TL_OptionsSetup) THEN
+		W_StaticID := TL_Diagnostic;
+		page_extern := 4; (*STD Page*)
+		DiagnosticSelectedLine := 0;
+		DiagnosticDisplayLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+	ELSIF F3 AND NOT (W_StaticID = TL_Configuration) AND NOT (W_StaticID = TL_SpecialConfiguration) AND NOT (W_StaticID = TL_OptionsSetup) THEN
+		IF B_SpecialMenu = TRUE THEN
+			W_StaticID := TL_SpecialConfiguration;
+		ELSE
+			W_StaticID := TL_Configuration;
+		END_IF
+		page_extern := 4; (*STD Page*)
+		B_ConfigurationSpecific := FALSE;
+		ConfigSelectedLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+	ELSIF F4 AND NOT (W_StaticID = TL_FaultLog) AND NOT  (W_StaticID = TL_DisplayFaults) AND NOT  (W_StaticID = TL_MotorFaults) AND NOT (W_StaticID = TL_ASDEventLog) AND NOT ( W_StaticID = TL_EraseAllEntries) AND NOT (W_StaticID = TL_OptionsSetup) THEN
+		W_StaticID := TL_FaultLog;
+		page_extern := 4; (*STD Page*)
+		FaultLogSelectedLine := 0;
+		FaultLogDisplayLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+	ELSIF F5 AND NOT (W_StaticID = TL_Information) AND NOT (W_StaticID = TL_Motors) AND NOT (W_StaticID = TL_SystemStatus) AND NOT (W_StaticID = TL_History) AND NOT( W_StaticID = TL_Version) AND NOT (W_StaticID = TL_OptionsSetup) THEN
+		W_StaticID := TL_Information;
+		page_extern := 4; (*STD Page*)
+		InformationSelectedLine := 0;
+		InformationDisplayLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+	END_IF
+ELSE
+	LEDF1 := TRUE;
+	LEDF2 := TRUE;
+	LEDF3 := TRUE;
+	LEDF4 := TRUE;
+	LEDF5 := TRUE;
+	LEDF6 := TRUE;
+
+	page_extern := 1; (*INIT PAGE*)
+	(* Display program version *)
+	Val1 := DWORD_TO_WORD(S_Program);
+	Val2 := DWORD_TO_WORD(SHR(S_Program, 16));
+	Val3 := S_Version;
+END_IF
+
+
+IF act_picture = 2 AND W_StaticID <> 0 AND page_extern = 2 THEN
+	W_StaticID := 0;
+END_IF
+
+DiagnosticCenter();
+
+B_Init := FALSE;
+END_PROGRAM

@@ -1,0 +1,1696 @@
+[Comments]
+Lines=8
+Line1=|-----------------------------------------------------
+Line2=|--- ifm electronic gmbh                           ---
+Line3=|--- Teichstraﬂe 4	                         ---
+Line4=|--- D-45127 Essen                                 ---
+Line5=|--- Phone : +49 201 2422-0 Fax : +49 201 2422-200 ---
+Line6=|---                                               ---
+Line7=|--- Bearbeitung: ifm electronic gmbh              ---
+Line8=|-----------------------------------------------------
+
+[FileInfo]
+FileName=ifm_template_CR0403_slave_V010101.eds
+FileVersion=1
+FileRevision=0
+EDSVersion=4.0
+Description=Basic EDS for programmable Devices
+CreationTime=11:26 AM
+CreationDate=03-08-2011
+CreatedBy=ifm electronic gmbh; ECE gf
+ModificationTime=11:26 AM
+ModificationDate=03-08-2011
+ModifiedBy=ifm electronic gmbh; ECE gf
+
+
+[DeviceInfo]
+VendorName=ifm electronic gmbh
+VendorNumber=0x0069666D
+ProductName=System R360: BasicController CR0403
+ProductNumber=0
+RevisionNumber=0
+OrderCode=CR0403
+SimpleBootUpSlave=1
+SimpleBootUpMaster=0
+BaudRate_10=0
+BaudRate_20=0
+BaudRate_50=1
+BaudRate_100=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=1
+BaudRate_1000=1
+Granularity=8
+DynamicChannelsSupported=0
+GroupMessaging=0
+NrOfRXPDO=4
+NrOfTXPDO=4
+LSS_Supported=0
+
+ProductVersion=1
+ProductRevision=1
+LMT_ManufacturerName=3S GmbH
+LMT_ProductName=3S_Dev 
+ExtendedBootUpMaster=1
+ExtendedBootUpSlave=0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[DummyUsage]
+Dummy0000=0
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[1000]
+SubNumber=0
+ParameterName=Device Type
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x191
+PDOMapping=0
+
+[1001]
+SubNumber=0
+ParameterName=Error Register
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=30
+1=0x1003
+2=0x1005
+3=0x1006
+4=0x1008
+5=0x1009
+6=0x100A
+7=0x100C
+8=0x100D
+9=0x1014
+10=0x1016
+11=0x1017
+12=0x1018
+13=0x1400
+14=0x1401
+15=0x1402
+16=0x1403
+17=0x1404
+18=0x1600
+19=0x1601
+20=0x1602
+21=0x1603
+22=0x1604
+23=0x1800
+24=0x1801
+25=0x1802
+26=0x1803
+27=0x1A00
+28=0x1A01
+29=0x1A02
+30=0x1A03
+
+[ManufacturerObjects]
+SupportedObjects=8
+1=0x3000
+2=0x3001
+3=0x3002
+4=0x3003
+5=0x3100
+6=0x3101
+7=0x3102
+8=0x3103
+
+[1003]
+SubNumber=2
+ParameterName=Predefined error field
+
+[1003sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1003sub1]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub2]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub3]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub4]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub5]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1005]
+SubNumber=0
+ParameterName=COBID Synch Message
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x80
+PDOMapping=0
+
+[1006]
+SubNumber=0
+ParameterName=ComCyclePeriod
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1008]
+SubNumber=0
+ParameterName=Objekt1xxxh.ManufacturerDeviceName
+ObjectType=0x7
+DataType=0xA
+AccessType=rw
+DefaultValue=CR0302
+PDOMapping=0
+
+[1009]
+SubNumber=0
+ParameterName=Objekt1xxxh.ManufacturerHardwareVersion
+ObjectType=0x7
+DataType=0xA
+AccessType=rw
+DefaultValue=HW_Ver 1.0
+PDOMapping=0
+
+[100A]
+SubNumber=0
+ParameterName=Objekt1xxxh.ManufacturerSoftwareVersion
+ObjectType=0x7
+DataType=0xA
+AccessType=rw
+DefaultValue=SW_Ver 1.0
+PDOMapping=0
+
+[100C]
+SubNumber=0
+ParameterName=Guard Time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=500
+PDOMapping=0
+
+[100D]
+SubNumber=0
+ParameterName=Lifetime Factor
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=3
+PDOMapping=0
+
+[1014]
+SubNumber=0
+ParameterName=COBId Emergency
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x80+$NodeId
+PDOMapping=0
+
+[1016sub0]
+ParameterName=Nums consumer heartbeat time
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1016sub1]
+ParameterName=Consumer heartbeat time
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1017]
+SubNumber=0
+ParameterName=Producer heartbeat time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1018]
+SubNumber=4
+ParameterName=Receive PDO Communication Parameter
+
+[1018sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1018sub1]
+ParameterName=VendorID
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x0
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product Code
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x0
+PDOMapping=0
+
+[1400]
+SubNumber=4
+ParameterName=Receive PDO Communication Parameter
+
+[1400sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1400sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 512
+PDOMapping=0
+
+[1400sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1401]
+SubNumber=4
+ParameterName=Receive PDO Communication Parameter
+
+[1401sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1401sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 768
+PDOMapping=0
+
+[1401sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1402]
+SubNumber=4
+ParameterName=Receive PDO Communication Parameter
+
+[1402sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1402sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 1024
+PDOMapping=0
+
+[1402sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1403]
+SubNumber=4
+ParameterName=Receive PDO Communication Parameter
+
+[1403sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1403sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 1280
+PDOMapping=0
+
+[1403sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1404]
+SubNumber=4
+ParameterName=Receive PDO Communication Parameter
+
+[1404sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1404sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1404sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1600]
+SubNumber=5
+ParameterName=Receive PDO mapping
+
+[1600sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1600sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000110
+PDOMapping=0
+
+[1600sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000210
+PDOMapping=0
+
+[1600sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000310
+PDOMapping=0
+
+[1600sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000410
+PDOMapping=0
+
+[1600sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601]
+SubNumber=5
+ParameterName=Receive PDO mapping
+
+[1601sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1601sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30010110
+PDOMapping=0
+
+[1601sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30010210
+PDOMapping=0
+
+[1601sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30010310
+PDOMapping=0
+
+[1601sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30010410
+PDOMapping=0
+
+[1601sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1602]
+SubNumber=5
+ParameterName=Receive PDO mapping
+
+[1602sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1602sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30020110
+PDOMapping=0
+
+[1602sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30020210
+PDOMapping=0
+
+[1602sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30020310
+PDOMapping=0
+
+[1602sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30020410
+PDOMapping=0
+
+[1602sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1602sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1602sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1602sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1603]
+SubNumber=5
+ParameterName=Receive PDO mapping
+
+[1603sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1603sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30030110
+PDOMapping=0
+
+[1603sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30030210
+PDOMapping=0
+
+[1603sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30030310
+PDOMapping=0
+
+[1603sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30030410
+PDOMapping=0
+
+[1603sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1603sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1603sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1603sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604]
+SubNumber=1
+ParameterName=Receive PDO mapping
+
+[1604sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1604sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1604sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1800]
+SubNumber=6
+ParameterName=Transmit PDO Communication Parameter
+
+[1800sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1800sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 384
+PDOMapping=0
+
+[1800sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1800sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub4]
+ParameterName=reserved
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub5]
+ParameterName=event time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801]
+SubNumber=6
+ParameterName=Transmit PDO Communication Parameter
+
+[1801sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1801sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 640
+PDOMapping=0
+
+[1801sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1801sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801sub4]
+ParameterName=reserved
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1801sub5]
+ParameterName=event time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802]
+SubNumber=6
+ParameterName=Transmit PDO Communication Parameter
+
+[1802sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1802sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 896
+PDOMapping=0
+
+[1802sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1802sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802sub4]
+ParameterName=reserved
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1802sub5]
+ParameterName=event time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803]
+SubNumber=6
+ParameterName=Transmit PDO Communication Parameter
+
+[1803sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1803sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 1152
+PDOMapping=0
+
+[1803sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1803sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803sub4]
+ParameterName=reserved
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1803sub5]
+ParameterName=event time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A00]
+SubNumber=5
+ParameterName=Transmit PDO mapping
+
+[1A00sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1A00sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31000110
+PDOMapping=0
+
+[1A00sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31000210
+PDOMapping=0
+
+[1A00sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31000310
+PDOMapping=0
+
+[1A00sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31000410
+PDOMapping=0
+
+[1A00sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A00sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A00sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A00sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A01]
+SubNumber=5
+ParameterName=Transmit PDO mapping
+
+[1A01sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1A01sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31010110
+PDOMapping=0
+
+[1A01sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31010210
+PDOMapping=0
+
+[1A01sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31010310
+PDOMapping=0
+
+[1A01sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31010410
+PDOMapping=0
+
+[1A01sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A01sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A01sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A01sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A02]
+SubNumber=5
+ParameterName=Transmit PDO mapping
+
+[1A02sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1A02sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31020110
+PDOMapping=0
+
+[1A02sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31020210
+PDOMapping=0
+
+[1A02sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31020310
+PDOMapping=0
+
+[1A02sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31020410
+PDOMapping=0
+
+[1A02sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A02sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A02sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A02sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A03]
+SubNumber=5
+ParameterName=Transmit PDO mapping
+
+[1A03sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1A03sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31030110
+PDOMapping=0
+
+[1A03sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31030210
+PDOMapping=0
+
+[1A03sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31030310
+PDOMapping=0
+
+[1A03sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x31030410
+PDOMapping=0
+
+[1A03sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A03sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A03sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A03sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[3000]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3000sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3000sub1]
+ParameterName=SlaveReceivePdo.Rx_Pdo1_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3000sub2]
+ParameterName=SlaveReceivePdo.Rx_Pdo1_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3000sub3]
+ParameterName=SlaveReceivePdo.Rx_Pdo1_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3000sub4]
+ParameterName=SlaveReceivePdo.Rx_Pdo1_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3001]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3001sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3001sub1]
+ParameterName=SlaveReceivePdo.Rx_Pdo2_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3001sub2]
+ParameterName=SlaveReceivePdo.Rx_Pdo2_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3001sub3]
+ParameterName=SlaveReceivePdo.Rx_Pdo2_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3001sub4]
+ParameterName=SlaveReceivePdo.Rx_Pdo2_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3002]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3002sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3002sub1]
+ParameterName=SlaveReceivePdo.Rx_Pdo3_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3002sub2]
+ParameterName=SlaveReceivePdo.Rx_Pdo3_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3002sub3]
+ParameterName=SlaveReceivePdo.Rx_Pdo3_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3002sub4]
+ParameterName=SlaveReceivePdo.Rx_Pdo3_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3003]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3003sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3003sub1]
+ParameterName=SlaveReceivePdo.Rx_Pdo4_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3003sub2]
+ParameterName=SlaveReceivePdo.Rx_Pdo4_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3003sub3]
+ParameterName=SlaveReceivePdo.Rx_Pdo4_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3003sub4]
+ParameterName=SlaveReceivePdo.Rx_Pdo4_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3100]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3100sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3100sub1]
+ParameterName=SlaveTransmitPdo.Tx_Pdo1_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3100sub2]
+ParameterName=SlaveTransmitPdo.Tx_Pdo1_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3100sub3]
+ParameterName=SlaveTransmitPdo.Tx_Pdo1_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3100sub4]
+ParameterName=SlaveTransmitPdo.Tx_Pdo1_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3101]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3101sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3101sub1]
+ParameterName=SlaveTransmitPdo.Tx_Pdo2_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3101sub2]
+ParameterName=SlaveTransmitPdo.Tx_Pdo2_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3101sub3]
+ParameterName=SlaveTransmitPdo.Tx_Pdo2_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3101sub4]
+ParameterName=SlaveTransmitPdo.Tx_Pdo2_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3102]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3102sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3102sub1]
+ParameterName=SlaveTransmitPdo.Tx_Pdo3_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3102sub2]
+ParameterName=SlaveTransmitPdo.Tx_Pdo3_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3102sub3]
+ParameterName=SlaveTransmitPdo.Tx_Pdo3_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3102sub4]
+ParameterName=SlaveTransmitPdo.Tx_Pdo3_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3103]
+SubNumber=5
+ParameterName=Application defined objects
+
+[3103sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x4
+PDOMapping=0
+
+[3103sub1]
+ParameterName=SlaveTransmitPdo.Tx_Pdo4_Word0
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3103sub2]
+ParameterName=SlaveTransmitPdo.Tx_Pdo4_Word1
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3103sub3]
+ParameterName=SlaveTransmitPdo.Tx_Pdo4_Word2
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3103sub4]
+ParameterName=SlaveTransmitPdo.Tx_Pdo4_Word3
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+

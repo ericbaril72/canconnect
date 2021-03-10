@@ -1,0 +1,575 @@
+ACTION	Options:
+LEDUP := TRUE;
+LEDDOWN := TRUE;
+LEDLEFT := FALSE;
+LEDRIGHT := FALSE;
+LEDESC := FALSE;
+LEDOK := TRUE;
+B_InvisibleValue1 := FALSE;
+B_InvisibleValue2 := FALSE;
+B_InvisibleValue3 := FALSE;
+B_InvisibleValue4 := FALSE;
+
+ScanIndexMax := 80;
+
+IF KEY_UP THEN
+	IF SelectedLine = 0 THEN
+		IF ScanIndexPointer > 0 THEN
+			ScanIndexPointer := ScanIndexPointer - 1;
+		ELSE
+			ScanIndexPointer := 0;
+		END_IF
+	ELSE
+		SelectedLine := SelectedLine - 1;
+	END_IF
+END_IF
+
+	IF KEY_DOWN THEN
+		IF SelectedLine = MaxLines -1 THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		ELSE
+			SelectedLine := SelectedLine + 1;
+		END_IF
+	END_IF
+
+	IF KEY_LEFT THEN
+		IF ScanIndexPointer > MaxLines - 1 THEN
+			ScanIndexPointer := ScanIndexPointer - MaxLines;
+		ELSE
+			ScanIndexPointer := 0;
+		END_IF
+	END_IF
+
+	IF KEY_RIGHT THEN
+		IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+			ScanIndexPointer := ScanIndexPointer + MaxLines;
+		ELSE
+			ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+		END_IF
+	END_IF
+
+	(* System variables list, display the right values *)
+	index := 0;
+	BY_CurrentLine := 0;
+	WHILE index <= 90 AND ScanIndexPointer + 4 > BY_CurrentLine DO
+		B_SkipLine := FALSE;
+		B_TmpVal := FALSE;
+		CASE index OF
+		1:
+			IF OPT_838STD THEN
+				TextTemp := TL_838STD;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_838STD := FALSE;
+					OPT_838WID := TRUE;
+				END_IF
+			ELSIF OPT_838WID THEN
+				TextTemp := TL_838WID;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_838WID := FALSE;
+					OPT_838UNI := TRUE;
+				END_IF
+			ELSIF OPT_838UNI THEN
+				TextTemp := TL_838UNI;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_838UNI := FALSE;
+					OPT_838SUP := TRUE;
+				END_IF
+			ELSIF OPT_838SUP THEN
+				TextTemp := TL_838SUP;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_929 := TRUE;
+					OPT_838SUP := FALSE;
+				END_IF
+			ELSIF OPT_929 THEN
+				TextTemp := TL_929;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_929 := FALSE;
+					OPT_929S := TRUE;
+				END_IF
+			ELSIF OPT_929S THEN
+				TextTemp := TL_929S;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_929S := FALSE;
+					OPT_929H := TRUE;
+				END_IF
+			ELSIF OPT_929H THEN
+				TextTemp := TL_929H;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_929H := FALSE;
+					OPT_838STD := TRUE;
+				END_IF
+			ELSE
+				OPT_838STD := TRUE;
+			END_IF
+			B_TmpVal := TRUE;
+
+		9:
+			TextTemp := TL_ElevatorLiftJoystick;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_ElevatorLiftJoystick := NOT OPT_ElevatorLiftJoystick;
+			END_IF
+			B_TmpVal := OPT_ElevatorLiftJoystick;
+
+		10:
+			TextTemp := TL_BridgeLiftJoystick;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_BridgeLiftJoystick := NOT OPT_BridgeLiftJoystick;
+			END_IF
+			B_TmpVal := OPT_BridgeLiftJoystick;
+
+		11:
+			TextTemp := TL_DeluxeJoystick;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DeluxeJoysticks := NOT OPT_DeluxeJoysticks;
+			END_IF
+			B_TmpVal := OPT_DeluxeJoysticks;
+
+		12:
+			TextTemp := TL_ElevatorDualRotate;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_ElevatorDualRotate := NOT OPT_ElevatorDualRotate;
+			END_IF
+			B_TmpVal := OPT_ElevatorDualRotate;
+
+		13:
+			TextTemp := TL_DriveJoystick;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DriveJoystick := NOT OPT_DriveJoystick;
+			END_IF
+			B_TmpVal := OPT_DriveJoystick;
+
+		14:
+			IF OPT_Battery = 0 THEN
+				TextTemp :=  TL_LeadAcidBattery;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_Battery := 1;
+					IF OPT_838STD OR OPT_838WID OR OPT_838SUP OR OPT_838UNI THEN
+						MAX_Battery_Current := 500;
+					ELSIF OPT_929 OR OPT_929S OR OPT_929H THEN
+						MAX_Battery_Current := 1200;
+					END_IF
+				END_IF
+			ELSIF OPT_Battery = 1 THEN
+				TextTemp := TL_GreenCubeBattery;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_Battery := 2;
+					IF OPT_838STD OR OPT_838WID OR OPT_838SUP OR OPT_838UNI THEN
+						MAX_Battery_Current := 500;
+					ELSIF OPT_929 OR OPT_929S OR OPT_929H THEN
+						MAX_Battery_Current := 1200;
+					END_IF
+				END_IF
+			ELSIF OPT_Battery = 2 THEN
+				TextTemp := TL_TLDiBSBattery;
+				IF KEY_OK AND W_SelectedIndex = index THEN
+					OPT_Battery := 0;
+					IF OPT_838STD OR OPT_838WID OR OPT_838SUP OR OPT_838UNI THEN
+						MAX_Battery_Current := 300;
+					ELSIF OPT_929 OR OPT_929S OR OPT_929H THEN
+						MAX_Battery_Current := 1200;
+					END_IF
+				END_IF
+			ELSE
+				OPT_Battery := 0;
+			END_IF
+			B_TmpVal := TRUE;
+
+		16:
+			TextTemp := TL_ASD;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_ASD := NOT OPT_ASD;
+			END_IF
+			B_TmpVal := OPT_ASD;
+
+		17:
+			TextTemp := TL_ASDConsignment;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_CONSIGNMENT := NOT OPT_CONSIGNMENT;
+			END_IF
+			B_TmpVal := OPT_CONSIGNMENT;
+
+		18:
+			TextTemp := TL_HandrailSensitiveBumper;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_HandrailSensBump := NOT OPT_HandrailSensBump;
+			END_IF
+			B_TmpVal := OPT_HandrailSensBump;
+
+		19:
+			TextTemp := TL_NoASDButton;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_NOASDButton := NOT OPT_NOASDButton;
+			END_IF
+			B_TmpVal := OPT_NOASDButton;
+
+		20:
+			TextTemp := TL_AutoASDBridgeUp;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_AutoASDBridgeUp := NOT OPT_AutoASDBridgeUp;
+			END_IF
+			B_TmpVal := OPT_AutoASDBridgeUp;
+
+		21:
+			TextTemp := TL_ASDPlus;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_ASDPlus := NOT OPT_ASDPlus;
+			END_IF
+			B_TmpVal := OPT_ASDPlus;
+
+		23:
+			TextTemp := TL_AnalogTempSensor;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_AnalogTempSensor := NOT OPT_AnalogTempSensor;
+			END_IF
+			B_TmpVal := OPT_AnalogTempSensor;
+
+		30:
+			TextTemp := TL_BridgeSideShift;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_BridgeSS := NOT OPT_BridgeSS;
+			END_IF
+			B_TmpVal := OPT_BridgeSS;
+
+		33:
+			TextTemp := TL_SlowBridgeOnCargo;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_SlowBridgeOnCargo := NOT OPT_SlowBridgeOnCargo;
+			END_IF
+			B_TmpVal := OPT_SlowBridgeOnCargo;
+
+		36:
+			TextTemp := TL_PoweredTrays;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_PwrTrays := NOT OPT_PwrTrays;
+			END_IF
+			B_TmpVal := OPT_PwrTrays;
+
+		37:
+			TextTemp := TL_DeadmanJoystick;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DeadmanJoystick := NOT OPT_DeadmanJoystick;
+			END_IF
+			B_TmpVal := OPT_DeadmanJoystick;
+
+		40:
+			TextTemp := TL_LowHydraulicOilLevelShutdown;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_LowHydShutdown := NOT OPT_LowHydShutdown;
+			END_IF
+			B_TmpVal := OPT_LowHydShutdown;
+
+		41:
+			TextTemp := TL_LowHydraulicOilPressureShutdown;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_HydOilLowPressure := NOT OPT_HydOilLowPressure;
+			END_IF
+			B_TmpVal := OPT_HydOilLowPressure;
+
+		42:
+			TextTemp := TL_TLDLink;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_TLDLink := NOT OPT_TLDLink;
+			END_IF
+			B_TmpVal := OPT_TLDLink;
+
+		43:
+			TextTemp := TL_60Interlock;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_60InIntlk := NOT OPT_60InIntlk;
+			END_IF
+			B_TmpVal := OPT_60InIntlk;
+
+		45:
+			TextTemp := TL_AlternateSlowStop;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_AltSlowStop := NOT OPT_AltSlowStop;
+			END_IF
+			B_TmpVal := OPT_AltSlowStop;
+
+		47:
+			TextTemp := TL_BridgeRearBarrier;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_BridgeRearBarrier := NOT OPT_BridgeRearBarrier;
+			END_IF
+			B_TmpVal := OPT_BridgeRearBarrier;
+
+		48:
+			TextTemp := TL_MoveableConsoleDriveInterlock;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_PwrConsoleWalkway := NOT OPT_PwrConsoleWalkway;
+			END_IF
+			B_TmpVal := OPT_PwrConsoleWalkway;
+
+		49:
+			TextTemp := TL_LowBatteryBeacon;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_LowBatteryBeacon := NOT OPT_LowBatteryBeacon;
+			END_IF
+			B_TmpVal := OPT_LowBatteryBeacon;
+
+		50:
+			TextTemp :=  TL_OilRecirculation;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_OilRecirculation := NOT OPT_OilRecirculation;
+			END_IF
+			B_TmpVal := OPT_OilRecirculation;
+
+
+		53:
+			TextTemp := TL_BridgeAutolevel;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_BridgeAutolevel := NOT OPT_BridgeAutolevel;
+			END_IF
+			B_TmpVal := OPT_BridgeAutolevel;
+
+		54:
+			TextTemp := TL_MarkerLights;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_MarkerLights := NOT OPT_MarkerLights;
+			END_IF
+			B_TmpVal := OPT_MarkerLights;
+
+		55:
+			TextTemp := TL_DisableFaultIndicator;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DisableFaultIndicator := NOT OPT_DisableFaultIndicator;
+			END_IF
+			B_TmpVal := OPT_DisableFaultIndicator;
+
+		56:
+			TextTemp := TL_SideGuidesInterlock;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_SideGuidesIntlk := NOT OPT_SideGuidesIntlk;
+			END_IF
+			B_TmpVal := OPT_SideGuidesIntlk;
+
+		57:
+			TextTemp := TL_SensitiveSideGuides;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_SensitiveSideGuidesIntlk := NOT OPT_SensitiveSideGuidesIntlk;
+			END_IF
+			B_TmpVal := OPT_SensitiveSideGuidesIntlk;
+
+		58:
+			TextTemp := TL_BridgeAlarm;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_BridgeAlarm := NOT OPT_BridgeAlarm;
+			END_IF
+			B_TmpVal := OPT_BridgeAlarm;
+
+
+		59:
+			TextTemp := TL_AircraftDetect;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_AircraftDetect := NOT OPT_AircraftDetect;
+			END_IF
+			B_TmpVal := OPT_AircraftDetect;
+
+
+		60:
+			TextTemp := TL_BridgeSecurity;
+			IF KEY_OK AND (F6_IN OR NOT OPT_BridgeSafetySensor) AND W_SelectedIndex = index THEN
+				OPT_BridgeSafetySensor := NOT OPT_BridgeSafetySensor;
+			END_IF
+			B_TmpVal := OPT_BridgeSafetySensor;
+
+		61:
+			TextTemp := TL_RHS110Tray;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_RHS110Tray := NOT OPT_RHS110Tray;
+			END_IF
+			B_TmpVal := OPT_RHS110Tray;
+
+		63:
+			TextTemp := TL_UnderBridgeBeacon;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_UnderBridgeBeacon := NOT OPT_UnderBridgeBeacon;
+			END_IF
+			B_TmpVal := OPT_UnderBridgeBeacon;
+
+		65:
+			TextTemp := TL_AllGuidesDown;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_AllGuidesDown := NOT OPT_AllGuidesDown;
+			END_IF
+			B_TmpVal := OPT_AllGuidesDown;
+
+		67:
+			TextTemp := TL_Tray145;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_Tray145 := NOT OPT_Tray145;
+			END_IF
+			B_TmpVal := OPT_Tray145;
+
+		68:
+			TextTemp := TL_NoStabilizersAlarm;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_NoStabAlarm := NOT OPT_NoStabAlarm;
+			END_IF
+			B_TmpVal := OPT_NoStabAlarm;
+
+		69:
+			TextTemp := TL_UnderElevatorBeacon;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_UnderElevBeacon := NOT OPT_UnderElevBeacon;
+			END_IF
+			B_TmpVal := OPT_UnderElevBeacon;
+
+		70:
+			TextTemp := TL_SensitiveBumper;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_SensitiveBumper := NOT OPT_SensitiveBumper;
+			END_IF
+			B_TmpVal := OPT_SensitiveBumper;
+
+		71:
+			TextTemp := TL_ChassisRearHorn;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_ChassisRearHorn := NOT OPT_ChassisRearHorn;
+			END_IF
+			B_TmpVal := OPT_ChassisRearHorn;
+
+		72:
+			TextTemp :=  TL_DriveReverseInhibit;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DriveRevInhibitWithBridgeUp := NOT OPT_DriveRevInhibitWithBridgeUp;
+			END_IF
+			B_TmpVal := OPT_DriveRevInhibitWithBridgeUp;
+
+		75:
+			TextTemp :=  TL_LowHydraulicOilLevelIndicator;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_LowHydOilLevelIndicator := NOT OPT_LowHydOilLevelIndicator;
+			END_IF
+			B_TmpVal := OPT_LowHydOilLevelIndicator;
+
+
+		78:
+			TextTemp := TL_NoRestartOnFault;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_NoRestartOnFault := NOT OPT_NoRestartOnFault;
+			END_IF
+			B_TmpVal := OPT_NoRestartOnFault;
+
+		79:
+			TextTemp :=  TL_ZeroStraddleDetection;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_StraddleDetect := NOT OPT_StraddleDetect;
+			END_IF
+			B_TmpVal := OPT_StraddleDetect;
+
+		80:
+			TextTemp := TL_InwardSideRollers;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_InwardSideRollers := NOT OPT_InwardSideRollers;
+			END_IF
+			B_TmpVal := OPT_InwardSideRollers;
+
+		81:
+			TextTemp := TL_NoRearWheelAlarm;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_NoRearWheelsAlarm := NOT OPT_NoRearWheelsAlarm;
+			END_IF
+			B_TmpVal := OPT_NoRearWheelsAlarm;
+
+		84:
+			TextTemp := TL_DCDCSystem;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DCDCSystem := NOT OPT_DCDCSystem;
+			END_IF
+			B_TmpVal := OPT_DCDCSystem;
+
+		85:
+			TextTemp := TL_ManLift;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_ManLift := NOT OPT_ManLift;
+			END_IF
+			B_TmpVal := OPT_ManLift;
+
+		86:
+			TextTemp := TL_LHS110Tray;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_LHS110Tray := NOT OPT_LHS110Tray;
+			END_IF
+			B_TmpVal := OPT_LHS110Tray;
+
+		87:
+			TextTemp := TL_DriveAlarm;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_DriveAlarm := NOT OPT_DriveAlarm;
+			END_IF
+			B_TmpVal := OPT_DriveAlarm;
+
+		89:
+			TextTemp := TL_BatteryInterlock;
+			IF KEY_OK AND W_SelectedIndex = index THEN
+				OPT_BatteryLevelInterlock := NOT OPT_BatteryLevelInterlock;
+			END_IF
+			B_TmpVal := OPT_BatteryLevelInterlock;
+
+		ELSE
+			B_SkipLine := TRUE;
+		END_CASE
+
+		(* Shift lines to be displayed *)
+		IF NOT B_SkipLine THEN
+			TextL1 := TextL2;
+			Val1 := Val2;
+			TextL2 := TextL3;
+			Val2 := Val3;
+			TextL3 := TextL4;
+			Val3 := Val4;
+			TextL4 := TextTemp;
+			Val4 := BOOL_TO_WORD(B_TmpVal);
+
+			W_DisplayedIndex[0] := W_DisplayedIndex[1];
+			W_DisplayedIndex[1] := W_DisplayedIndex[2];
+			W_DisplayedIndex[2] := W_DisplayedIndex[3];
+			W_DisplayedIndex[3] := index;
+
+			BY_CurrentLine := BY_CurrentLine + 1;
+		END_IF
+
+		(* Increment index until last line *)
+		index := index + 1;
+	END_WHILE
+
+	IF ScanIndexPointer + 4 > BY_CurrentLine THEN
+		ScanIndexPointer := ScanIndexPointer - 1;
+	END_IF
+
+	W_SelectedIndex := W_DisplayedIndex[SelectedLine];
+
+	IF SelectedLine = 0 THEN
+		FrameColorL1 := TRUE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 1 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := TRUE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 2 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := TRUE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 3 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := TRUE;
+	ELSE
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	END_IF
+
+END_ACTION
+

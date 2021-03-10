@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TLD Can-Connect</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"   integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="  crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/responsive.bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="shortcut icon" href="./static/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+    <script type="text/javascript" charset="utf-8">
+        var dataSet=[]; //[{"id":"0","data":"1","ts":"2","decode":"None"},{"id":"2","data":"1","ts":"2","decode":"None"}];
+        var msgArray={};
+        var panelobj={};
+        var table;
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                 json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+        function output(idname,inp) {
+            console.log("append to :",idname);
+            var $newdiv2 = $( "<pre>"+inp+"</pre>" );
+            //document.getElementById(idname).getElementsByClassName("panel-body").appendChild(document.createElement('pre')).innerHTML = inp;
+            $("#"+idname).find(".panel-body").append($newdiv2)
+        }
+
+        $(document).ready(function(){
+
+            namespace = '/test'; // change to an empty string to use the global namespace
+                var socket = new io.connect('http://' + document.domain + ':' + location.port + namespace);
+
+                socket.on('connect', function(msg) {
+                    console.log("Connected:",socket.disconnected);
+                    socket.emit('my event', {data: 'I\'m connected!'});
+                });
+
+
+                socket.on('businfo', function(msg){
+                    dataSet=[];
+                    console.log("datasrc:",msgArray,msg)
+                    for( var data in msg.dataArray){
+                        console.log("msg",msg.dataArray[data],Object.keys(panelobj));
+                        msgArray[data]=msg.dataArray[data];  }
+                    for( var data in msgArray){
+                        dataSet.push(msgArray[data])
+
+                        var devname=msgArray[data][0];//msg.dataArray[data]["decodeObj"]["DevName"];
+
+                        if ( Object.keys(panelobj).indexOf(devname)>=0) {
+
+
+                        }
+                        else {
+                            //var clonePanel= $("#template").clone();
+                            //clonePanel.attr("id",devname)
+                            panelobj[devname]=true;
+                            $("#template").clone().attr("id",devname).attr("style","").appendTo("#zone");
+                            //$("#template").clone().attr("id",devname).attr("style","").appendTo("#zone");
+                            $("#"+devname).find(".panel-heading").html(devname);
+                            //$("#"+devname).find(".panel-body").html(output(devname,syntaxHighlight(JSON.stringify(msg.dataArray[data]["decodeObj"],null,4))));
+                            output(devname,(JSON.stringify(msg.dataArray[data]["decodeObj"],null,4)));
+                            //$("#zone").append(clonePanel);
+
+                        }
+                    }
+
+
+
+                    //table.clear().draw();
+                    //table.rows.add(dataSet).draw();
+                });
+
+                socket.on("error", function(err) {
+                    console.log('Socket encountered error: ', err.message, 'Closing socket');
+                    socket.close();
+                });
+                socket.on('disconnect', function(err) {
+                    console.log("disconnected !!!");
+                    //window.close();
+                        var customWindow = window.open('', '_blank', '');
+                        customWindow.close();
+                    console.log("Closed windows !")
+                    //socket.open();
+                });
+                socket.on("close", function(e) {
+                    console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+                    setTimeout(function() {
+                      console.log("reconnect socket!")
+                      //connect();
+                    }, 1000);
+                });
+
+
+
+        });
+
+    </script>
+</head>
+<body>
+<style>
+     tr:not(.group)  {
+        font-family: monospace;
+
+     }
+
+    tr.group,
+    tr.group:hover {
+        background-color: #ddd !important;
+    }
+
+    tr.canwarning {
+        background-color: rgba(255, 255, 0, 0.6) !important;
+    }
+    tr.canerror {
+        background-color: rgba(255, 0, 0, 0.3) !important;
+    }
+    tr.cangood {
+        background-color: rgba(0, 255, 0, 0.3) !important;
+    }
+
+</style>
+<div class="container">
+    <h3>BusInfo</h3>
+    <p id='test'> Hello </p>
+    <div>
+        <div class="row" id="zone">
+
+
+        </div>
+        <div id="template" style="visibility:hidden">
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center"><h1>CanFox</h1></div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

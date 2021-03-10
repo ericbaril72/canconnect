@@ -1,0 +1,179 @@
+ACTION	LoadTestCode:
+CASE BY_LoadTestCode OF
+			0:
+				IF KEY_UP THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_LEFT OR KEY_DOWN OR KEY_RIGHT  OR F1 OR F2 OR F3 OR F4 THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			1:
+				IF KEY_DOWN THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_LEFT OR KEY_UP OR F1 OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			2:
+				IF KEY_UP THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_LEFT  OR KEY_DOWN OR KEY_RIGHT OR F1 OR F2 OR F3 OR F4 THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			3:
+				IF KEY_DOWN THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_UP OR KEY_RIGHT OR KEY_LEFT OR F1 OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			4:
+				IF KEY_LEFT THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF  KEY_UP OR KEY_DOWN OR KEY_RIGHT OR F1 OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			5:
+				IF KEY_RIGHT THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_DOWN OR KEY_LEFT OR KEY_UP OR F1 OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			6:
+				IF KEY_LEFT THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_UP OR F1 OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+
+			7:
+				IF KEY_RIGHT THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_DOWN OR KEY_LEFT OR KEY_UP OR F1 OR F2 OR F3 OR F4 THEN
+					BY_LoadTestCode := 0;
+				END_IF
+
+			8:
+				IF F1 THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_LEFT OR KEY_UP OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+
+			9:
+				IF F2 THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_LEFT OR KEY_UP OR F1 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+
+			10:
+				IF F1 THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_LEFT OR KEY_UP OR F2 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			11:
+				IF F2 THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_LEFT OR KEY_UP OR F1 OR F3 OR F4  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			12:
+				IF F3 THEN
+					BY_LoadTestCode := BY_LoadTestCode+1;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_LEFT OR KEY_UP OR F1 OR F2 OR F4 THEN
+					BY_LoadTestCode := 0;
+				END_IF
+			13:
+				IF F4 THEN
+					B_LoadTestOK := TRUE;
+				ELSIF KEY_RIGHT OR KEY_DOWN OR KEY_LEFT OR KEY_UP OR F1 OR F2 OR F3  THEN
+					BY_LoadTestCode := 0;
+				END_IF
+END_CASE
+
+RT_Cycles(CLK:= B_LoadTestOK , Q=> );
+IF RT_Cycles.Q THEN
+	DW_LoadTestCycle := DW_ElevatorCycles;
+END_IF
+
+IF B_LoadTestOK THEN
+
+	W_StaticID := TL_Blank;
+
+	FrameColorL1 := FALSE;
+	FrameColorL2 := FALSE;
+	FrameColorL3 := FALSE;
+	FrameColorL4 := FALSE;
+
+	IF DiagnosticCheck.FaultActive  THEN
+		TextL1 := TL_Fault;
+	ELSE
+		TextL1 := TL_LoadTest;
+	END_IF
+	Val1 := DWORD_TO_WORD(DW_ElevatorCycles - DW_LoadTestCycle);
+	TextL2 := TL_Blank;
+	TextL3 := TL_Blank;
+	TextL4 := TL_Blank;
+
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+	LEDOK := FALSE;
+	LEDESC := TRUE;
+	LEDF1 := TRUE;
+	LEDF2 := TRUE;
+	LEDF3 := TRUE;
+	LEDF4 := TRUE;
+	LEDF5 := TRUE;
+	LEDF6 := TRUE;
+	LEDF7 := TRUE;
+	LEDF8 := TRUE;
+
+	OpElevUpFastCmd := KEY_UP_IN AND F1_IN;
+	OpElevDownFastCmd := KEY_DOWN_IN AND F1_IN;
+
+	OpBridgeUpFastCmd := KEY_UP_IN AND F2_IN;
+	OpBridgeDownFastCmd := KEY_DOWN_IN AND F2_IN;
+	OpBridgeUpCmd := KEY_UP_IN AND F2_IN;
+	OpBridgeDownCmd := KEY_DOWN_IN AND F2_IN;
+
+	OpBridgeFwdCmd  := KEY_UP_IN AND F3_IN;
+	OpBridgeRevCmd  := KEY_DOWN_IN AND F3_IN;
+	OpBridgeLeftCmd  := KEY_LEFT_IN AND F3_IN AND OPT_BridgeSS;
+	OpBridgeRightCmd  := KEY_RIGHT_IN AND F3_IN AND OPT_BridgeSS;
+
+	OpElevFrontFwdCmd  := KEY_UP_IN AND F4_IN AND NOT F7_IN AND NOT F8_IN;
+	OpElevFrontRevCmd  := KEY_DOWN_IN AND F4_IN AND NOT F7_IN AND NOT F8_IN;
+	OpElevFrontLeftCmd  := KEY_LEFT_IN AND F4_IN;
+	OpElevFrontRightCmd  := KEY_RIGHT_IN AND F4_IN;
+
+	OpElevRearFwdCmd  := KEY_UP_IN AND F5_IN AND NOT F7_IN AND NOT F8_IN;
+	OpElevRearRevCmd  := KEY_DOWN_IN AND F5_IN AND NOT F7_IN AND NOT F8_IN;
+	OpElevRearLeftCmd  := KEY_LEFT_IN AND F5_IN;
+	OpElevRearRightCmd  := KEY_RIGHT_IN AND F5_IN;
+
+	IF KEY_UP_IN AND F7_IN AND NOT F1_IN AND NOT F2_IN THEN
+		OpLeftSideGuideUpCmd := TRUE;
+	END_IF
+
+	IF KEY_DOWN_IN AND F7_IN AND NOT F1_IN AND NOT F2_IN THEN
+		OpLeftSideGuideUpCmd := FALSE;
+	END_IF
+
+	IF KEY_UP_IN AND F8_IN AND NOT F1_IN AND NOT F2_IN THEN
+		OpRightSideGuideUpCmd := TRUE;
+	END_IF
+
+	IF KEY_DOWN_IN AND F8_IN AND NOT F1_IN AND NOT F2_IN THEN
+		OpRightSideGuideUpCmd := FALSE;
+	END_IF
+
+	OpRearWheelUpCmd := KEY_UP_IN AND F6_IN;
+	OpRearWheelDownCmd := KEY_DOWN_IN AND F6_IN;
+
+	IF KEY_ESC THEN
+		page_extern := 2; (*Main Menu*)
+		B_LoadTestOK := FALSE;
+	END_IF
+END_IF
+END_ACTION

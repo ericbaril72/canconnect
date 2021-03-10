@@ -1,0 +1,947 @@
+[FileInfo]
+EDSVersion=4.0
+FileName=CR9916_h.eds
+FileVersion=0x01
+FileRevision=0x00
+Description=Basic EDS for programmable Devices
+CreationTime=05:00 PM
+CreationDate=06-14-2012
+CreatedBy=Christian NICOLLEAU
+ModificationTime=11:05 AM
+ModificationDate=03-05-2014
+ModifiedBy=Christian NICOLLEAU
+
+[DeviceInfo]
+VendorName=ifm electronic
+VendorNumber=0x000002C3
+ProductName=CR9916HB_IO Module 12 voies
+ProductNumber=0x00000001
+RevisionNumber=0x00000001
+OrderCode=CR9916HB
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=0
+BaudRate_1000=0
+SimpleBootUpMaster=0
+SimpleBootUpSlave=1
+Granularity=0x00
+DynamicChannelsSupported=0x00000002
+GroupMessaging=0
+LSS_Supported=0
+NrOfRXPDO=1
+NrOfTXPDO=3
+CompactPDO=0x00
+
+[Comments]
+Lines=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[DynamicChannels]
+
+[MandatoryObjects]
+SupportedObjects=0x0003
+1=0x1000
+2=0x1001
+3=0x1018
+
+[ManufacturerObjects]
+SupportedObjects=0x0001
+1=0x2000
+
+[OptionalObjects]
+SupportedObjects=0x001A
+1=0x1005
+2=0x1009
+3=0x100A
+4=0x100B
+5=0x100C
+6=0x100D
+7=0x1010
+8=0x1011
+9=0x1014
+10=0x1016
+11=0x1017
+12=0x1200
+13=0x1400
+14=0x1600
+15=0x1800
+16=0x1801
+17=0x1802
+18=0x1A00
+19=0x1A01
+20=0x1A02
+21=0x20F0
+22=0x20F1
+23=0x20F2
+24=0x20F3
+25=0x6000
+26=0x6200
+
+[1000]
+ParameterName=Device type
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00030191
+
+[1001]
+ParameterName=Error register
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[1005]
+ParameterName=COB-ID SYNC message
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00000080
+
+[1009]
+ParameterName=Manufacturer hardware version
+ObjectType=7
+AccessType=CONST
+DataType=0x0009
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=01
+
+[100A]
+ParameterName=Manufacturer software version
+ObjectType=7
+AccessType=CONST
+DataType=0x0009
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=01
+
+[100B]
+ParameterName=Node Identifier
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00000018
+
+[100C]
+ParameterName=Guard time
+ObjectType=7
+AccessType=RW
+DataType=0x0006
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[100D]
+ParameterName=Life time factor
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[1010]
+SubNumber=0x02
+ParameterName=Store parameters
+ObjectType=8
+ObjFlags=0x00000000
+
+[1010sub0]
+ParameterName=Largest sub-index supported
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=1
+
+[1010sub1]
+ParameterName=Save all parameters
+ObjectType=7
+AccessType=RW
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+
+[1011]
+SubNumber=0x02
+ParameterName=Restore default parameters
+ObjectType=8
+ObjFlags=0x00000000
+
+[1011sub0]
+ParameterName=Largest sub-index supported
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=1
+
+[1011sub1]
+ParameterName=Restore all default parameters
+ObjectType=7
+AccessType=RW
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+
+[1014]
+ParameterName=COB-ID EMCY message
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x80
+
+[1016]
+SubNumber=0x02
+ParameterName=Consumer heartbeat time
+ObjectType=8
+ObjFlags=0x00000000
+
+[1016sub0]
+ParameterName=Number of entries
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+LowLimit=1
+HighLimit=1
+DefaultValue=1
+
+[1016sub1]
+ParameterName=Consumer heartbeat time of first Node
+ObjectType=7
+AccessType=RW
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+LowLimit=0
+HighLimit=0x007FFFFF
+DefaultValue=0x00000064
+
+[1017]
+ParameterName=Producer Heartbeat Time
+ObjectType=7
+AccessType=RW
+DataType=0x0006
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=500
+
+[1018]
+SubNumber=0x04
+ParameterName=Identity Object
+ObjectType=9
+ObjFlags=0x00000000
+
+[1018sub0]
+ParameterName=number of entries
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+LowLimit=1
+HighLimit=4
+DefaultValue=3
+
+[1018sub1]
+ParameterName=Vendor ID
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x000002C3
+
+[1018sub2]
+ParameterName=Product code
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00000001
+
+[1018sub3]
+ParameterName=Revision number
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00000001
+
+[1200]
+SubNumber=0x03
+ParameterName=Server SDO1 parameter
+ObjectType=9
+ObjFlags=0x00000000
+
+[1200sub0]
+ParameterName=Number of supported entries
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[1200sub1]
+ParameterName=COB-ID Client -> Server (rx)
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x600
+
+[1200sub2]
+ParameterName=COB-ID Server -> Client (tx)
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x580
+
+[1400]
+SubNumber=0x03
+ParameterName=Receive PDO1 parameter
+ObjectType=9
+ObjFlags=0x00000000
+
+[1400sub0]
+ParameterName=number of entries
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[1400sub1]
+ParameterName=COB-ID used by PDO
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x200
+
+[1400sub2]
+ParameterName=transmission type
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x01
+
+[1600]
+SubNumber=0x03
+ParameterName=Receive PDO1 mapping
+ObjectType=9
+ObjFlags=0x00000000
+
+[1600sub0]
+ParameterName=number of mapped objects
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[1600sub1]
+ParameterName=Codage de l'objet PDO1 Rx 6200-01
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x62000108
+
+[1600sub2]
+ParameterName=Codage de l'objet PDO1 Rx 6200-02
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x62000208
+
+[1800]
+SubNumber=0x03
+ParameterName=Transmit PDO1 parameter
+ObjectType=9
+ObjFlags=0x00000000
+
+[1800sub0]
+ParameterName=Largest sub-index supported
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[1800sub1]
+ParameterName=COB-ID used by PDO1
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x180
+
+[1800sub2]
+ParameterName=Transmission type
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00
+
+[1801]
+SubNumber=0x03
+ParameterName=Transmit PDO2 parameter
+ObjectType=9
+ObjFlags=0x00000000
+
+[1801sub0]
+ParameterName=Largest sub-index supported
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[1801sub1]
+ParameterName=COB-ID used by PDO2
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x280
+
+[1801sub2]
+ParameterName=Transmission type
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00
+
+[1802]
+SubNumber=0x03
+ParameterName=Transmit PDO3 parameter
+ObjectType=9
+ObjFlags=0x00000000
+
+[1802sub0]
+ParameterName=Largest sub-index supported
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[1802sub1]
+ParameterName=COB-ID used by PDO3
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=$NODEID+0x380
+
+[1802sub2]
+ParameterName=Transmission type
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x00
+
+[1A00]
+SubNumber=0x05
+ParameterName=Transmit PDO1 mapping
+ObjectType=9
+ObjFlags=0x00000000
+
+[1A00sub0]
+ParameterName=Number of mapped application objects in PDO
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=4
+
+[1A00sub1]
+ParameterName=TxPDO1 mapping Sub-Index 01
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000110
+
+[1A00sub2]
+ParameterName=TxPDO1 mapping Sub-Index 02
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000210
+
+[1A00sub3]
+ParameterName=TxPDO1 mapping Sub-Index 03
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000310
+
+[1A00sub4]
+ParameterName=TxPDO1 mapping Sub-Index 04
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000410
+
+[1A01]
+SubNumber=0x05
+ParameterName=Transmit PDO2 mapping
+ObjectType=9
+ObjFlags=0x00000000
+
+[1A01sub0]
+ParameterName=Number of mapped application objects in PDO
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=4
+
+[1A01sub1]
+ParameterName=TxPDO2 mapping Sub-Index 01
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000510
+
+[1A01sub2]
+ParameterName=TxPDO2 mapping Sub-Index 02
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000610
+
+[1A01sub3]
+ParameterName=TxPDO2 mapping Sub-Index 03
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000710
+
+[1A01sub4]
+ParameterName=TxPDO2 mapping Sub-Index 04
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000810
+
+[1A02]
+SubNumber=0x05
+ParameterName=Transmit PDO3 mapping
+ObjectType=9
+ObjFlags=0x00000000
+
+[1A02sub0]
+ParameterName=Number of mapped application objects in PDO
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=4
+
+[1A02sub1]
+ParameterName=TxPDO3 mapping Sub-Index 09
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000910
+
+[1A02sub2]
+ParameterName=TxPDO3 mapping Sub-Index 10
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000A10
+
+[1A02sub3]
+ParameterName=TxPDO3 mapping Sub-Index 11
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000B10
+
+[1A02sub4]
+ParameterName=TxPDO3 mapping Sub-Index 12
+ObjectType=7
+AccessType=RO
+DataType=0x0007
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0x60000C10
+
+[2000]
+SubNumber=0x0D
+ParameterName=IO Configuration
+ObjectType=8
+ObjFlags=0x00000000
+
+[2000sub0]
+ParameterName=number of elements
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=12
+
+[2000sub1]
+ParameterName=Periph 1
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub2]
+ParameterName=Periph 2
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub3]
+ParameterName=Periph 3
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub4]
+ParameterName=Periph 4
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub5]
+ParameterName=Periph 5
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub6]
+ParameterName=Periph 6
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub7]
+ParameterName=Periph 7
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub8]
+ParameterName=Periph 8
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000sub9]
+ParameterName=Periph 9
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000subA]
+ParameterName=Periph 10
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000subB]
+ParameterName=Periph 11
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[2000subC]
+ParameterName=Periph 12
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=0
+
+[20F0]
+ParameterName=CAN ID
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+
+[20F1]
+ParameterName=CAN ID
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+
+[20F2]
+ParameterName=CAN Rate
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+
+[20F3]
+ParameterName=CAN Rate
+ObjectType=7
+AccessType=RW
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+
+[6000]
+SubNumber=0x0D
+ParameterName=Entrées Périphériques
+ObjectType=8
+ObjFlags=0x00000000
+
+[6000sub0]
+ParameterName=Etat des entrées
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=12
+
+[6000sub1]
+ParameterName=IN_ANA1
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub2]
+ParameterName=IN_ANA2
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub3]
+ParameterName=IN_ANA3
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub4]
+ParameterName=IN_ANA4
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub5]
+ParameterName=IN_ANA5
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub6]
+ParameterName=IN_ANA6
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub7]
+ParameterName=IN_ANA7
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub8]
+ParameterName=IN_ANA8
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000sub9]
+ParameterName=IN_ANA9
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000subA]
+ParameterName=IN_ANA10
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000subB]
+ParameterName=IN_ANA11
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6000subC]
+ParameterName=IN_ANA12
+ObjectType=7
+AccessType=RO
+DataType=0x0006
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6200]
+SubNumber=0x03
+ParameterName=Pilotage des Sorties
+ObjectType=8
+ObjFlags=0x00000000
+
+[6200sub0]
+ParameterName=Pilotage Sorties
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=0
+ObjFlags=0x00000000
+DefaultValue=2
+
+[6200sub1]
+ParameterName=OUT12_9
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=1
+ObjFlags=0x00000000
+
+[6200sub2]
+ParameterName=OUT8_1
+ObjectType=7
+AccessType=RO
+DataType=0x0005
+PDOMapping=1
+ObjFlags=0x00000000
+

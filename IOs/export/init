@@ -1,0 +1,301 @@
+
+MEMORY_RETAIN_PARAM1(ENABLE:=TRUE , LEN:= 4096 , MODE:=3 );
+
+IF B_Init THEN
+	IO_List;							(* Setup config for all inputs/outputs *)
+	DiagnosticCheck_List;			(* Setup Name/Description for all Faults*)
+	ShortOpenDetect();				(*Configure CR0032 Short Open Detect*)
+	R_Distance := DW_Odometer;
+
+	(*Setup Name of All Menu*)
+	OperationsTextList[0] := TL_BridgeUpDownSlow;
+	OperationsTextList[1] := TL_BridgeUpDownFast;
+	OperationsTextList[2] := TL_ElevatorUpDownSlow;
+	OperationsTextList[3] := TL_ElevatorUpDownFast;
+
+	OperationsTextList[6] := TL_BridgeTransfer;
+	OperationsTextList[7] := TL_FrontElevatorTransfer;
+	OperationsTextList[8] := TL_RearElevatorTransfer;
+	OperationsTextList[9] := TL_ElevatorRearRotate;
+	OperationsTextList[10] := TL_ElevatorCenterRotate;
+
+	OperationsTextList[12] := TL_ElevatorLeftGuideDown;
+	OperationsTextList[13] := TL_ElevatorRightGuideDown;
+	OperationsTextList[14] := TL_ElevatorRearPalletStopDown;
+
+	OperationsTextList[17] := TL_HighDemand;
+	OperationsTextList[18] := TL_SupercapsDischarge;
+
+	DiagnosticTextList[0] := TL_InputsAnalog;
+	DiagnosticTextList[1] := TL_InputsDigital;
+	DiagnosticTextList[2] := TL_OutputsAnalog;
+	DiagnosticTextList[3] := TL_OutputsDigital;
+	DiagnosticTextList[4] := TL_Network;
+
+	ConfigTextList[0] := TL_SerialNumber;
+	IF B_OPT_929 THEN
+		ConfigTextList[1] := TL_BridgeUpFastSpeed;
+		ConfigTextList[2] := TL_BridgeDownFastSpeed;
+		ConfigTextList[3] := TL_BridgeUpSlowSpeed;
+		ConfigTextList[4] := TL_BridgeDownSlowSpeed;
+	ELSE (*838*)
+		ConfigTextList[3] := TL_BridgeSlowSpeed;
+		ConfigTextList[4] := TL_BridgeFastSpeed;
+	END_IF
+	ConfigTextList[5] := TL_ElevatorUpFastSpeed;
+	ConfigTextList[6] := TL_ElevatorDownFastSpeed;
+	ConfigTextList[7] := TL_ElevatorUpSlowSpeed;
+	ConfigTextList[8] := TL_ElevatorDownSlowSpeed;
+	ConfigTextList[9] := TL_ChargePressureSetup;
+
+	ConfigTextList[11] := TL_BridgeForwardReverseSpeed;
+	ConfigTextList[12] := TL_FrontElevatorForwardReverseSpeed;
+	ConfigTextList[13] := TL_RearElevatorForwardReverseSpeed;
+	ConfigTextList[14] := TL_BridgeSideShiftSpeed;
+	ConfigTextList[15] := TL_FrontElevatorSideShiftSpeed;
+	ConfigTextList[16] := TL_RearElevatorSideShiftSpeed;
+	ConfigTextList[17] := TL_ElevatorCenterRotateSpeed;
+	ConfigTextList[18] := TL_ElevatorRearRotateSpeed;
+	ConfigTextList[19] := TL_MinimumTransferPressure;
+
+	ConfigTextList[23] := TL_DriveCreepSpeed;
+	ConfigTextList[24] := TL_DriveASDSpeed;
+
+	ConfigTextList[26] := TL_DriveMaxSpeed;
+
+	ConfigTextList[29] := TL_BridgeTransferThreshold;
+	ConfigTextList[30] := TL_ElevatorUpThreshold;
+	ConfigTextList[31] := TL_FrontElevatorTransferThreshold;
+	ConfigTextList[32] := TL_RearElevatorTransferThreshold;
+
+	ConfigTextList[35] := TL_ElevatorDownThreshold;
+
+	ConfigTextList[37] := TL_RegenControlThreshold;
+
+	ConfigTextList[40] := TL_CameraAdjust;
+
+	ConfigTextList[42] := TL_ForceMode;
+	ConfigTextList[43] := TL_SV90Bypass;
+	ConfigTextList[44] := TL_SideRollerBypass;
+	ConfigTextList[45] := TL_MaximumBatteryCurrent;
+	ConfigTextList[46] := TL_StateOfChargeReset;
+
+	ConfigTextList[48] := TL_PumpMotorEnable;
+	ConfigTextList[49] := TL_TractionMotorEnable;
+	ConfigTextList[50] := TL_RegenMotorEnable;
+	ConfigTextList[51] := TL_AutomaticShutdownTime;
+
+	ConfigTextList[61] := TL_HourmeterAdjust;
+
+	FaultLogTextList[0] := TL_DisplayFaults;
+	FaultLogTextList[1] := TL_MotorFaults;
+	FaultLogTextList[2] := TL_ASDEventLog;
+	FaultLogTextList[3] := TL_EraseAllEntries;
+
+	InformationTextList[0] := TL_Motors;
+	InformationTextList[1] := TL_SystemStatus;
+	InformationTextList[2] := TL_History;
+	InformationTextList[3] := TL_Version;
+END_IF
+
+(* Operation menus enable/disable *)
+(*'BRIDGE LIFT SLOW'*)
+OperationsEnable[0] := TRUE;
+(*'BRIDGE LIFT FAST'*)
+OperationsEnable[1] := TRUE;
+(*'ELEVATOR LIFT SLOW'*)
+OperationsEnable[2] := TRUE;
+(*'ELEVATOR LIFT FAST'*)
+OperationsEnable[3] := TRUE;
+(*'BRIDGE TRANSFERS'*)
+OperationsEnable[6] := TRUE;
+(*'ELEV FRONT TRANSFERS'*)
+OperationsEnable[7] := TRUE;
+(*'ELEV REAR TRANSFERS'*)
+OperationsEnable[8] := TRUE;
+(*'ELEV REAR ROTATE'*)
+OperationsEnable[9] := TRUE;
+(*'ELEV CENTER ROTATE'*)
+OperationsEnable[10] := OPT_ElevatorDualRotate;
+(*'LEFT SIDE GUIDE DOWN'*)
+OperationsEnable[12] := TRUE;
+(*'RIGHT SIDE GUIDE DOWN'*)
+OperationsEnable[13] := TRUE;
+(*'REAR ELEV STOP DOWN'*)
+OperationsEnable[14] := TRUE;
+(*HIGH DEMAND'*)
+OperationsEnable[17] := TRUE;
+(*SUPERCAPS DISCHARGE*)
+OperationsEnable[18] := OPT_DCDCSystem AND OPT_LeadAcidBattery;
+
+(* Configuration menus enable/disable *)
+(* Must match ConfigTextList array *)
+
+(*UNIT SERIAL NUMBER*)
+ConfigEnable[0] := B_SpecialMenu;
+(*BRIDGE UP FAST SPEED*)
+ConfigEnable[1] := B_OPT_929;
+(*BRIDGE DOWN FAST SPEED*)
+ConfigEnable[2] := B_OPT_929;
+(*'BRIDGE SLOW SPEED 838 // BRIDGE UP SLOW SPEED 929',*)
+ConfigEnable[3] := TRUE;
+(*'BRIDGE FAST SPEED 838', // BRIDGE DOWN SLOW SPEED 929*)
+ConfigEnable[4] := TRUE;
+(*'ELEV UP SPEED',*)
+ConfigEnable[5] := TRUE;
+(*'ELEV DOWN SPEED',*)
+ConfigEnable[6] := TRUE;
+(*'ELEV UP SLOW SPEED',*)
+ConfigEnable[7] := TRUE;
+(*'ELEV DOWN SLOW SPEED',*)
+ConfigEnable[8] := TRUE;
+(*'CHARGE PRESSURE SETUP',*)
+ConfigEnable[9] := B_SpecialMenu;
+(*'BRIDGE FWD/REV SPEED',*)
+ConfigEnable[11] := TRUE;
+(*'ELEV FRONT SPEED',*)
+ConfigEnable[12] := TRUE;
+(*'ELEV REAR SPEED',*)
+ConfigEnable[13] := TRUE;
+(*'BRIDGE SIDE SHIFT SPD',*)
+ConfigEnable[14] := TRUE;
+(*'ELEV FRONT SS',*)
+ConfigEnable[15] := OPT_ElevatorDualRotate;
+(*'ELEV REAR SS',*)
+ConfigEnable[16] := TRUE;
+(*'ELEV CENTER ROTATE',*)
+ConfigEnable[17] := OPT_ElevatorDualRotate;
+(*'ELEV REAR ROTATE',*)
+ConfigEnable[18] := TRUE;
+(*'MIN TRANSFER PRESSURE',*)
+ConfigEnable[19] := B_SpecialMenu;
+(*'DRIVE CREEP SPEED';*)
+ConfigEnable[23] := B_SpecialMenu;
+(*'DRIVE ASD SPEED';*)
+ConfigEnable[24] := B_SpecialMenu;
+(*'DRIVE MAX SPEED';*)
+ConfigEnable[26] := B_SpecialMenu;
+(*'EP1 THRESHOLD',*)
+ConfigEnable[29] :=  B_SpecialMenu;
+(*'EP2 THRESHOLD',*)
+ConfigEnable[30] :=  B_SpecialMenu AND B_OPT_838;
+(*'EP31 THRESHOLD',*)
+ConfigEnable[31] :=  B_SpecialMenu;
+(*'EP32 THRESHOLD',*)
+ConfigEnable[32] :=  B_SpecialMenu;
+(*'EP61 ELEV THRESHOLD',*)
+ConfigEnable[35] :=  B_SpecialMenu AND B_OPT_838;
+(*'EP65 REGEN CONTROL THRESHOLD',*)
+ConfigEnable[37] :=  B_SpecialMenu AND B_OPT_929;
+(*'CAMERA ADJUST',*)
+ConfigEnable[40] := OPT_ASD;
+(*FORCE MODE*)
+ConfigEnable[42] := B_SpecialMenu;
+(*SV-90 BYPASS*)
+ConfigEnable[43] :=  B_SpecialMenu;
+(*SIDE ROLLER BYPASS*)
+ConfigEnable[44] :=  B_SpecialMenu;
+(*45-BATTERY CURRENT*)
+ConfigEnable[45] :=  B_SpecialMenu;
+(*46-SOC RESET*)
+ConfigEnable[46] :=  B_SpecialMenu AND OPT_LeadAcidBattery;
+(*MOTOR PUMP ENABLE';*)
+ConfigEnable[48] :=  B_SpecialMenu;
+(*MOTOR TRACT ENABLE';*)
+ConfigEnable[49] :=  B_SpecialMenu;
+(*MOTOR REGEN ENABLE';*)
+ConfigEnable[50] :=  B_SpecialMenu;
+(*AUTO SHUTDOWN TIMER';*)
+ConfigEnable[51] :=  B_SpecialMenu;
+(*HOURMETER FORCE';*)
+ConfigEnable[61] :=  B_SpecialMenu;
+
+(* Reset LED status *)
+LEDF1 := FALSE;
+LEDF2 := FALSE;
+LEDF3 := FALSE;
+LEDF4 := FALSE;
+LEDF5 := FALSE;
+LEDF6 := FALSE;
+LEDF7 := FALSE;
+LEDF8 := FALSE;
+LEDUP := FALSE;
+LEDDOWN := FALSE;
+LEDLEFT := FALSE;
+LEDRIGHT := FALSE;
+LEDOK := FALSE;
+LEDESC := FALSE;
+
+(*Reset Command*)
+OpBridgeUpCmd := FALSE;
+OpBridgeDownCmd := FALSE;
+OpBridgeUpFastCmd := FALSE;
+OpBridgeDownFastCmd := FALSE;
+OpElevUpSlowCmd := FALSE;
+OpElevDownSlowCmd := FALSE;
+OpElevUpFastCmd := FALSE;
+OpElevDownFastCmd := FALSE;
+OpBridgeFwdCmd := FALSE;
+OpBridgeRevCmd := FALSE;
+OpBridgeLeftCmd := FALSE;
+OpBridgeRightCmd := FALSE;
+OpElevFrontFwdCmd := FALSE;
+OpElevFrontRevCmd := FALSE;
+OpElevFrontLeftCmd := FALSE;
+OpElevFrontRightCmd := FALSE;
+OpElevRearFwdCmd := FALSE;
+OpElevRearRevCmd := FALSE;
+OpElevRearLeftCmd := FALSE;
+OpElevRearRightCmd := FALSE;
+OPElevCenterRotateCWCmd := FALSE;
+OPElevCenterRotateCCWCmd := FALSE;
+OPElevRearRotateCWCmd := FALSE;
+OPElevRearRotateCCWCmd := FALSE;
+OpLeftSideGuideDownCmd := FALSE;
+OpRightSideGuideDownCmd := FALSE;
+OpRearStopDownCmd := FALSE;
+G_ForcePumpEnable := FALSE;
+G_ForceSupercaps := FALSE;
+G_EP1ThresholdSet := FALSE;
+G_EP2ThresholdSet := FALSE;
+G_EP31ThresholdSet := FALSE;
+G_EP32ThresholdSet := FALSE;
+G_EP61ThresholdSet := FALSE;
+G_EP65ThresholdSet := FALSE;
+G_ChargePressureSet := FALSE;
+B_SV90Bypass := FALSE;
+G_Force5kmh := FALSE;
+G_CameraAdjust := FALSE;
+G_HighDemandRequest := FALSE;
+B_JogPump := FALSE;
+OpRearWheelUpCmd := FALSE;
+OpRearWheelDownCmd:= FALSE;
+
+RT_F1(IN := F1_IN);
+F1 := RT_F1.Q;
+RT_F2(IN := F2_IN);
+F2 := RT_F2.Q;
+RT_F3(IN := F3_IN);
+F3 := RT_F3.Q;
+RT_F4(IN := F4_IN);
+F4 := RT_F4.Q;
+RT_F5(IN := F5_IN);
+F5 := RT_F5.Q;
+RT_F6(IN := F6_IN);
+F6 := RT_F6.Q;
+RT_F7(IN := F7_IN);
+F7 := RT_F7.Q;
+RT_F8(IN := F8_IN);
+F8 := RT_F8.Q;
+RT_KEY_OK(IN := KEY_OK_IN);
+KEY_OK := RT_KEY_OK.Q;
+RT_KEY_ESC(IN := KEY_ESC_IN);
+KEY_ESC := RT_KEY_ESC.Q;
+RT_KEY_LEFT(IN := KEY_LEFT_IN);
+KEY_LEFT := RT_KEY_LEFT.Q;
+RT_KEY_RIGHT(IN := KEY_RIGHT_IN);
+KEY_RIGHT := RT_KEY_RIGHT.Q;
+RT_KEY_UP(IN := KEY_UP_IN);
+KEY_UP := RT_KEY_UP.Q;
+RT_KEY_DOWN(IN := KEY_DOWN_IN);
+KEY_DOWN := RT_KEY_DOWN.Q;

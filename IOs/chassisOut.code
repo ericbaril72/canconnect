@@ -1,0 +1,78 @@
+chassisOut:
+Pump:
+COutLiftDownEnable
+
+Target:CPWMElevatorDownEP61
+
+G_loadMode
+	or
+OPT_ManLift AND BridgeAtFrame
+	or
+OPT_Manlift  AND CInManLiftActive and CInManLiftRedundant
+
+Elevator_Rise_Speed:= G_InputsA[CInElevatorHeight].W_Value<2000 is T100ms or T1000ms
+
+
+
+[COutParkBrake] - PLC[2]
+[COutBridgeLiftEnable] - PLC[3]
+
+
+PumpEnable:
+G_PumpTargetRequest --­CPWMMainPumpPressureEP3
+
+
+
+G_EP2Demand --[CPWMLiftPumpFlowEP2].W_Value
+
+G_loadMode
+	or
+OPT_ManLift AND BridgeAtFrame
+	or
+OPT_Manlift  AND CInManLiftActive and CInManLiftRedundant
+
+
+
+[COutLiftPumpPressureEnable]=PLC[6]
+
+[COutLiftEnable]=PLC[7]
+
+
+G_OutputsD[COutBridgeUp] plc12
+G_OutputsD[COutBridgeDown] plc13
+
+
+
+LIGHTS:
+
+G_OutputsD[COutWarningHorn] plc8
+G_OutputsD[COutReverseLight] plc9
+G_OutputsD[COutStopLight] plc10
+G_OutputsD[COutHeadLight] plc11
+
+
+EP4
+(B_ElvatorUp or B_ElevatorDown ) and NOT EP5.B_active
+G_OutputsA[CPWMLeftCylinderEP4].W_Value
+
+EP5
+(B_ElvatorUp or B_ElevatorDown ) and NOT EP4.B_active
+G_OutputsA[CPWMRightCylinderEP5].W_Value
+
+CR0403
+G_OutputsD[COutBridgeDownFast].B_Value = 1.0
+G_OutputsD[COutBridgeUpFast].B_Value = 1.1
+
+
+G_OutputsD[COutTractionMotorEnable].B_Value=1.4
+G_OutputsD[COutPumpMotorEnable].B_Value =1.5
+G_OutputsD[COutRegenMotorEnable].B_Value =1.6
+
+G_OutputsD[COutStabsDown].B_Value =1.8
+G_OutputsD[COutStabsUp].B_Value =1.9
+
+G_OutputsD[COutRearHeightAdjustDown].B_Value=1.10
+G_OutputsD[COutRearHeightAdjustUp].B_Value=1.11
+
+
+

@@ -1,0 +1,270 @@
+ACTION	F1_Operation:
+IF NOT B_OperationSpecific THEN
+	LEDOK := TRUE;
+	LEDESC := TRUE;
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := TRUE;
+	B_InvisibleValue4 := TRUE;
+
+	ScanIndexPointer2 := 0;
+	FOR Index := 0 TO 25 DO
+		IF OperationsEnable[Index] THEN
+			ScanIndex[ScanIndexPointer2] := Index;
+			ScanIndexPointer2 := ScanIndexPointer2 + 1;
+		END_IF
+	END_FOR
+	ScanIndexMax := ScanIndexPointer2 - 1;
+
+	IF KEY_LEFT THEN
+		IF ScanIndexPointer > MaxLines - 1 THEN
+			ScanIndexPointer := ScanIndexPointer - MaxLines;
+		ELSE
+			ScanIndexPointer := 0;
+		END_IF
+	END_IF
+
+	IF KEY_RIGHT THEN
+		IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+			ScanIndexPointer := ScanIndexPointer + MaxLines;
+		ELSE
+			ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+		END_IF
+	END_IF
+
+	IF KEY_UP THEN
+		IF SelectedLine = 0 THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		ELSE
+			SelectedLine := SelectedLine - 1;
+		END_IF
+	END_IF
+
+	IF KEY_DOWN THEN
+		IF SelectedLine = MaxLines -1 THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		ELSE
+			SelectedLine := SelectedLine + 1;
+		END_IF
+	END_IF
+
+	OperationsSelectedLine := ScanIndex[ScanIndexPointer + SelectedLine];
+
+
+	IF KEY_OK THEN
+		B_OperationSpecific := TRUE;
+	END_IF
+
+	IF KEY_ESC THEN
+		page_extern := 2; (*MAIN PAGE*)
+		OperationsSelectedLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+	END_IF
+
+	TextL1 := OperationsTextList[ScanIndex[ScanIndexPointer]];
+	TextL2 := OperationsTextList[ScanIndex[ScanIndexPointer+1]];
+	TextL3 := OperationsTextList[ScanIndex[ScanIndexPointer+2]];
+	TextL4 := OperationsTextList[ScanIndex[ScanIndexPointer+3]];
+
+	IF SelectedLine = 0 THEN
+		FrameColorL1 := TRUE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 1 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := TRUE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 2 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := TRUE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 3 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := TRUE;
+	ELSE
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	END_IF
+ELSIF B_OperationSpecific THEN
+	FrameColorL1 := FALSE;
+	FrameColorL2 := FALSE;
+	FrameColorL3 := FALSE;
+	FrameColorL4 := FALSE;
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := TRUE;
+	B_InvisibleValue4 := TRUE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDLEFT := FALSE;
+	LEDRIGHT := FALSE;
+	LEDOK := FALSE;
+	LEDESC := TRUE;
+
+	TextL1 := OperationsTextList[OperationsSelectedLine];
+	TextL2 := TL_Blank;
+	TextL3 := TL_UseTheArrowKeys;
+	TextL4 := TL_Blank;
+
+	CASE OperationsSelectedLine OF
+		0:
+			IF KEY_UP_IN THEN
+				OpBridgeUpCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpBridgeDownCmd := TRUE;
+			END_IF
+		1:
+			IF KEY_UP_IN THEN
+				OpBridgeUpFastCmd := TRUE;
+				OpBridgeUpCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpBridgeDownFastCmd := TRUE;
+				OpBridgeDownCmd := TRUE;
+			END_IF
+		2:
+			IF KEY_UP_IN THEN
+				OpElevUpSlowCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpElevDownSlowCmd := TRUE;
+			END_IF
+		3:
+			IF KEY_UP_IN THEN
+				OpElevUpFastCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpElevDownFastCmd := TRUE;
+			END_IF
+		6:
+			LEDLEFT := OPT_BridgeSS;
+			LEDRIGHT := OPT_BridgeSS;
+
+			IF KEY_UP_IN THEN
+				OpBridgeFwdCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpBridgeRevCmd := TRUE;
+			ELSIF KEY_LEFT_IN AND OPT_BridgeSS THEN
+				OpBridgeLeftCmd := TRUE;
+			ELSIF KEY_RIGHT_IN AND OPT_BridgeSS THEN
+				OpBridgeRightCmd := TRUE;
+			END_IF
+		7:
+			LEDLEFT := OPT_ElevatorDualRotate;
+			LEDRIGHT := OPT_ElevatorDualRotate;
+
+			IF KEY_UP_IN THEN
+				OpElevFrontFwdCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpElevFrontRevCmd := TRUE;
+			ELSIF KEY_LEFT_IN THEN
+				OpElevFrontLeftCmd := TRUE;
+			ELSIF KEY_RIGHT_IN THEN
+				OpElevFrontRightCmd := TRUE;
+			END_IF
+		8:
+			LEDLEFT := TRUE;
+			LEDRIGHT := TRUE;
+
+			IF KEY_UP_IN THEN
+				OpElevRearFwdCmd := TRUE;
+			ELSIF KEY_DOWN_IN THEN
+				OpElevRearRevCmd := TRUE;
+			ELSIF KEY_LEFT_IN THEN
+				OpElevRearLeftCmd := TRUE;
+			ELSIF KEY_RIGHT_IN THEN
+				OpElevRearRightCmd := TRUE;
+			END_IF
+		9:
+			LEDUP := FALSE;
+			LEDDOWN := FALSE;
+			LEDLEFT := TRUE;
+			LEDRIGHT := TRUE;
+
+			IF KEY_LEFT_IN THEN
+				OpElevRearRotateCWCmd := TRUE;
+			ELSIF KEY_RIGHT_IN THEN
+				OpElevRearRotateCCWCmd := TRUE;
+			END_IF
+		10:
+			LEDUP := FALSE;
+			LEDDOWN := FALSE;
+			LEDLEFT := TRUE;
+			LEDRIGHT := TRUE;
+
+			IF KEY_LEFT_IN THEN
+				OpElevRearLeftCmd := TRUE;
+				OpElevFrontRightCmd := TRUE;
+			ELSIF KEY_RIGHT_IN THEN
+				OpElevFrontLeftCmd := TRUE;
+				OpElevRearRightCmd := TRUE;
+			END_IF
+		12:
+			LEDUP := FALSE;
+
+			IF KEY_DOWN_IN THEN
+				OpLeftSideGuideDownCmd := TRUE;
+			END_IF
+		13:
+			LEDUP := FALSE;
+
+			IF KEY_DOWN_IN THEN
+				OpRightSideGuideDownCmd := TRUE;
+			END_IF
+		14:
+			LEDUP := FALSE;
+
+			IF KEY_DOWN_IN THEN
+				OpRearStopDownCmd := TRUE;
+			END_IF
+
+		17:
+			LEDUP := FALSE;
+			LEDDOWN := FALSE;
+
+			TextL3 := TL_Blank;
+
+			G_ForcePumpEnable := TRUE;
+			G_HighDemandRequest := TRUE;
+			B_PumpRotationCheck := FALSE;
+
+		18:
+			LEDUP := FALSE;
+			LEDDOWN := FALSE;
+			LEDOK := TRUE;
+			B_InvisibleValue4 := FALSE;
+
+			TextL2 := TL_PressOKToDischarge;
+			TextL3 := TL_PowerOFFWhenEmpty;
+			TextL4 := TL_SupercapacitorLevel;
+			Val4 := SupercapsManagement.BY_SuperCapsLevel;
+			IF KEY_OK_IN THEN
+				G_ForceSupercaps := TRUE;
+			END_IF
+	END_CASE
+
+	IF KEY_ESC THEN
+		B_OperationSpecific := FALSE;
+	END_IF
+END_IF
+END_ACTION
+
+
+

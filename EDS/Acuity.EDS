@@ -1,0 +1,419 @@
+[Comments]
+Lines=1
+Line1=Mandatory Comment.
+[FileInfo]
+FileName=\\TITAN\engineering\TLD Canada\APPROVAL-IN\SD\EAP #59601 KLM SOFTWARE\Acuity\Acuity.EDS
+FileVersion=1
+FileRevision=1
+Description=EDS for CoDeSys-Project: \\TITAN\engineering\TLD Canada\APPROVAL-IN\SD\EAP #59601 KLM SOFTWARE\Acuity\AcuityEDS.pro
+CreationTime=07:55PM
+CreationDate=03-05-2018
+CreatedBy=CoDeSys
+ModificationTime=07:55PM
+ModificationDate=03-05-2018
+ModifiedBy=CoDeSys
+EDSVersion=4.0
+
+[DeviceInfo]
+VendorName=3S Smart Software Solutions GmbH
+ProductName=AcuityEDS
+ProductNumber=0x33535F44
+ProductVersion=1
+ProductRevision=1
+OrderCode=xxxx.yyyy.zzzz
+LMT_ManufacturerName=3S GmbH
+LMT_ProductName=3S_Dev 
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_100=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=1
+BaudRate_1000=1
+SimpleBootUpMaster=1
+SimpleBootUpSlave=0
+ExtendedBootUpMaster=1
+ExtendedBootUpSlave=0
+VendorNumber=0x33535F44
+DynamicChannelsSupported=0
+Granularity=8
+LSS_Supported=0
+GroupMessaging=0
+NrOfRXPDO=0
+NrOfTXPDO=1
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device Type
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x191
+PDOMapping=0
+
+[1001]
+ParameterName=Error Register
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=9
+1=0x1003
+2=0x1005
+3=0x100C
+4=0x100D
+5=0x1014
+6=0x1016
+7=0x1017
+8=0x1800
+9=0x1A00
+
+[ManufacturerObjects]
+SupportedObjects=1
+1=0x3000
+
+[1003]
+SubNumber=6
+ParameterName=Predefined error field
+ObjectType=0x8
+
+[1003sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1003sub1]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub2]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub3]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub4]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub5]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1005]
+ParameterName=COBID Synch Message
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x80
+PDOMapping=0
+
+[100C]
+ParameterName=Guard Time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=200
+PDOMapping=0
+
+[100D]
+ParameterName=Lifetime Factor
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=2
+PDOMapping=0
+
+[1014]
+ParameterName=COBId Emergency
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x80+$NodeId
+PDOMapping=0
+
+[1016]
+SubNumber=2
+ParameterName=Consumer heartbeat times
+ObjectType=0x8
+
+[1016sub0]
+ParameterName=Nums consumer heartbeat time
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1016sub1]
+ParameterName=Consumer heartbeat time
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1017]
+ParameterName=Producer heartbeat time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1018]
+SubNumber=3
+ParameterName=Receive PDO Communication Parameter
+ObjectType=0x8
+
+[1018sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1018sub1]
+ParameterName=VendorID
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x33535F44
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product Code
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x33535F44
+PDOMapping=0
+
+[1800]
+SubNumber=6
+ParameterName=Transmit PDO Communication Parameter
+ObjectType=0x9
+
+[1800sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[1800sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 384
+PDOMapping=0
+
+[1800sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=255
+PDOMapping=0
+
+[1800sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub4]
+ParameterName=reserved
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1800sub5]
+ParameterName=event time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A00]
+SubNumber=7
+ParameterName=Transmit PDO mapping
+ObjectType=0x8
+
+[1A00sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=5
+PDOMapping=0
+
+[1A00sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000110
+PDOMapping=0
+
+[1A00sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000210
+PDOMapping=0
+
+[1A00sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000310
+PDOMapping=0
+
+[1A00sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000508
+PDOMapping=0
+
+[1A00sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000408
+PDOMapping=0
+
+[1A00sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A00sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1A00sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[3000]
+SubNumber=6
+ParameterName=Application defined objects
+ObjectType=0x8
+
+[3000sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x5
+PDOMapping=0
+
+[3000sub1]
+ParameterName=.BatteryVoltage
+ObjectType=0x7
+DataType=0x6
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3000sub2]
+ParameterName=.BatteryCurrent
+ObjectType=0x7
+DataType=0x3
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3000sub3]
+ParameterName=.BatteryTemp
+ObjectType=0x7
+DataType=0x3
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3000sub4]
+ParameterName=.StateOfCharge
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[3000sub5]
+ParameterName=.Dummy
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+

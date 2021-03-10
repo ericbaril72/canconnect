@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>TLD diagnostics</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <div class="container1">
+            <div id="nodelist" class="row">
+
+            </div>
+        </div>
+    </body>
+
+    <div id="template" class="col-lg-4" hidden>
+        <div class="card card-default">
+            <div class="card-header fctcmd">
+            </div>
+            <div class="card-body">
+                 <div  class="row">
+                    <div  class="col-lg-3 text-center fctin" ></div>
+                    <div  class="col-lg-6 text-center fctfcts" style="background-color: grey;"></div>
+                    <div  class="col-lg-3 text-center fctout"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
+<script>
+var values={
+    "Traction": {
+                    "Inputs": {
+                        "Inputs":   {"Elevator UP":true,"RPM>100":true,"Badge Accepted":true,"Stab DOWN":false},
+                        'LimitsSwitch': {"At Frame":true,"at Max":true},
+                        'G_Variables' : {"RPM min demand":1200},
+                        "Parameters":{"OPT_has Elevator":true,"has limits":true}
+                    },
+                    "fcts": ["FWD","REV","Brake","Stab_UP","Stab_Down"],
+                    "Outputs": {
+                        'Outs':{"RPM":"1200","Cylinder-UP":true,"Redundant":true},
+                        'Global':{"vclRPM":1200},
+                    }
+                },
+    "Elevator": {
+                    "Inputs": {
+                        "Inputs":   {"Elevator UP":true,"RPM>100":true,"Badge Accepted":true,"Stab DOWN":false},
+                        'LimitsSwitch': {"At Frame":true,"at Max":true,'Straddle Interlock':true},
+                        'G_Variables' : {"CInRearElevManifoldPressure":1200,"CInRearElevTransferPressure":4000},
+                        "Parameters":{"OPT_has Elevator":true,"has limits":true}
+                    },
+         "fcts": ["Elev_Up","Elev_Down",'Elev_Rear_Transfer_FWD','Elev_Rear_Transfer_REV','Elev_Front_Transfer_FWD','Elev_Front_Transfer_REV','Rotagte-Left'],
+                    "Outputs": {
+                        'Outs':{"RPM":"1200","Cylinder-UP":false,"Redundant":false,"CInLeftSideGuideDownSensor":true},
+                        'Global':{"vclRPM":1200},
+                    }
+                },
+    "Bridge": {
+                    "Inputs": {
+                        "Inputs":   {"Bridge UP":true,"RPM>100":true,"Badge Accepted":true,"Stab DOWN":false},
+                        'LimitsSwitch': {"At Frame":true,"at Max":true},
+                        'G_Variables' : {"RPM min demand":1200},
+                        "Parameters":{"OPT_has Elevator":true,"has limits":true}
+                    },"fcts": ["Bridge_Up","Bridge_Down",'Bridge_Transfer_FWD','Bridge_Transfer_REV'],
+                    "Outputs": {
+                        'Outs':{"RPM":"1200","Cylinder-UP":false,"Redundant":false},
+                        'Global':{"vclRPM":1200},
+                    }
+                },
+    "PUMP/REGEN": {
+                    "Inputs": {
+                        "Inputs":   {"RPM>100":true,"Badge Accepted":false,"PSI in":1200},
+                        'LimitsSwitch': {"Oil Cold":true,"Oil Full":true},
+                        'G_Variables' : {"SOC > 20% ":true},
+                        "Parameters":{"OPT_has Pump":true}
+                    },"fcts": ["Pump","Regen"],
+                    "Outputs": {
+                        'Outs':{"PSI out":"1200"},
+                        'Global':{"vclRPM":1200},
+                    }
+                }
+};
+
+function createNode(name,nodeParams) {
+    var newNode = $("#template").clone();
+    newNode.attr('id',name).removeAttr('hidden')
+
+    var cnt=0;
+    for (elem in nodeParams["Inputs"]) {
+        newNode.find(".fctin").append("<br>"+elem);
+        for (subelem in nodeParams["Inputs"][elem]) {
+            var bcolor='btn-success';
+
+
+            if (elem=='G_Variables' | elem=='Parameters'){bcolor='btn-primary'};
+            if (nodeParams["Inputs"][elem][subelem]==false){bcolor='btn-danger'}
+            var newcellin = $("<button>", {"class": "btn "+bcolor+" btn-lg btn-block"}).html(subelem + "<br>");
+            newNode.find(".fctin").append(newcellin);
+        }
+    }
+
+
+    var midnode=$('<p/>').html('<h1><p class="text-center align-middle"><br>'+name+'<br></p></h1>');
+    newNode.find(".fctcmd").append(midnode);
+
+    newNode.find(".fctfcts").append("Sub-Functions<br>");
+    for (elem in nodeParams["fcts"]) {
+        var bcolor='btn-secondary';
+        var newcellfct = $("<button>", {"class": "btn "+bcolor+" btn-lg btn-block"}).html(nodeParams["fcts"][elem] + "<br>");
+        newNode.find(".fctfcts").append(newcellfct);
+
+    }
+
+    for (elem in nodeParams["Outputs"])    {
+        newNode.find(".fctout").append("<br>"+elem);
+        for (subelem in nodeParams["Outputs"][elem]){
+             var bcolor='btn-success';
+            if (elem=='Global' ){bcolor='btn-primary'};
+            if (nodeParams["Outputs"][elem][subelem]==false){bcolor='btn-danger'}
+            var newcellout = $("<button>",{"class":"btn "+bcolor+" btn-lg btn-block"}).html(subelem+"<br>");
+            newNode.find(".fctout").append(newcellout);
+        };
+    }
+    return newNode
+}
+
+
+$( document ).ready(function() {
+    for (elem in values){
+
+
+        var newelem =createNode(elem,values[elem]);
+
+        $("#nodelist").append(newelem);
+
+    }
+
+
+    
+    
+
+});
+
+</script>
+
+
+

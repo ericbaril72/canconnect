@@ -1,0 +1,514 @@
+ACTION	F5_Information:
+IF W_StaticID = TL_Information THEN
+	LEDLEFT := FALSE;
+	LEDRIGHT := FALSE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDOK := TRUE;
+	LEDESC := TRUE;
+
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := TRUE;
+	B_InvisibleValue4 := TRUE;
+
+	TextL1 := InformationTextList[InformationDisplayLine];
+	TextL2 := InformationTextList[InformationDisplayLine + 1];
+	TextL3 := InformationTextList[InformationDisplayLine + 2];
+	TextL4 := InformationTextList[InformationDisplayLine + 3];
+
+	IF KEY_UP THEN
+		IF InformationSelectedLine > 0 THEN
+			InformationSelectedLine := InformationSelectedLine - 1;
+			IF SelectedLine = 0 THEN
+				InformationSelectedLine := InformationSelectedLine - 1;
+			ELSE
+				SelectedLine := SelectedLine - 1;
+			END_IF
+		ELSE
+			InformationSelectedLine := 0;
+			InformationDisplayLine := 0;
+			SelectedLine := 0;
+		END_IF
+	END_IF
+
+	IF KEY_DOWN THEN
+		IF NOT (InformationTextList[InformationSelectedLine+1] = 0) THEN
+			InformationSelectedLine := InformationSelectedLine + 1;
+			IF SelectedLine = 3 THEN
+				InformationSelectedLine := InformationSelectedLine + 1;
+			ELSE
+				SelectedLine := SelectedLine + 1;
+			END_IF
+		END_IF
+	END_IF
+
+
+	IF KEY_OK THEN
+		CASE InformationSelectedLine OF
+			0:	(* ENGINE INFORMATION *)
+				W_StaticID := TL_Motors;
+				InformationDisplayLine := 0;
+				SelectedLine := 0;
+				ScanIndexPointer := 0;
+			1 :	(* SYSTEM STATUS *)
+				W_StaticID := TL_SystemStatus;
+				InformationDisplayLine := 0;
+				SelectedLine := 0;
+				ScanIndexPointer := 0;
+			2 :	(* HISTORY *)
+				W_StaticID := TL_History;
+				InformationDisplayLine := 0;
+				SelectedLine := 0;
+				ScanIndexPointer := 0;
+			3 :	(* VERSION *)
+				W_StaticID := TL_Version;
+				InformationDisplayLine := 0;
+				SelectedLine := 0;
+				ScanIndexPointer := 0;
+		END_CASE
+	END_IF
+
+
+	IF KEY_ESC THEN
+		page_extern := 2; (*MAIN PAGE*)
+		InformationSelectedLine := 0;
+		InformationDisplayLine := 0;
+		SelectedLine := 0;
+	END_IF
+
+	IF SelectedLine = 0 THEN
+		FrameColorL1 := TRUE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 1 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := TRUE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 2 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := TRUE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 3 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := TRUE;
+	ELSE
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	END_IF
+
+ELSIF 	W_StaticID = TL_Motors OR  	W_StaticID = TL_SystemStatus OR W_StaticID = TL_History OR W_StaticID = TL_Version  THEN
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDOK := FALSE;
+	LEDESC := TRUE;
+
+	B_InvisibleValue1 := FALSE;
+	B_InvisibleValue2 := FALSE;
+	B_InvisibleValue3 := FALSE;
+	B_InvisibleValue4 := FALSE;
+
+	FrameColorL1 := FALSE;
+	FrameColorL2 := FALSE;
+	FrameColorL3 := FALSE;
+	FrameColorL4 := FALSE;
+
+	CASE InformationSelectedLine OF
+	0:		(* Engine information *)
+
+		IF B_OPT_929 THEN
+			ScanIndexMax := 17;
+		ELSE
+			ScanIndexMax := 14;
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		(* Engine parameters list, display the right values *)
+		index := 0;
+ 		WHILE index <= ScanIndexPointer DO
+			(* Shift lines to be displayed *)
+			IF index > 0 THEN
+				TextL1 := TextL2;
+				Val1 := Val2;
+				TextL2 := TextL3;
+				Val2 := Val3;
+				TextL3 := TextL4;
+				Val3 := Val4;
+			END_IF
+
+			CASE index OF
+			0:
+				TextL1 := TL_PumpMotorRPM;
+				Val1 := I_PumpMotorRPM;
+				TextL2 := TL_TractionMotorRPM;
+				Val2 :=I_TractionMotorRPM;
+				TextL3 := TL_RegenMotorRPM;
+				Val3 := I_RegenMotorRPM;
+				TextL4 := TL_PumpMotorVoltage;
+				Val4 := W_PumpControllerVoltage;
+			1:
+				TextL4 := TL_TractionMotorVoltage;
+				Val4 := W_TractionControllerVoltage;
+			2:
+				TextL4 := TL_RegenMotorVoltage;
+				Val4 := W_RegenControllerVoltage;
+			3:
+				TextL4 := TL_PumpMotorAmpere;
+				Val4 := I_PumpControllerCurrent;
+			4:
+				TextL4 := TL_TractionMotorAmpere;
+				Val4 := I_TractionControllerCurrent;
+			5:
+				TextL4 := TL_RegenMotorAmpere;
+				Val4 := I_RegenControllerCurrent;
+			6:
+				TextL4 := TL_PumpMotorTemperature;
+				Val4 := INT_TO_WORD(I_PumpMotorTemp);
+			7:
+				TextL4 := TL_TractionMotorTemperature;
+				Val4 := INT_TO_WORD(I_TractionMotorTemp);
+			8:
+				TextL4 := TL_RegenMotorTemperature;
+				Val4 := INT_TO_WORD(I_RegenMotorTemp );
+			9:
+				IF B_OPT_838 THEN
+					TextL4 := TL_PumpControllerTemperature;
+					Val4 := INT_TO_WORD(I_PumpControllerTemp);
+				ELSE (*929*)
+					TextL4 := TL_PumpControllerTemperaturePCB;
+					Val4 := INT_TO_WORD(I_PumpControllerTempPCB);
+				END_IF
+			10:
+				IF B_OPT_838 THEN
+					TextL4 := TL_TractionControllerTemperature;
+					Val4 := INT_TO_WORD(I_TractionControllerTemp);
+				ELSE (*929*)
+					TextL4 := TL_TractionControllerTemperaturePCB;
+					Val4 := INT_TO_WORD(I_TractionControllerTempPCB);
+				END_IF
+			11:
+				IF B_OPT_838 THEN
+					TextL4 := TL_RegenControllerTemperature;
+					Val4 := INT_TO_WORD(I_RegenControllerTemp);
+				ELSE (*929*)
+					TextL4 := TL_RegenControllerTemperaturePCB;
+					Val4 := INT_TO_WORD(I_RegenControllerTempPCB);
+				END_IF
+			12:
+				TextL4 := TL_PumpControllerTemperaturePowerStage;
+				Val4 := INT_TO_WORD(I_PumpControllerTempPowerStage);
+			13:
+				TextL4 := TL_TractionControllerTemperaturePowerStage;
+				Val4 := INT_TO_WORD(I_TractionControllerTempPowerStage);
+			14:
+				TextL4 := TL_RegenControllerTemperaturePowerStage;
+				Val4 := INT_TO_WORD(I_RegenControllerTempPowerStage);
+			END_CASE
+
+			(* Increment index until last line *)
+			index := index + 1;
+		END_WHILE
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_Information;
+			SelectedLine := 0;
+			InformationSelectedLine := 0;
+			InformationDisplayLine := 0;
+		END_IF
+
+	1:		(* SYSTEM STATUS *)
+		B_InvisibleValue1 := TRUE;
+		B_InvisibleValue2 := TRUE;
+		B_InvisibleValue3 := TRUE;
+		B_InvisibleValue4 := TRUE;
+
+		ScanIndexMax := 8;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		(* System variables list, display the right values *)
+		index := 0;
+ 		WHILE index <= ScanIndexPointer DO
+			(* Shift lines to be displayed *)
+			IF index > 0 THEN
+				TextL1 := TextL2;
+				Val1 := Val2;
+				TextL2 := TextL3;
+				Val2 := Val3;
+				TextL3 := TextL4;
+				Val3 := Val4;
+			END_IF
+
+			CASE index OF
+			0:
+				B_InvisibleValue1 := FALSE;
+
+				TextL1 := TL_BatteryStateOfCharge;
+				Val1 := G_BatteryLevel;
+
+				IF G_LoadMode THEN
+					TextL2 := TL_ModeLoad;
+				ELSIF G_DriveMode THEN
+					TextL2 := TL_ModeDrive;
+				ELSE
+					TextL2 := TL_ModeNoMode;
+				END_IF
+				IF G_StraddleInterlockEngaged THEN
+					TextL3 := TL_StraddleEngaged;
+				ELSE
+					TextL3 := TL_StraddleNotEngaged;
+				END_IF
+				IF (G_InputsD[CInRearStopUpSensor].B_Value AND G_FaultFlags[GE_RearStopSensorFault].B_Active)
+				  OR G_InputsD[CInElevatorNearFrame].B_Value OR G_InputsD[CInElevatorAtFrame].B_Value
+				  OR G_InputsD[CInElevatorBelow60In].B_Value THEN
+					TextL4 := TL_RearStopInterlockOff;
+				ELSE
+					TextL4 := TL_RearStopInterlockOn;
+				END_IF
+
+			1:	B_InvisibleValue4 := FALSE;
+
+				TextL4 := TL_ElevatorUpSpeed;
+				Val4 := W_LiftUpSpeed/10;
+
+			2: 	B_InvisibleValue3 := FALSE;
+
+				IF NOT G_FaultFlags[GE_HydLowPressure].B_Active THEN
+					TextL4 := TL_HydraulicOilPressureOk;
+				ELSE
+					TextL4 := TL_HydraulicOilPressureLow;
+				END_IF
+
+			3: 	B_InvisibleValue2 := FALSE;
+				IF NOT OPT_LowHydShutdown THEN
+					TextL4 := TL_HydraulicOilLevelNA;
+				ELSIF Chassis.G_HydOilLevelOK THEN
+					TextL4 := TL_HydraulicOilLevelOK;
+				ELSE
+					TextL4 := TL_HydraulicOilLevelLow;
+				END_IF
+
+			4: 	B_InvisibleValue1 := FALSE;
+				IF Chassis.G_NeutralForStartOK THEN
+					TextL4 := TL_DriveNeutralPositionOK;
+				ELSE
+					TextL4 := TL_NoStartNotInNeutral;
+				END_IF
+
+			5:	B_InvisibleValue4 := FALSE;
+				TextL4 := TL_PumpPressureRequest;
+				Val4 := G_OutputsA[CPWMMainPumpPressureEP3].I_Value;
+			END_CASE
+
+			(* Increment index until last line *)
+			index := index + 1;
+		END_WHILE
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_Information;
+			SelectedLine := 0;
+			InformationSelectedLine := 0;
+			InformationDisplayLine := 0;
+		END_IF
+
+
+	2:		(* HISTORY *)
+		ScanIndexMax := 10;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		(* Counters list, display the right values *)
+		index := 0;
+ 		WHILE index <= ScanIndexPointer DO
+			(* Shift lines to be displayed *)
+			IF index > 0 THEN
+				TextL1 := TextL2;
+				Val1 := Val2;
+				TextL2 := TextL3;
+				Val2 := Val3;
+				TextL3 := TextL4;
+				Val3 := Val4;
+			END_IF
+
+			CASE index OF
+			0:
+				TextL1 := TL_LoaderStart;
+				Val1 := DWORD_TO_WORD(DW_EngineStarts);
+				TextL2 := TL_Hourmeter;
+				Val2 := DWORD_TO_WORD(DW_Hourmeter/60);
+				TextL3 := TL_PumpMotorHourmeter;
+				Val3 := DWORD_TO_WORD(DW_PumpMotorHours/60);
+				TextL4 := TL_TractionMotorHourmeter;
+				Val4 := DWORD_TO_WORD(DW_TractionMotorHours/60);
+			1:
+				TextL4 := TL_RegenMotorHourmeter;
+				Val4 := DWORD_TO_WORD(DW_RegenMotorHours/60);
+			2:
+				TextL4 := TL_ElevatorCycles;
+				Val4 := DWORD_TO_WORD(DW_ElevatorCycles/100);
+			3:
+				TextL4 := TL_Odometer;
+				Val4 := REAL_TO_WORD(DW_Odometer/10);
+			4:
+				TextL4 := TL_BrakeApplied;
+				Val4 := DWORD_TO_WORD(DW_BrakeApplied/100);
+			5:
+				TextL4 := TL_TotalEnergy;
+				Val4 := REAL_TO_WORD(History.EnergyTotal);
+			6:
+				TextL4 := TL_BridgeCycles;
+				Val4 := DWORD_TO_WORD(DW_BridgeCycles/100);
+			7:
+				TextL4 := TL_BatteryCycles;
+				Val4 := DWORD_TO_WORD(G_NumberBatteryCycle);
+
+			8: 	TextL4 := TL_BatteryShutdown;
+				Val4 :=  BYTE_TO_WORD(BY_BatteryShutdown);
+
+			END_CASE
+
+			(* Increment index until last line *)
+			index := index + 1;
+		END_WHILE
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_Information;
+			SelectedLine := 0;
+			InformationSelectedLine := 0;
+			InformationDisplayLine := 0;
+		END_IF
+
+
+	3:		(* VERSION *)
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+
+		B_InvisibleValue1 := TRUE;
+		B_InvisibleValue2 := TRUE;
+		B_InvisibleValue3 := TRUE;
+		B_InvisibleValue4 := TRUE;
+
+		(* Display program version *)
+		TextL1 := TL_MainController;
+		TextL2 := TL_Blank;
+		Val1 := DWORD_TO_WORD(S_Program);
+		Val2 := DWORD_TO_WORD(SHR(S_Program, 16));
+		Val3 := S_Version;
+
+		TextL3 := TL_DiagnosticCenter;
+		TextL4 := TL_Blank;
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_Information;
+			SelectedLine := 0;
+			InformationSelectedLine := 0;
+			InformationDisplayLine := 0;
+		END_IF
+	END_CASE
+END_IF
+END_ACTION
+
+
+

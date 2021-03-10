@@ -1,0 +1,209 @@
+Cnt	Module	num	Zone	opt	INOUT	number	Digital analog	CR0020 equiv	CR0020 pin	Group	Signal NAme	Details	comments	AirFrance	929-Regn	CR0020pin	929-Diesel	929-Regn
+1	CR0032	18	Chassis		OUTPUT	OUT00	d				SV-60	Elevator Lift - Down enable		x				
+2	CR0032	17	Chassis		OUTPUT	OUT01	a	OUT07	53	Elevator	EP-61 SV-65	Elevator down proportion		x				
+3	CR0032	16	Chassis		OUTPUT	OUT02	d	OUT08	39	Traction	SV-90	parking brake		x			x	
+4	CR0032	15	Chassis		OUTPUT	OUT03	d	OUT11	22	Bridge	sv-74	Securite mouvement du bridge - Bridge Redundant		x			x	
+5	CR0032	14	Chassis		OUTPUT	OUT04	a			Pump	EP-3	pression de pompe principale		x				
+6	CR0032	13	Chassis		OUTPUT	OUT05	a			Pump	EP-2	ctrl debit de pomp - flow control		x				
+7	CR0032	12	Chassis		OUTPUT	OUT06	d	OUT06	17	Pump	SV-66	Activation Pression pompe Levage - Lift pump pressure enable		x			x	
+8	CR0032	11	Chassis		OUTPUT	OUT07	d			Pump	SV-67	Activation Levage - Lift Enable		x				
+9	CR0032	2	Chassis		OUTPUT	OUT08	d	OUT105	52	Traction	H-3	Backup Alarm		x			x	
+10	CR0032	3	Chassis		OUTPUT	OUT09	d	OUT104	51	Traction	L L-19/20	BAckup lights		x			x	
+11	CR0032	4	Chassis		OUTPUT	OUT10	d	OUT103	50	Traction	L L-17/18	Brake Lights		x			x	
+12	CR0032	5	Chassis		OUTPUT	OUT11	d			Safety	CC2-10	vers le bridge		x				
+13	CR0032	6	Chassis		OUTPUT	OUT12	d	OUT12	41	Bridge	sv-64	Bridge-up slow		x			x	
+14	CR0032	7	Chassis		OUTPUT	OUT13	d	OUT13	42	Bridge	sv-63	Bridge-Down Slow		x			x	
+15	CR0032	8	Chassis		OUTPUT	OUT14	a			Elevator	ep-4	Left Elevator Adjustment		x				
+16	CR0032	9	Chassis		OUTPUT	OUT15	a			Elevator	ep-5	Right Elevator Adjustment		x				
+17	CR0032	55	Chassis		INPUT	IN00	d			Other	SW-69	Maintenance		x				
+18	CR0032	36	Chassis		INPUT	IN01	a	IN00	8	Bridge	RFT-7	Capteur Securite Pont		x			x	
+19	CR0032	54	Chassis		INPUT	IN02	d	IN02	9	Pump	TS-3	High Temp Hydril >165		x			x	
+20	CR0032	35	Chassis		INPUT	IN03	d	IN03	28	Pump	FS-2	low lEVEL hYDROLIC		x			x	
+21	CR0032	53	Chassis		INPUT	IN04	a			Elevator	incl-1	iNCLINOMETRE		x				
+22	CR0032	34	Chassis		INPUT	IN05	d	in015	38	Other	signalX	paRKING AND CONSOLE lAMPS		x			x	
+23	CR0032	52	Chassis		INPUT	IN06	a	IN05	29	Pump	ps-7	mAIN pUMP pRESSURE		x			x	
+24	CR0032	33	Chassis		INPUT	IN07	a	IN06	11	Pump,Traction	PS-8 PS-9	pARKING bRAKE pRESSURE / Big Block pressure		x			x	
+25	CR0032	24	Chassis		INPUT	IN08		IN07	30	Bridge	SW-22	Bridge RedundantSignal		x				
+26	CR0032	41	Chassis		INPUT	IN09	d			Battery	LS-59	Charger Door Closed		x				
+27	CR0032	23	Chassis		INPUT	IN10	a	IN01	27	Elevator	PS-6	CounterBalance Pressure		x			x	
+28	CR0032	40	Chassis		INPUT	IN11	d			Other	SW	MainBoxDoorOpen		x				
+29	CR0032	22	Chassis	OPT	INPUT	IN12	d			Bridge	SW-71	BarrePalpeuse		x				
+30	CR0032	39	Chassis	OPT	INPUT	IN13	d			Bridge	US-6	CapteurUltrasonique escalier		x				
+31	CR0032	21	Chassis		INPUT	IN14	d			Safety	LS-57 LS-58	Left-Right kick Horn		x				
+32	CR0032	38	Chassis		INPUT	IN15												
+33	CR0020		Chassis		OUTPUT			OUT05	54	Traction	SV-68	Drive REV		-			x	
+34	CR0020		Chassis		OUTPUT			OUT04	36	Traction	SV-67	Drive FWD		-			x	
+35	CR0020		Chassis		INPUT			IN107	38	Traction	LS-7	Drive Speed		-			x	
+36	CR0020		Chassis		INPUT			IN04	10	Traction,Pump	LS-29	FUEL LEVEL		-			x	
+37	CR0020		Chassis					ERROR	13			Error Signal						
+38	CR0032	32	Chassis		Other	vbb15												
+39	CR0032	10	Chassis		Other	vbbs		VBBS	23									
+40	CR0032	19	Chassis		Other	vbbo		VBBO	5									
+41	CR0032	1	Chassis		Other	vbbr		VBBR	34									
+42	CR0032	20	Chassis		Other	gnds		GNDS	1									
+43	CR0032	42	Chassis		Other	gndo		GND0	15									
+44	CR0032	37	Chassis		Other	gndo		GNDoO	12									
+45	CR0032	47	Chassis		Other	can1h		can1h	14									
+46	CR0032	29	Chassis		Other	can1l		can1l	32									
+47	CR0032	46	Chassis		Other	can2h		can2h	26									
+48	CR0032	28	Chassis		Other	can2l		can2l	25									
+49	CR0032	45	Chassis		Other	can3h												
+50	CR0032	27	Chassis		Other	can3l												
+51	CR0032	44	Chassis		Other	can4h												
+52	CR0032	26	Chassis		Other	can4l												
+53	CR0032	25	Chassis		Other	rxd		rxd	6									
+54	CR0032	43	Chassis		Other	txd		txd	7									
+55	CR0032	50	Chassis		Other	test		test	24									
+56	CR0032	51	Chassis		Other	5v												
+57	CR0032	31	Chassis		Other	vcc5												
+58	CR0032	48	Chassis		Other	usb-												
+59	CR0032	30	Chassis		Other	usb+												
+60	CR0032	49	Chassis		Other	gnd		GND	49									
+61	CR0403		Chassis		OUTPUT	OUT00	d			Bridge	sv-71	Bridge-DownFast		x				
+62	CR0403		Chassis		OUTPUT	OUT01	d	OUT10	40	Bridge	sv-75	Bridge-UpFast		x				
+63	CR0403		Chassis		OUTPUT	OUT02												
+64	CR0403		Chassis		OUTPUT	OUT03												
+65	CR0403		Chassis		OUTPUT	OUT04	d	OUT107	35	Traction	mb4-3 CR-8	Traction Motor Enable / Diesel engine RUN + hourmeter		x			x	
+66	CR0403		Chassis		OUTPUT	OUT05	d	OUT09 CR-1	3	Pump	mb4-4	PumpMotorEnable		x				
+67	CR0403		Chassis		OUTPUT	OUT06	d			Pump	mb4-5	RegenMotorEnable		x				
+68	CR0403		Chassis		OUTPUT	OUT07							-	x				
+69	CR0403		Chassis		OUTPUT	OUT08	d	OUT102	31	Traction	sv-61	Stab Down		x				
+70	CR0403		Chassis		OUTPUT	OUT09	d	OUT101	49	Traction	sv-62	Stab UP		x				
+71	CR0403		Chassis		OUTPUT	OUT10	d	OUT15	4	Traction	sv-70	Rear Chassis Down		x				
+72	CR0403		Chassis		OUTPUT	OUT11	d	OUT14	43	Traction	sv-69	Rear Chassis UP		x				
+73	CR0403		Chassis		INPUT	IN00	a			Elevator	PS-3	Left Elevator Cylinder Pressure		x				
+74	CR0403		Chassis		INPUT	IN01	a			Elevator	PS-4	Right Elevator Cylinder PRessure		x				
+75	CR0403		Chassis		INPUT	IN02	d			Battery	signalX	OverVoltage Cap1		x				
+76	CR0403		Chassis		INPUT	IN03	d			Battery	signalX	Overvoltage Cap2		x				
+77	CR0403		Chassis		INPUT	IN04	d	in014	21	Elevator,Safety	sw-41	AllGuidesDownEnable		x				
+78	CR0403		Chassis		INPUT	IN05												
+79	CR0403		Chassis		INPUT	IN06	d			Battery	signalX	Overtemp Capacitor2		x				
+80	CR0403		Chassis		INPUT	IN07	d			Battery	signalX	Overtemp Capacitor2		x				
+81	CR0403		Chassis		INPUT	IN08	d	IN012	20	Traction	ls-1	Stabilizer UP position		x				
+82	CR0403		Chassis		INPUT	IN09	d	IN013	2	Traction	ls-2	Stabilisateur DOWN position		x				
+83	CR0403		Chassis		INPUT	IN10	d			Bridge	ls-3	Bridge At Frame		x				
+84	CR0403		Chassis		INPUT	IN11	d	IN104	19	Elevator	ls-5	Elevator at frame		x				
+85	CR1620 ID91		Console	OPT	OUTPUT	OUT01	d			ASD	l-6	ASD Beacon		x			x	x
+86	CR1620 ID91		Console	OPT	OUTPUT	OUT02	d			Battery	l-2	Flashing 10% battery		x				
+87	CR1620 ID91		Console	OPT	OUTPUT	OUT03	d			Battery	l-3	battery 20%		x				
+88	CR1620 ID91		Console	OPT	OUTPUT	OUT04	d			Safety,Bridge	l-43	stairway intrusion detected		x				
+89	CR1620 ID91		Console	OPT	OUTPUT	OUT05	d			Safety,Lamps	L-36/L-37	Rear worklamp left-right		x			x	x
+90	CR1620 ID91		Console	OPT	OUTPUT	OUT06	d			Safety,Lamps	L-8/L-9	bridge /Elevator worklamp		x			x	x
+91	CR1620 ID91		Console		OUTPUT	OUT07	d			Pump,Traction	T-10 interupteur demarrage			x				Auto-Shutdown
+92	CR1620 ID91		Console		OUTPUT	OUT08	d			Elevator	L-44	Elevator not at frame		x			HeadLamp	HeadLamp
+93	CR1620 ID91		Console	OPT	OUTPUT	OUT09	d			Bridge,Options	cr-13 cr-14	lhs handrail retract		x				
+94	CR1620 ID91		Console	OPT	OUTPUT	OUT10	d			Bridge,Options	lz-1	laser pointer module		x				
+95	CR1620 ID91		Console	OPT	OUTPUT	OUT11	d			Bridge,Options	cr-15 cr-16	lhs handrail extend		x				
+96	CR1620 ID91		Console	OPT	OUTPUT	OUT12	d			Bridge,Options	cr-17 cr-18	console extend		x				
+97	CR1620 ID91		Console	OPT	OUTPUT	OUT13	d			Bridge,Options	cr-19 cr-20	console retract		x				
+98	CR1620 ID91		Console		OUTPUT	OUT14	d			Safety,Traction	cr-21	Horn relay		x				
+99	CR1620 ID91		Console	OPT	OUTPUT	OUT15	d			Safety,Options	pb-12-L	autosteer lamp		x				
+100	CR1620 ID91		Console		OUTPUT	OUT16	d			Bridge,Safety	us-7	US-7 power supply stairway		x				
+101	CR1620 ID91		Console		INPUT	IN01	d			Bridge,Options	ls-70	l-r hand rail retracted		x			x	ls-49
+102	CR1620 ID91		Console	OPT	INPUT	IN02	d			Bridge,Safety,Options	ls-49	left handrail sensitive bumper		x			x	ls-70
+103	CR1620 ID91		Console	OPT	INPUT	IN03	d			Bridge,Safety,Option	ls-51	right handrail sensitive bumper		x			x	x
+104	CR1620 ID91		Console	OPT	INPUT	IN04	d			Traction,Option	pb-8	asd button		x			x	x
+105	CR1620 ID91		Console	OPT	INPUT	IN05	d			Traction,Option	pb-12	auto-steer button		x			ls-72 / ls-72 both wheel straight	ls-72 / ls-72 both wheel straight
+106	CR1620 ID91		Console	OPT	INPUT	IN06	d	IN200 / sw-6	48	Traction,Bridge,Safety	sw-50	consignment reset sw		x				sw-50 consignment
+107	CR1620 ID91		Console	OPT	INPUT	IN07	d			Bridge,Safety	us-7	stairway intrusion		x				
+108	CR1620 ID91		Console		INPUT	IN08	d			Safety	pb-10	cargo horn		x			sw-27 main deck switch	sw-27 main deck switch
+109	CR1620 ID91		Console	OPT	INPUT	IN09	d			Bridge,Safety	pb-11	StairwayIntrusionOverride		x				
+110	CR1620 ID91		Console	OPT	INPUT	IN10	d			Bridge,Options	sw-33	moveable console retraction		x				
+111	CR1620 ID91		Console	OPT	INPUT	IN11	d			Bridge,Options	sw-70	left handrail extend		x				
+112	CR1620 ID91		Console	OPT	INPUT	IN12	d			Bridge,Options	sw-70	right handrail extend		x				
+113	CR1620 ID91		Console	OPT	INPUT	INA-01	d			Bridge,Options,Safety	us-8	left handrail aircraft detection		x				
+114	CR1620 ID91		Console	OPT	INPUT	INA-02	d			Traction,Options	signalX	nashtect module drive permission		x				
+115	CR1620 ID91		Console		INPUT	INA-03												
+116	CR1620 ID91		Console	OPT	INPUT	INA-04	d			Bridge,Options	sw-33	moveable console retraction		x				
+117	PR3610 ID96		Console		INPUT	IN01				Elevator,Cargo	sw-29	Elevator Rear Rotate		x			x	
+118	PR3610 ID96		Console		INPUT	IN02				Alignment	sw-17	Rear Chassis Adjust		x			x	
+119	PR3610 ID96		Console		INPUT	IN03				Elevator	sw-15	Elevator Up-Down		x			x	
+120	PR3610 ID96		Console		INPUT	IN04				Bridge	sw-22A	Bridge Interlock		x			x	
+121	PR3610 ID96		Console		INPUT	IN05				Elevator	sw-44	Elevator Alternate Slow Stop		x			x	
+122	PR3610 ID96		Console		INPUT	IN06				Bridge,Alignment	sw-24	Low Pressure demand ( bridge tilt and Guides left right )		x			x	
+123	PR3610 ID94		Console	OPT	INPUT	IN01				Pump,Options	sw-31	Artic Kit		x			x	
+124	PR3610 ID94		Console		INPUT	IN02				Bridge, Safety	sw-23a	Bridge Interlock		x			x	
+125	PR3610 ID94		Console		INPUT	IN03												
+126	PR3610 ID94		Console		INPUT	IN04				Traction	sw-11	Drive fwd-rev		x			x	
+127	PR3610 ID94		Console		INPUT	IN05				Traction	ps-5	Brake Pedal		x			x	
+128	PR3610 ID94		Console		INPUT	IN06				Traction	rft-3	Accelerator pedal		x			x	
+129	CR2032 ID 16		Bridge		OUTPUT	b	d			Bridge,Cargo	sv-13	descente chaines bridge		x			x	
+130	CR2032 ID 16		Bridge		OUTPUT	a	a			Bridge,Cargo	ep-1	bridge fct speed control		x			x	
+131	CR2032 ID 16		Bridge		OUTPUT	b	d			Bridge,Cargo	sv-2	bridge fct rev		x			x	
+132	CR2032 ID 16		Bridge		OUTPUT	a	d			Bridge,Cargo	sv-13	bridge fct fwd		x			sv-1 	
+133	CR2032 ID 16		Bridge	OPT	OUTPUT	b	d			Bridge,Cargo	sv-3	bridge mdw left		x			x	
+134	CR2032 ID 16		Bridge	OPT	OUTPUT	a	d			Bridge,Cargo	sv-4	bridge mdw right		x			x	
+135	CR2032 ID 16		Bridge		OUTPUT	b	d			Bridge,Alignment	sv-10	bridge tilt down		x				
+136	CR2032 ID 16		Bridge		OUTPUT	a	d			Bridge,Alignment	sv-9	bridge tilt up		x				
+137	CR2032 ID 16		Bridge		INPUT	b	a			Bridge,Alignment,Elevator	signalX	Straddle detect + pressure bridge manifold		x				
+138	CR2032 ID 16		Bridge		INPUT	a	d			Bridge,Alignment	ls-8 / ps-11	bridge tilt centered	bridge autolevel 	x				ls-56 tray 145 up
+139	CR2032 ID 16		Bridge		INPUT	b	d			Bridge,Elevator	ls-11	straddle left elevator at bridge		x			rft-1 right bridge stop	
+140	CR2032 ID 16		Bridge	OPT	INPUT	a	d			Bridge,Cargo,Safety	ir-2 irt-3	bridge rear barrier option		x				
+141	CR2032 ID 16		Bridge	OPT	INPUT	b	d			Bridge,Safety	ls-40/41/42/43	sensitive bumper		x			x	
+142	CR2032 ID 16		Bridge	OPT	INPUT	a	d			Bridge,Safety	ls-44/45/46/47	sensitive bumper 2		x			x	
+143	CR2032 ID 16		Bridge		INPUT	b	d			Elevator,Safety	ls-13	left straddle		x			rft-2 left bridge stop	
+144	CR2032 ID 16		Bridge		INPUT	a	d			Elevator,Safety	ls-15	left elevator bridge sensor		x			ls-28 overtravel	
+145	CR2032 ID 17		Bridge	OPT	OUTPUT	b	d			Bridge,Cargo	sv-14	front stop down		x			x	
+146	CR2032 ID 17		Bridge	OPT	OUTPUT	a	d			Bridge,Alignment	sv-27	bridge 145 tray inverted		x			x	
+147	CR2032 ID 17		Bridge	OPT	OUTPUT	b	d			Bridge,Safety	l-39	under bridge beacon		x			x	
+148	CR2032 ID 17		Bridge		OUTPUT	a	d			Bridge,Alignment	sv-26	125 rhs tray invert		x			x	
+149	CR2032 ID 17		Bridge	OPT	OUTPUT	b	d			Bridge,Alignment	sv-12	tray 96 down		x			x	
+150	CR2032 ID 17		Bridge	OPT	OUTPUT	a	d			Bridge,Alignment	sv-11	tray 96 up		x			x	
+151	CR2032 ID 17		Bridge	OPT	OUTPUT	b	d			Bridge,Alignment	sv-16	tray 125 down		x			x	
+152	CR2032 ID 17		Bridge	OPT	OUTPUT	a	d			Bridge,Alignment	sv-15	tray 125 up		x			x	
+153	CR2032 ID 17		Bridge		INPUT	b	d			Elevator,Alignment	ls-16	right elevator near bridge		x			uc-1 aircraft detect far	
+154	CR2032 ID 17		Bridge		INPUT	a	d			Elevator,Alignment	ls-12	right elevator at bridge		x			uc-1 aircraft detect near	
+155	CR2032 ID 17		Bridge		INPUT	b	a			Bridge,Cargo	ps-12	pressure bridge transfer		x				
+156	CR2032 ID 17		Bridge		INPUT	a	d			Bridge,Alignment,Safety	irt-2 ir-3	rear barrier straddle		x				
+157	CR2032 ID 17		Bridge	OPT	INPUT	b	d			Bridge,Alignment	ls-17	powered console trays		x			ls-17 movable console retracted	
+158	CR2032 ID 17		Bridge		INPUT	a	d			Bridge,Safety	ls-61	rembarde escamotable		x			ls-61 folded handrail	
+159	CR2032 ID 17		Bridge	OPT	INPUT	b								-			rft-6 bridge auto-level	
+160	CR2032 ID 17		Bridge		INPUT	a	d			Elevator,Safety	ls-14	Right Straddle		x			ls-56 tray 145 up	
+161	CR2032 ID 20		Elevator		OUTPUT	b	d			Elevator,Safety	sv-46	elevator side right guide down		x			x	x
+162	CR2032 ID 20		Elevator		OUTPUT	a	d			Elevator,Safety	sv-47	elevator left side guide down		x			x	x
+163	CR2032 ID 20		Elevator		OUTPUT	b	d			Elevator,Safety	sv-48	elevator rear stop down		x			x	x
+164	CR2032 ID 20		Elevator	OPT	OUTPUT	a	d			Elevator,Cargo	sv-45	elevator rear rotate		x			x	x
+165	CR2032 ID 20		Elevator		OUTPUT	b												
+166	CR2032 ID 20		Elevator		OUTPUT	a												
+167	CR2032 ID 20		Elevator		OUTPUT	b	d			Elevator,Cargo	sv-50	elevator rear ftc down		x			x	x
+168	CR2032 ID 20		Elevator		OUTPUT	a	a			Elevator,Cargo	ep-32	rear speed control		x			x	x
+169	CR2032 ID 20		Elevator		INPUT	b	a			Elevator,Cargo	analog	ps-13	rear elevator manifold	x				x
+170	CR2032 ID 20		Elevator		INPUT	a							-					
+171	CR2032 ID 20		Elevator		INPUT	b	a			Elevator,Cargo	analog	ps-14	rear elevator transfer pressure	x				x
+172	CR2032 ID 20		Elevator		INPUT	a												
+173	CR2032 ID 20		Elevator		INPUT	b												
+174	CR2032 ID 20		Elevator		INPUT	a												
+175	CR2032 ID 20		Elevator		INPUT	b	d							-			ls-6 Elevator interlock	
+176	CR2032 ID 20		Elevator		INPUT	a	d							-			ls-6 Elevator interlock	
+177	CR2032 ID 21		Elevator	OPT	OUTPUT	b	d			Elevator,Cargo	sv-43	rear mdw left		x			x	x
+178	CR2032 ID 21		Elevator	OPT	OUTPUT	a	d			Elevator,Cargo	sv-44	rear mdw right		x			x	x
+179	CR2032 ID 21		Elevator		OUTPUT	b	d				-	-						
+180	CR2032 ID 21		Elevator		OUTPUT	a	d			Elevator,Cargo	sv-53	rotation inward rollar		x				
+181	CR2032 ID 21		Elevator		OUTPUT	b	d			Elevator,Cargo	sv-40	rear elevator fct fwd		x			x	x
+182	CR2032 ID 21		Elevator		OUTPUT	a	d			Elevator,Cargo	sv-41	rear elevator fct rev		x			x	x
+183	CR2032 ID 21		Elevator	OPT	OUTPUT	b	d				-	-		-			L-27 Beacon	L-27 Beacon
+184	CR2032 ID 21		Elevator	OPT	OUTPUT	a	d			Elevator,Safety	sv-17	front elevator pallet stop down		x			Marker Lights	Marker Lights
+185	CR2032 ID 21		Elevator	OPT	INPUT	b	d			Elevator,Safety	ls-18	side guides interlock		x			x	x
+186	CR2032 ID 21		Elevator		INPUT	a											-	-
+187	CR2032 ID 21		Elevator		INPUT	b											-	-
+188	CR2032 ID 21		Elevator	OPT	INPUT	a	d			Elevator,Safety	ls-19	side guides interlock		x			x	x
+189	CR2032 ID 21		Elevator		INPUT	b											-	-
+190	CR2032 ID 21		Elevator	OPT	INPUT	a	d			Elevator,Safety	ls-20	side guides interlock		x			x	x
+191	CR2032 ID 21		Elevator		INPUT	b											-	-
+192	CR2032 ID 21		Elevator		INPUT	a											-	-
+193	CR2032 ID 24		Elevator		OUTPUT	b	d			Elevator,Cargo	sv-34	elevator front mdw left		x			x	x
+194	CR2032 ID 24		Elevator		OUTPUT	a	d			Elevator,Cargo	sv-35	elevator front mdw right		x			x	x
+195	CR2032 ID 24		Elevator		OUTPUT	b	d			Elevator,InOut	sv-38	elevator side rollers right		x			x	x
+196	CR2032 ID 24		Elevator		OUTPUT	a	d			Elevator,InOut	sv-37	elevator side rollers left		x			x	x
+197	CR2032 ID 24		Elevator		OUTPUT	b	d			Elevator,Cargo	sv-31	elevator front fct fwd		x			x	x
+198	CR2032 ID 24		Elevator		OUTPUT	a	d			Elevator,Cargo	sv-32	elevator front fct rev		x			x	x
+199	CR2032 ID 24		Elevator		OUTPUT	b	d			Elevator,Cargo	sv-51	elevator front fct down		x			x	x
+200	CR2032 ID 24		Elevator		OUTPUT	a	a			Elevator,Cargo	ep-31	Speed controll fron t elevator		x			x	x
+201	CR2032 ID 24		Elevator		INPUT	b	d							-			sw-68 man lift up down	-
+202	CR2032 ID 24		Elevator		INPUT	a	d							-			sw-69 man lift redundant	-
+203	CR2032 ID 24		Elevator		INPUT	b											-	-
+204	CR2032 ID 24		Elevator	OPT	INPUT	a	d			Elevator,Safety	ls-60	Straddle trigger		x			ls-60	ls-60
+205	CR2032 ID 24		Elevator	OPT	INPUT	b	a			Elevator,Cargo	ps-16	Pressure front elevator transfer		x			ls-60	ls-60
+206	CR2032 ID 24		Elevator	OPT	INPUT	a	d			Elevator	ls-54	alternate elevator slow		x			ls-54 alt elev slow	ls-54 alt elev slow
+207	CR2032 ID 24		Elevator		INPUT	b	a							-			-	ps-16 pressure front elev transfer
+208	CR2032 ID 24		Elevator	OPT	INPUT	a	d			Elevator	ls-55	alternate elevator stop		x			ls-55 alt elev stop	ls-55 alt elev stop

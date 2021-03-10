@@ -1,0 +1,70 @@
+      - Vehicle Type                               0          P_User18
+      - Vehicle index                              2          P_User19
+      - Sequenced Driving Autorization             OFF        P_User_Bit1.2
+      - Allow Change Direction Enable              ON         P_User_Bit1.7
+      - Show speed in Display                      ON         P_User_Bit1.6
+      - Display speed in Metric Units              ON         P_User_Bit2.3
+      - Proximity sensor                           ON         P_User_Bit2.4
+        - BDI led Function Enable                  OFF        P_User_Bit2.1
+        - Blinking BDI output                      OFF        P_User_Bit1.3
+        - BDI Driver PWM                           35         P_User22
+        - BDI pre warning level                    35         P_User24
+        - BDI warning level                        20         P_User23
+        - Current Load Function Enable             OFF        P_User_Bit2.0
+        - Current load enable Voltage              8000       P_User13
+        - Current load disable Delay               120        P_User14
+        - Current Load PWM                         100        P_User15
+        - Rev Creep Speed Enable                   OFF        P_User_Bit1.5
+        - Rev Creep Speed                          7          P_User17
+      - BDI low max speed                          278        P_User8
+      - ASD speed FWD                              35         P_User33
+      - ASD speed REV                              140        P_User34
+      - High speed FWD                             1300       P_User3
+      - High speed REV                             278        P_User4
+      - Default Full Brake Rate LS                 60         P_User36
+      - Low speed FWD                              278        P_User5
+      - Low speed REV                              278        P_User6
+        - Release brake speed after high           10         P_User35
+        - Release brake speed after low            30         P_User40
+        - ASD Full Brake Rate LS                   1          P_User37
+        - Dock speed high delta                    30         P_User38
+        - Dock speed low delta                     15         P_User39
+        - Inching MAX SPEED                        200        P_User7
+        - Inching Timeout                          10         P_User9
+        - Inching Distance                         10         P_User31
+        - Default Kp                               70         P_User43
+        - Default Ki LS                            70         P_User44
+        - Default Full Accel Rate LS               120        P_User45
+        - Default Low Accel Rate                   60         P_User46
+        - Default Neutral Decel Rate LS            20         P_User47
+        - Default Full Brake Rate LS               60         P_User48
+        - Default Low Brake Rate                   50         P_User49
+        - Default Partial Decel Rate               200        P_User50
+        - Alt Kp                                   200        P_User53
+        - Alt Ki LS                                200        P_User54
+        - Alt Full Accel Rate LS                   200        P_User55
+        - Alt Low Accel Rate                       200        P_User56
+        - Alt Neutral Decel Rate LS                200        P_User57
+        - Alt Full Brake Rate LS                   200        P_User58
+        - Alt Low Brake Rate                       200        P_User59
+        - Alt Partial Decel Rate                   200        P_User60
+      - Brake Light PWM                            30         P_User12
+      - EVY1 Driver PWM                            15         P_User16
+        - Power Steering PWM                       25         P_User11
+        - Power Steer Delay                        1          P_User10
+      - BDI Lockout Level                          5          P_User30
+      - Pedal Fault Delay                          20         P_User32
+        - Total Maintenance enable                 OFF        P_User_Bit1.0
+        - Total Maintenance Interval               30000      P_User1
+        - Traction Maintenance enable              OFF        P_User_Bit1.1
+        - Trac Maintenance Interval                400        P_User2
+        - Pump Maintenance enable                  OFF        P_User_Bit2.2
+        - Pump Maintenance Interval                400        P_User25
+        - Reset Total Maintenance                  400        User_Bit1.1
+        - Reset Traction Maintenance               400        User_Bit1.4
+        - Pump Belt Maintenance                    400        User_Bit2.6
+        - Set New Hours                            400        User1
+        - Set new Mins                             400        User2
+        - Preset Total Hourmeter                   400        User_Bit1.0
+        - Preset Traction Hourmeter                400        User_Bit1.3
+        - Pump Belt Hourmeter                      400        User_Bit2.5

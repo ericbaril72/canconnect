@@ -1,0 +1,209 @@
+1,G_InputsA,,CInCurrentDCDCToBat,dcdc,DCDC
+2,G_InputsA,,CInCurrentDCDCFromBat,dcdc,DCDC
+3,G_InputsA,,CInCurrentDCDCToScaps,dcdc,DCDC
+4,G_InputsA,,CInCurrentDCDCFromScaps,dcdc,DCDC
+5,G_InputsA,,CInVinDCDC,dcdc,DCDC
+6,G_InputsA,,CInVoutDCDC,dcdc,DCDC
+7,G_InputsA,,CInSuperCap1Fault,Node4.IW220,DCDC
+8,G_InputsA,,CInSuperCap1Temp,Node4.IW216,DCDC
+9,G_InputsA,,CInSuperCap2Fault,Node4.IW222,DCDC
+10,G_InputsA,,CInSuperCap2Temp,Node4.IW218,DCDC
+11,G_InputsA,,CInElevatorHeightRaw838,IN_4,Elevator
+12,G_InputsA,,CInElevatorActualAnglePositive,JN2101 - 0Angle,Elevator
+13,G_InputsA,,CInElevatorActualAngleNegative,JN2101 - 0Angle,Elevator
+14,G_InputsA,,CInElevRearFwd,JoyStick,Elevator.cargo
+15,G_InputsA,,CInElevRearRev,JoyStick,Elevator.cargo
+16,G_InputsA,,CInElevRearLeft,JoyStick,Elevator.cargo
+17,G_InputsA,,CInElevRearRight,JoyStick,Elevator.cargo
+18,G_InputsA,,CInElevFrontFwd,JoyStick,Elevator.cargo
+19,G_InputsA,,CInElevFrontRev,JoyStick,Elevator.cargo
+20,G_InputsA,,CInElevFrontLeft,JoyStick,Elevator.cargo
+21,G_InputsA,,CInElevFrontRight,JoyStick,Elevator.cargo
+22,G_InputsA,,CInBridgeFwd,JoyStick,Bridge.cargo
+23,G_InputsA,,CInBridgeRev,JoyStick,Bridge.cargo
+24,G_InputsA,,CInBridgeLeft,JoyStick,Bridge.cargo
+25,G_InputsA,,CInBridgeRight,JoyStick,Bridge.cargo
+26,G_InputsA,,CInElevatorUp,Joystick,Elevator
+27,G_InputsA,(* SW-15 *),CInElevatorDown,Joystick,Elevator
+28,G_InputsA,,CInBridgeUp,Joystick,Bridge
+29,G_InputsA,,CInBridgeDown,Joystick,Bridge
+30,G_InputsA,,CInDriveFwdJoystick,Joystick,Traction
+31,G_InputsA,,CInElevatorLeftCylinderPressure,Node4.IW210,Elevator
+32,G_InputsA,(* LS-28 *),CInElevatorRightCylinderPressure,Node4.IW212,Elevator
+33,G_InputsA,,CInCounterbalancePressure,IN_10,Elevator
+34,G_InputsA,,CInMainPumpPressure,IN_6,Pump
+35,G_InputsA,,CInParkingBrakePressure,IN_7,traction
+36,G_InputsA,,CInBridgeManifoldPressure,Bridge1 CH1B,pump
+37,G_InputsA,,CInBridgeTransferPressure,Bridge2.CH3B,pump
+38,G_InputsA,,CInRearElevManifoldPressure,Elevator1.CH1B,pump
+39,G_InputsA,,CInRearElevTransferPressure,Elevator1.CH3B,pump
+40,G_InputsA,,CInFrontElevTransferPressure,Elevator3.CH5B,pump
+41,G_InputsA,,CInElevatorLiftPressure,Node4.IW210,pump
+42,G_InputsA,,CInLiftPumpPressure,Node4.IW212,pump
+43,G_InputsA,,CInAcceleratorPedal,Console.5,traction
+44,G_InputsA,(* SM1-56 *),CInAutolevel1,Bridge2.CH5B,bridge
+45,G_InputsA,,CInAutolevel2,Bridge2.CH7B,bridge
+46,G_InputsA,,CInBridgeSafetySensor,IN_1,bridge
+47,G_InputsA,,CInElevatorHeightRaw929,IN_4,elevator
+48,G_InputsA,,CInElevatorHeight,Memory,elevator
+49,G_InputsA,,CInDriveSpeed,TractionMotor.RPM,traction
+50,G_InputsA,,CInHydOilTemp,IN_2,pump
+51,G_InputsD,(* FS-2 *),CInHydLowOilLevel,I_03,pump
+52,G_InputsD,(* IR-2 *),CInRearBarrier,Bridge1.1,cargo
+53,G_InputsD,(* IR-3 *),CInStraddleSensor,Bridge2.1,elevator
+54,G_InputsD,(* J-1 *),CInElevRearRotateJCW,Joystick,elevator.cargo
+55,G_InputsD,(* J-1 *),CInElevRearRotateJCCW,Joystick,elevator.cargo
+56,G_InputsD,(* J-3 *),CInDeadmanJoystick,Joystick,
+57,G_InputsD,(* LS-01 *),CInStabsUpSensor,Chassis1.8,chassis
+58,G_InputsD,(* LS-02 *),CInStabsDownSensor,Chassis1.9,chassis
+59,G_InputsD,(* LS-03 *),CInBridgeAtFrame,Chassis1.10,bridge
+60,G_InputsD,(* LS-05 *),CInElevatorAtFrame,Chassis1.11,elevator
+61,G_InputsD,(* LS-11*),CInElevatorAtBridgeLeft,Bridge1.5,elevator
+62,G_InputsD,(* LS-12*),CInElevatorAtBridgeRight,Bridge2.0,elevator
+63,G_InputsD,(* LS-13*),CInInterfaceStraddleLeft,Bridge1.7,elevator
+64,G_InputsD,(* LS-14*),CInInterfaceStraddleRight,Bridge2.3,elevator
+65,G_InputsD,(* LS-15*),CInElevatorNearBridgeLeft,Bridge1.3,elevator
+66,G_InputsD,(* LS-16*),CInElevatorNearBridgeRight,Bridge2.4,elevator
+67,G_InputsD,(* LS-17 *),CInWalkwayRetracted,Bridge2.2,alignment
+68,G_InputsD,(* LS-18 *),CInRearStopUpSensor,Elevator2.4,cargo.stop
+69,G_InputsD,,CInRightSideGuideDownSensor,Elevator2.1,cargo.stop
+70,G_InputsD,,CInLeftSideGuideDownSensor,Elevator2.2,cargo.stop
+71,G_InputsD,(* LS-40/41/42/43 *),CInSensitiveBumper1,Bridge1.6,bridge.safety
+72,G_InputsD,(* LS-44/45/46/47 *),CInSensitiveBumper2,Bridge1.2,bridge.safety
+73,G_InputsD,(* LS-49 *),CInLeftHandSensBump,Console1.1,bridge.safety
+74,G_InputsD,(* LS-50 *),CInRightHandSensBump,Console1.2,bridge.safety
+75,G_InputsD,(* LS-54 *),CInAlternateSlow,Elevator3.2-CH5A,
+76,G_InputsD,(* LS-55 *),CInAlternateStop,Elevator3.3-CH7A,
+77,G_InputsD,(* LS-56 *),CInTray145Up,Bridge1.0,bridge.alingment
+78,G_InputsD,(* LS-57/58 *),CInChassisRearHorn,I14,chassis.safety
+79,G_InputsD,(* LS-59 *),CInChargerDoor,I09,pump
+80,G_InputsD,(* LS-60 *),CInStraddlePositionSensor,Elevator3.1,elevator
+81,G_InputsD,(* LS-70/71  *),CInHandrailsRetracted,Console1.0,bridge.safety
+82,G_InputsD,(* LS-72/73  *),CInStraightWheels,Console1.4,traction
+83,G_InputsD,,CInElevatorNearFrame,Calculated,elevator
+84,G_InputsD,,CInElevatorBelow60In,Calculated,elevator
+85,G_InputsD,(* PS-05 *),CInBrakePedalPressed,sw.4,traction
+86,G_InputsD,,CInHydOilLowPressure,calculated,pump
+87,G_InputsD,(* SM1-51 *),CInRightSideGuideUp,,cargo.stop
+88,G_InputsD,(* SM1-51 *),CInRightSideGuideAuto,,cargo.stop
+89,G_InputsD,(* SM1-51 *),CInRightSideGuideDown,,cargo.stop
+90,G_InputsD,(* SM1-52 *),CInRearStopUp,Elevator2.4,cargo.stop
+91,G_InputsD,(* SM1-52 *),CInRearStopAuto,,cargo.stop
+92,G_InputsD,(* SM1-52 *),CInRearStopDown,,cargo.stop
+93,G_InputsD,(* SM1-53 *),CInLeftSideGuideUp,,cargo.stop
+94,G_InputsD,(* SM1-53 *),CInLeftSideGuideAuto,,cargo.stop
+95,G_InputsD,(* SM1-53 *),CInLeftSideGuideDown,,cargo.stop
+96,G_InputsD,,CInAutoLevelActive,,bridge.alignment
+97,G_InputsD,(* SM2-16 *),CInLowDemand,,pump
+98,G_InputsD,(* SM2-54 *),CInTrays125Up,,bridge.alignment
+99,G_InputsD,(* SM2-54 *),CInTrayS125Down,,bridge.alignment
+100,G_InputsD,(* SM2-55 *),CInTrays96Up,,bridge.alignment
+101,G_InputsD,(* SM2-55 *),CInTrays96Down,,bridge.alignment
+102,G_InputsD,(* SM2-56 *),CInStabDownSW,,bridge.alignment
+103,G_InputsD,(* SM2-56 *),CInStabUpSW,,bridge.alignment
+104,G_InputsD,(* SW-01 *),CInIgnKeyStart,I00,pump
+105,G_InputsD,(* SW-03 *),CInDayLights,I05,chassis.safety
+106,G_InputsD,(* SW-11 *),CInDriveFwd,,traction
+107,G_InputsD,(* SW-11 *),CInDriveRev,,traction
+108,G_InputsD,(* SW-17 *),CInChassisRearUp,,chassis.alignment
+109,G_InputsD,(* SW-17 *),CInChassisRearDown,,chassis.alignment
+110,G_InputsD,(* SW-22 *),CInBridgeSWUp,,bridge
+111,G_InputsD,(* SW-22 *),CInBridgeSWDown,,bridge
+112,G_InputsD,(* SW-23 *),CInDriverBridgeUp,,bridge
+113,G_InputsD,(* SW-23 *),CInDriverBridgeDown,,bridge
+114,G_InputsD,(* SW-23 *),CInBridgeRedundant,I08,bridge
+115,G_InputsD,(* SW-27 *),CInMainDeckActive,Console1.7,
+116,G_InputsD,(* SW-29 *),CInElevRearRotateSWCW,,elevator.cargo
+117,G_InputsD,(* SW-29 *),CInElevRearRotateSWCCW,,elevator.cargo
+118,G_InputsD,(* SW-31 *),CInOilRecirculationConsole,,pump
+119,G_InputsD,(* SW-40 *),CInAlternateSlowStop,,elevator.lift
+120,G_InputsD,(* SW-41 *),CInAllGuidesDownEnable,Chassis1.4,elevator.stop
+121,G_InputsD,(* SW-50 *),CInConsignment,Console1.5,chassis.safety
+122,G_InputsD,(* SW-67 *),CInManLiftActive,I13,elevator.lift
+123,G_InputsD,(* SW-67 *),CInManLiftRedundant,I15,elevator.lift
+124,G_InputsD,(* SW-68 *),CInManLiftUp,I11,elevator.lift
+125,G_InputsD,(* SW-68 *),CInManLiftDown,I12,elevator.lift
+126,G_InputsD,(* TS-3 *),CInHydOilHighTemp,I02,pump
+127,G_InputsD,(* US-1 *),CInAircraftDetectNear,,traction
+128,G_InputsD,(* US-1 *),CInAircraftDetectFar,,traction
+129,G_InputsD,(* PB-8 ASD push button *),CInASDButton,Console1.3,traction
+130,G_InputsD,(* PB-12 ASD + Button *),CInASDPlusButton,Console1.4,traction
+131,G_OutputsA,,CPWMBridgeEP1,,pump.bridge
+132,G_OutputsA,,CPWM_EP1Current,Bridge1.Out0,pump.bridge
+133,G_OutputsA,,CPWMLiftPumpEP2,PLC.out5,pump.elevator
+134,G_OutputsA,,CPWMMainPumpPressureEP3,PLC.out4,pump.elevator
+135,G_OutputsA,,CPWMLeftCylinderEP4,PLC.out14,pump.elevator
+136,G_OutputsA,,CPWMRightCylinderEP5,PLC.out15,pump.elevator
+137,G_OutputsA,,CPWMPilotPressureEp14,PLC.out6,pump.elevator
+138,G_OutputsA,,CPWMElevatorEP31,,pump.elevator
+139,G_OutputsA,,CPWM_EP31Current,Elevator.out3,pump.elevator
+140,G_OutputsA,,CPWMElevatorEP32,,pump.elevator
+141,G_OutputsA,,CPWM_EP32Current,Elevator1.out3,pump.elevator
+142,G_OutputsA,,CPWMElevatorDownEP61,PLC.out1,pump.elevator
+143,G_OutputsA,,CPWMBridgeDownEP63,PLC.out12,pump.bridge
+144,G_OutputsA,,CPWMBridgeUpEP64,PLC.out13,pump.bridge
+145,G_OutputsA,,CPWMRegenFlowEP65,PLC.out1,pump.elevator
+146,G_OutputsD,cr-01,COutEngineEnable,Variable,
+147,G_OutputsD,cr-03,COutPumpMotorEnable,chassis1.5,pump
+148,G_OutputsD,cr-04,COutTractionMotorEnable,chassis1.4,traction
+149,G_OutputsD,cr-05,COutRegenMotorEnable,chassis1.6,pump
+150,G_OutputsD,cr-10,COutAutomaticShutdown,Console1.6,
+151,G_OutputsD,H-1,COutWarningHorn,PLC.out8,chassis.safety
+152,G_OutputsD,L-06,COutASDBeacon,Console1.0,traction
+153,G_OutputsD,L-08/L-09,COutBridgeWorkLamp,Console1.5,Lamps
+154,G_OutputsD,L-11/L-12,COutHeadLight,Console1.7,Lamps
+155,G_OutputsD,L-16,COutLowBatBeacon,Console1.1,Battery
+156,G_OutputsD,L-17,COutStopLight,chassis1.10,Lamps
+157,G_OutputsD,L-20,COutReverseLight,chassis1.9,Lamps
+158,G_OutputsD,L-27,COutUnderElevBeacon,Elevator2.out7,Lamps
+159,G_OutputsD,L-29toL-34,COutElevMarkerLights,Elevator2.out3,Lamps
+160,G_OutputsD,L-36/L-37,COutRearWorkLamp,Console1.4,Lamps
+161,G_OutputsD,L-39,COutUnderBridgeBeacon,bridge2.out5,Lamps
+162,G_OutputsD,L-40,COutRearBarrier,Memory,bridge.safety
+163,G_OutputsD,PB-12,COutASDPlusLight,Console1.14,lamps
+164,G_OutputsD,sv-1,COutBridgeFwd,bridge1.out1,bridge.cargo
+165,G_OutputsD,sv-2,COutBridgeRev,bridge1.out5,bridge.cargo
+166,G_OutputsD,sv-3,COutBridgeMDWLeft,bridge1.out6,bridge.cargo
+167,G_OutputsD,sv-4,COutBridgeMDWRight,bridge1.out2,bridge.cargo
+168,G_OutputsD,sv-11,COutTray96Up,bridge2.out2,bridge.alignment
+169,G_OutputsD,sv-12,COutTray96Down,bridge2.out6,bridge.alignment
+170,G_OutputsD,sv-13,COutBridgeFTCDown,bridge1.out4,bridge.alignment
+171,G_OutputsD,sv-14,COutFrontStopDown,bridge2.out4,bridge.alignment
+172,G_OutputsD,sv-15,COutTray125Up,bridge2.out3,bridge.alignment
+173,G_OutputsD,sv-16,COutTray125Down,bridge2.out7,bridge.alignment
+174,G_OutputsD,sv-26,COutBridgeRightTrayInverter,bridge2.out1,bridge.alignment
+175,G_OutputsD,sv-27,COutTray145Inverter,bridge2.out0,bridge.alignment
+176,G_OutputsD,sv-31,COutElevFrontFTCFwd,elevator3.out6,elevator.cargo
+177,G_OutputsD,sv-32,COutElevFrontFTCRev,Elevator3.out2,elevator.cargo
+178,G_OutputsD,sv-34,COutElevFrontMDWLeft,Elevator2.out4--,elevator.cargo
+179,G_OutputsD,sv-35,COutElevFrontMDWRight,Elevator3.out0,elevator.cargo
+180,G_OutputsD,sv-37,COutElevSideRollersLeft,Elevator3.out1,elevator.cargo
+181,G_OutputsD,sv-38,COutElevSideRollersRight,elevator3.out5,elevator.cargo
+182,G_OutputsD,sv-40,COutElevRearFTCFwd,Elevator2.out6,elevator.cargo
+183,G_OutputsD,sv-41,COutElevRearFTCRev,Elevator2.out2,elevator.cargo
+184,G_OutputsD,sv-43,COutElevRearMDWLeft,Elevator2.out4,elevator.cargo
+185,G_OutputsD,sv-44,COutElevRearMDWRight,Elevator2.out0,elevator.cargo
+186,G_OutputsD,sv-45,COutElevRearRotate,Elevator1.out1,elevator.cargo
+187,G_OutputsD,sv-46,COutElevRightGuideDown,Elevator1.out4,elevator.cargo
+188,G_OutputsD,sv-47,COutElevLeftGuideDown,Elevator1.out1,elevator.cargo
+189,G_OutputsD,sv-48,COutElevRearStopDown,Elevator1.out5,elevator.cargo
+190,G_OutputsD,sv-50,COutElevRearFTCDown,Elevator1.out7,elevator.cargo
+191,G_OutputsD,sv-51,COutElevFrontFTCDown,elevator3.out7,elevator.cargo
+192,G_OutputsD,sv-53,COutElevSideRollersRHInverter,Elevator2.out1,elevator.cargo
+193,G_OutputsD,sv-57,COutLowGuidesPressure,unused,elevator.stop
+194,G_OutputsD,sv-60,COutLiftDownEnable,State,
+195,G_OutputsD,sv-61,COutStabsDown,chassis1.8,
+196,G_OutputsD,sv-62,COutStabsUp,chassis1.9,elevator.lift
+197,G_OutputsD,sv-63,COutBridgeDown,plc.out13,bridge.lift
+198,G_OutputsD,sv-64,COutBridgeUp,plc.out12,bridge.lift
+199,G_OutputsD,sv-66,COutLiftPumpPressureEnable,state,pump
+200,G_OutputsD,sv-67,COutLiftEnable,state,pump
+201,G_OutputsD,sv-69,COutRearHeightAdjustUp,chassis1.11,chassis.alignment
+202,G_OutputsD,sv-70,COutRearHeightAdjustDown,chassis1.10,chassis.alignment
+203,G_OutputsD,sv-71,COutBridgeDownFast,chassis1.0,bridge.lift
+204,G_OutputsD,sv-74,COutBridgeLiftEnable,plc.out3,bridge.lift
+205,G_OutputsD,sv-75,COutBridgeUpFast,chassis1.1,bridge.lift
+206,G_OutputsD,sv-76,COutElevatorUp,plc.out14,elevator.lift
+207,G_OutputsD,sv-77,COutElevatorDown,plc.out15,elevator.lift
+208,G_OutputsD,sv-78,COutBridgeDownPilot,state,bridge.lift
+209,G_OutputsD,sv-90,COutParkBrake,state,traction

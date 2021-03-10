@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://192.168.0.100/Status -->
+<html lang="en" coupert-item="9AF8D9A4E502F3784AD24272D81F0381"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="http://192.168.0.100/title.png"><title>bms</title><style>.bk {
+        height: 100%;
+        width: 100%;
+        background-color: black;
+        opacity: 0.8;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        z-index: 100;
+      }
+      #caseBlanche {
+        /* background-color: #c2c2c2; */
+        height: 140px;
+        width: 250px;
+
+        margin: 200px auto;
+      }
+
+      #caseBlanche #load {
+        color: #fff;
+        font-family: calibri;
+        text-align: center;
+      }
+      #test {
+        height: 10px;
+        width: 10px;
+
+        background-color: #fff;
+        border-radius: 50%;
+      }
+
+      #rond {
+        height: 200px;
+        width: 200px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        margin-left: 20px;
+        animation: rond 2s infinite;
+        -webkit-animation: rond 2s infinite;
+      }
+
+      @keyframes rond {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @-webkit-keyframes rond {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }</style><script>// /**
+      //  * [通过参数名获取url中的参数值]
+      //  * @param  {[string]} queryName [参数名]
+      //  * @return {[string]}           [参数值]
+      //  */
+      // function GetQueryValue1(queryName) {
+      //   var reg = new RegExp("(^|&)" + queryName + "=([^&]*)(&|$)", "i");
+      //   var r = window.location.search.substr(1).match(reg);
+      //   if (r != null) {
+      //     return decodeURI(r[2]);
+      //   } else {
+      //     return null;
+      //   }
+      // }
+      // if (!GetQueryValue1("username")) window.location.href = "login.html";
+
+      // 在页面未加载完毕之前显示的loading Html自定义内容
+
+      //获取浏览器页面可见高度和宽度
+      var _PageHeight = document.documentElement.clientHeight,
+        _PageWidth = document.documentElement.clientWidth;
+      //计算loading框距离顶部和左部的距离（loading框的宽度为215px，高度为61px）
+      var _LoadingTop = _PageHeight > 61 ? (_PageHeight - 61) / 2 : 0,
+        _LoadingLeft = _PageWidth > 215 ? (_PageWidth - 215) / 2 : 0;
+      //在页面未加载完毕之前显示的loading Html自定义内容
+      var _LoadingHtml =
+        '<div id="loadingDiv"><div class="bk"><div id="caseBlanche"><div id="rond"><div id="test"></div></div><div id="load"><p></p></div></div></div></div>';
+      //   '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' +
+      //   _PageHeight +
+      //   'px;top:0;background:#f3f8ff;opacity:1;filter:alpha(opacity=80);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' +
+      //   _LoadingLeft +
+      //   "px; top:" +
+      //   _LoadingTop +
+      //   "px; width: auto; height: 57px; line-height: 57px; padding-left: 50px; padding-right: 5px; background: #fff url(Image/loading.gif) no-repeat scroll 5px 10px; border: 2px solid #95B8E7; color: #696969; font-family:'Microsoft YaHei';\">页面加载中，请等待...</div></div>";
+      // //呈现loading效果
+      document.write(_LoadingHtml);
+
+      //window.onload = function () {
+      //    var loadingMask = document.getElementById('loadingDiv');
+      //    loadingMask.parentNode.removeChild(loadingMask);
+      //};
+
+      //监听加载状态改变
+      document.onreadystatechange = completeLoading;
+
+      //加载状态为complete时移除loading效果
+      function completeLoading() {
+        if (document.readyState == "complete") {
+          var loadingMask = document.getElementById("loadingDiv");
+          setTimeout(function() {
+            loadingMask.parentNode.removeChild(loadingMask);
+          }, 1000);
+        }
+      }</script><link rel="stylesheet" type="text/css" href="./IBSbms_web_files/Home_myComp.c25a1d9f.css"><script charset="utf-8" src="./IBSbms_web_files/Home_myComp.e62bc1f9.js.téléchargement"></script><link rel="stylesheet" type="text/css" href="./IBSbms_web_files/Home.e51e8234.css"><script charset="utf-8" src="./IBSbms_web_files/Home.e684402b.js.téléchargement"></script><link rel="stylesheet" type="text/css" href="./IBSbms_web_files/myComp.fbe3fb42.css"><script charset="utf-8" src="./IBSbms_web_files/myComp.3e0d7679.js.téléchargement"></script><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style><style>
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 400;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Regular.svg) format('svg');
+        }
+        @font-face{
+            font-family: 'Circular'; 
+            font-weight: 700;
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot);
+            src: url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.eot?#iefix) format('embedded-opentype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff2) format('woff2'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.woff) format('woff'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.ttf) format('truetype'),
+                url(chrome-extension://mfidniedemcgceagapgdekdbmanojomk/font/Circular-Pro-Black-Bold.svg) format('svg');
+        }
+    </style></head>
+<body>
+<link href="./IBSbms_web_files/Home.e51e8234.css" rel="prefetch">
+<link href="./IBSbms_web_files/Home_myComp.c25a1d9f.css" rel="prefetch">
+<link href="./IBSbms_web_files/myComp.fbe3fb42.css" rel="prefetch">
+<link href="./IBSbms_web_files/Home.e684402b.js.téléchargement" rel="prefetch">
+<link href="./IBSbms_web_files/Home_myComp.e62bc1f9.js.téléchargement" rel="prefetch">
+<link href="./IBSbms_web_files/myComp.3e0d7679.js.téléchargement" rel="prefetch">
+<link href="./IBSbms_web_files/app.62921ed0.css" rel="preload" as="style">
+<link href="./IBSbms_web_files/chunk-vendors.84bb20f7.css" rel="preload" as="style">
+<link href="./IBSbms_web_files/app.3accbc2d.js.téléchargement" rel="preload" as="script">
+<link href="./IBSbms_web_files/chunk-vendors.70af9117.js.téléchargement" rel="preload" as="script">
+<link href="./IBSbms_web_files/chunk-vendors.84bb20f7.css" rel="stylesheet">
+<link href="./IBSbms_web_files/app.62921ed0.css" rel="stylesheet">
+<div id="app" style="height: 926px;">
+<section data-v-f5c73176="" class="el-container">
+<aside data-v-f5c73176="" class="el-aside" style="width: 220px; height: 980px;">
+<div data-v-f5c73176="" class="logodiv">
+<div data-v-f5c73176="" class="top">
+<img data-v-f5c73176="" src="./IBSbms_web_files/logo.e43848e9.png" alt=""></div></div>
+<div data-v-f5c73176="" class="nemus">
+<ul data-v-f5c73176="" role="menubar" class="bg1 el-menu-vertical-demo el-menu" style="background-color: rgb(14, 50, 86);">
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item is-active" style="padding-left: 20px; color: rgb(255, 208, 75); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-s-platform"></i>
+<span data-v-f5c73176="" slot="title">Status Monitor</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 20px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-s-order"></i>
+<span data-v-f5c73176="" slot="title">Detail Monitor</span></div></li>
+<li data-v-f5c73176="" role="menuitem" aria-haspopup="true" class="bg2 el-submenu is-opened" aria-expanded="true">
+<div class="el-submenu__title" style="padding-left: 20px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-s-tools"></i>
+<span data-v-f5c73176="">Config</span></div>
+<i class="el-submenu__icon-arrow el-icon-arrow-down"></i></div>
+<ul role="menu" class="el-menu el-menu--inline" style="background-color: rgb(14, 50, 86);" data-old-padding-top="" data-old-padding-bottom="" data-old-overflow="">
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">basic</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">system</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">subpack</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">hardware</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">user</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">charge</span></div></li>
+<li data-v-f5c73176="" role="menuitem" aria-haspopup="true" class="bg3 el-submenu">
+<div class="el-submenu__title" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">control</span></div>
+<i class="el-submenu__icon-arrow el-icon-arrow-down"></i></div>
+<ul role="menu" class="el-menu el-menu--inline" style="background-color: rgb(14, 50, 86); display: none;">
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 60px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">overVoltage</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 60px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">underVoltage</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 60px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">temperature</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 60px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">voltageDiff</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 60px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">current</span></div></li></ul></li></ul></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 20px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-s-cooperation"></i>
+<span data-v-f5c73176="" slot="title">Data</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 20px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-s-check"></i>
+<span data-v-f5c73176="" slot="title">Operate</span></div></li>
+<li data-v-f5c73176="" role="menuitem" aria-haspopup="true" class="bg2 el-submenu">
+<div class="el-submenu__title" style="padding-left: 20px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-s-finance"></i>
+<span data-v-f5c73176="">HW SN/SW Ver</span></div>
+<i class="el-submenu__icon-arrow el-icon-arrow-down"></i></div>
+<ul role="menu" class="el-menu el-menu--inline" style="background-color: rgb(14, 50, 86); display: none;">
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">UniqueID</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">PCBA SN</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">Product SN</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">VIN</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">HW Version</span></div></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 40px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-finished"></i>
+<span data-v-f5c73176="">SW Version</span></div></li></ul></li>
+<li data-v-f5c73176="" role="menuitem" tabindex="-1" class="el-menu-item" style="padding-left: 20px; color: rgb(226, 235, 231); background-color: rgb(14, 50, 86);">
+<div data-v-f5c73176="" class="nenunamesc dvc">
+<i data-v-f5c73176="" class="el-icon-platform-eleme"></i>
+<span data-v-f5c73176="" slot="title">About</span></div></li></ul></div></aside>
+<section data-v-f5c73176="" class="el-container is-vertical">
+<header data-v-f5c73176="" class="el-header" style="height: 40px;">
+<button data-v-f5c73176="" type="button" class="el-button colspanq el-button--default el-button--mini">
+<!---->
+<i class="el-icon-s-fold"></i>
+<!----></button>
+<button data-v-f5c73176="" type="button" class="el-button colspanq el-button--default el-button--mini" style="display: none;">
+<!---->
+<i class="el-icon-s-unfold"></i>
+<!----></button>
+<span data-v-f5c73176="" class="systemName"> BMS Configure System</span>
+<div data-v-f5c73176="" class="lang">
+<div data-v-f5c73176="" class="el-dropdown">
+<div data-v-f5c73176="" class="fydiv el-dropdown-selfdefine" aria-haspopup="list" aria-controls="dropdown-menu-221" role="button" tabindex="0">
+<img data-v-f5c73176="" src="./IBSbms_web_files/fy.db64d740.png" alt=""></div>
+<ul data-v-f5c73176="" class="el-dropdown-menu el-popper" id="dropdown-menu-221" style="display: none;">
+<li data-v-f5c73176="" tabindex="-1" class="el-dropdown-menu__item">
+<!---->中文</li>
+<li data-v-f5c73176="" aria-disabled="true" class="el-dropdown-menu__item is-disabled">
+<!---->English</li></ul></div></div></header>
+<main data-v-f5c73176="" class="el-main">
+<div data-v-ae76986e="" data-v-f5c73176="" class="cont" style="height: 920px;">
+<div data-v-ae76986e="" class="carda">
+<div data-v-ae76986e="" class="ct">
+<div data-v-ae76986e="" class="el-card card1 is-always-shadow">
+<!---->
+<div class="el-card__body">
+<div data-v-813319ac="" data-v-ae76986e="" class="box echar">
+<div data-v-813319ac="" class="container">
+<div data-v-813319ac="" class="header"></div>
+<div data-v-813319ac="" class="contents"> SoC <br data-v-813319ac=""> 67% </div>
+<div data-v-813319ac="" class="battery" style="background: red; display: none;"></div>
+<div data-v-813319ac="" class="battery" style="background: rgb(230, 162, 60); display: none;"></div>
+<div data-v-813319ac="" class="battery" style="background: green;"></div>
+<div data-v-813319ac="" class="battery-copy">
+<div data-v-813319ac="" class="g-wave" style="bottom: 67%;"></div>
+<div data-v-813319ac="" class="g-wave" style="bottom: 67%;"></div>
+<div data-v-813319ac="" class="g-wave" style="bottom: 67%;"></div></div></div></div></div></div>
+<div data-v-07f5208e="" data-v-ae76986e="" class="card vards cardTitle">
+<div data-v-07f5208e="" class="title" style="height: 40%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="cardsd">SoH</div></div>
+<div data-v-07f5208e="" class="contents" style="height: 60%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="cardst">1</div></div></div></div>
+<div data-v-ae76986e="" class="card2">
+<div data-v-ae76986e="" class="card21">
+<div data-v-07f5208e="" data-v-ae76986e="" class="card cadest">
+<div data-v-07f5208e="" class="title" style="height: 42%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="cardsd">Total_V</div></div>
+<div data-v-07f5208e="" class="contents" style="height: 58%;">
+<div data-v-ae76986e="" data-v-07f5208e="">83.1</div></div></div>
+<div data-v-07f5208e="" data-v-ae76986e="" class="card cadest">
+<div data-v-07f5208e="" class="title" style="height: 40%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="cardsd">Total_I</div></div>
+<div data-v-07f5208e="" class="contents" style="height: 60%;">
+<div data-v-ae76986e="" data-v-07f5208e="">135.9</div></div></div></div>
+<div data-v-ae76986e="" class="card22 card22-101">
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">name</div>
+<div data-v-ae76986e="" class="dsc">value</div>
+<div data-v-ae76986e="" class="dsc">s</div>
+<div data-v-ae76986e="" class="dsc">m</div>
+<div data-v-ae76986e="" class="dsc">c</div></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">CV_max</div>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">3.333</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">1</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">3</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">4</span></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">CV_min</div>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">3.323</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">2</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">1</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">12</span></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">CT_max</div>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">18.8</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">2</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">2</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">4</span></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">CT_min</div>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">17.3</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">1</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">1</span>
+<span data-v-ae76986e="" class="dsc el-tag el-tag--light">1</span></div></div>
+<div data-v-ae76986e="" class="card23">
+<div data-v-07f5208e="" data-v-ae76986e="" class="card cadest">
+<div data-v-07f5208e="" class="title" style="height: 1%;"></div>
+<div data-v-07f5208e="" class="contents" style="height: 99%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="card231">
+<div data-v-ae76986e="" data-v-07f5208e="" class="card231-1 a">
+<img data-v-ae76986e="" data-v-07f5208e="" src="data:image/png;base64,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" alt="" class="opacitysq"></div>
+<div data-v-ae76986e="" data-v-07f5208e="" class="card231-1 b">
+<img data-v-ae76986e="" data-v-07f5208e="" src="data:image/png;base64,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" alt="" class="">
+</div>
+<div data-v-ae76986e="" data-v-07f5208e="" class="card231-1 c">
+    <img data-v-ae76986e="" data-v-07f5208e="" src="./IBSbms_web_files/bl.6e235383.png" alt="" class="">
+    </div>
+<div data-v-ae76986e="" data-v-07f5208e="" class="card231-1 d">
+<img data-v-ae76986e="" data-v-07f5208e="" src="./IBSbms_web_files/cl.63def4c0.png" alt="" class="opacitysq"></div>
+<div data-v-ae76986e="" data-v-07f5208e="" class="card231-1 e">
+<img data-v-ae76986e="" data-v-07f5208e="" src="./IBSbms_web_files/cd.8732b336.png" alt="" class=""></div></div></div></div>
+<div data-v-07f5208e="" data-v-ae76986e="" class="card cadest">
+<div data-v-07f5208e="" class="title" style="height: 40%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="cardsd">WorkHour</div></div>
+<div data-v-07f5208e="" class="contents" style="height: 60%;">
+<div data-v-ae76986e="" data-v-07f5208e="">18.8</div></div></div></div></div>
+<div data-v-ae76986e="" class="ct">
+<div data-v-ae76986e="" class="el-card card00 is-always-shadow">
+<!---->
+<div class="el-card__body">
+<div data-v-ae76986e="" class="ti">2021-02-02 09:31:37</div>
+<div data-v-ae76986e="" class="mesdiv"></div></div></div>
+<div data-v-07f5208e="" data-v-ae76986e="" class="card vards vsq">
+<div data-v-07f5208e="" class="title" style="height: 50%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="t">
+<div data-v-ae76986e="" data-v-07f5208e="" class="t1">
+<div data-v-ae76986e="" data-v-07f5208e="" class="t2">OUT</div></div>
+<span data-v-ae76986e="" class="t11 el-tag el-tag--danger el-tag--light" data-v-07f5208e="" style="">open</span>
+<span data-v-ae76986e="" class="t11 el-tag el-tag--success el-tag--light" data-v-07f5208e="" style="display: none;">close</span></div></div>
+<div data-v-07f5208e="" class="contents" style="height: 50%;">
+<div data-v-ae76986e="" data-v-07f5208e="" class="t">
+<div data-v-ae76986e="" data-v-07f5208e="" class="t1">
+<div data-v-ae76986e="" data-v-07f5208e="" class="t2">IN</div></div>
+<span data-v-ae76986e="" class="t11 el-tag el-tag--danger el-tag--light" data-v-07f5208e="" style="display: none;">open</span>
+<span data-v-ae76986e="" class="t11 el-tag el-tag--success el-tag--light" data-v-07f5208e="" style="">close</span></div></div></div></div></div>
+<div data-v-ae76986e="" class="card22 fd">
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">
+<span data-v-ae76986e="" class="t11 el-tag el-tag--info el-tag--mini el-tag--light">name</span></div>
+<div data-v-ae76986e="" class="dsc">
+<span data-v-ae76986e="" class="t11 el-tag el-tag--info el-tag--mini el-tag--light">status</span></div>
+<div data-v-ae76986e="" class="dsc">
+<span data-v-ae76986e="" class="t11 el-tag el-tag--info el-tag--mini el-tag--light">relay</span></div>
+<div data-v-ae76986e="" class="dsc">
+<span data-v-ae76986e="" class="t11 el-tag el-tag--info el-tag--mini el-tag--light">UV</span></div>
+<div data-v-ae76986e="" class="dsc">
+<span data-v-ae76986e="" class="t11 el-tag el-tag--info el-tag--mini el-tag--light">smoke</span></div>
+<div data-v-ae76986e="" class="dsc">
+<span data-v-ae76986e="" class="t11 el-tag el-tag--info el-tag--mini el-tag--light">Voltage</span></div></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">SubPack1</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">close</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">832</div></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">SubPack2</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">close</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">831</div></div>
+<div data-v-ae76986e="" class="ds">
+<div data-v-ae76986e="" class="dsc">SubPack3</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">close</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">Normal</div>
+<div data-v-ae76986e="" class="dsc">832</div></div></div></div></main></section></section></div>
+<script src="./IBSbms_web_files/chunk-vendors.70af9117.js.téléchargement"></script>
+<script src="./IBSbms_web_files/app.3accbc2d.js.téléchargement"></script>
+<!----></body>
+<div id="eabc4247-b527-47be-b855-687b672f3d39" style="all: initial;"></div>
+<div id="42b28ad8-9b63-44f2-922c-144be27cd925" style="all: initial;"></div>
+<div id="a1a2405f-afb2-45c0-b454-43e6989b775b" style="all: initial;"></div>
+<div id="9edb5e04-c37c-488c-ac65-3df516063b5c" style="all: initial;"></div>
+<div id="718a7d2a-8e31-4193-b006-412b5512ea7d" style="all: initial;"></div>
+<div id="fdf31dae-5d3e-4be1-b0df-cddb13462bd0" style="all: initial;"></div>
+<div id="2f263aae-681d-4759-93df-24ab487bc358" style="all: initial;"></div>
+<div id="6a7d2b0d-bac9-4e0d-9237-ae3941d2fc95" style="all: initial;"></div>
+<div id="6e2f7b4d-be03-420b-8df3-337062bd8c75" style="all: initial;"></div>
+<div id="250367ea-21ab-49dc-8b08-deecd5185672" style="all: initial;"></div>
+<div id="02927766-3554-4dab-b103-c342bd24fee1" style="all: initial;"></div></html>

@@ -1,0 +1,1401 @@
+ACTION	F3_Configuration:
+IF NOT B_ConfigurationSpecific THEN
+
+	LEDOK := TRUE;
+	LEDESC := TRUE;
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := TRUE;
+	B_InvisibleValue4 := TRUE;
+
+	ScanIndexPointer2 := 0;
+	FOR Index := 0 TO 70 DO
+		IF ConfigEnable[Index] THEN
+			ScanIndex[ScanIndexPointer2] := Index;
+			ScanIndexPointer2 := ScanIndexPointer2 + 1;
+		END_IF
+	END_FOR
+	ScanIndexMax := ScanIndexPointer2 - 1;
+
+	IF KEY_LEFT THEN
+		IF ScanIndexPointer > MaxLines - 1 THEN
+			ScanIndexPointer := ScanIndexPointer - MaxLines;
+		ELSE
+			ScanIndexPointer := 0;
+		END_IF
+	END_IF
+
+	IF KEY_RIGHT THEN
+		IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+			ScanIndexPointer := ScanIndexPointer + MaxLines;
+		ELSE
+			ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+		END_IF
+	END_IF
+
+	IF KEY_UP THEN
+		IF SelectedLine = 0 THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		ELSE
+			SelectedLine := SelectedLine - 1;
+		END_IF
+	END_IF
+
+	IF KEY_DOWN THEN
+		IF SelectedLine = MaxLines -1 THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		ELSE
+			SelectedLine := SelectedLine + 1;
+		END_IF
+	END_IF
+
+	ConfigSelectedLine := ScanIndex[ScanIndexPointer + SelectedLine];
+
+	IF KEY_OK THEN
+		B_ConfigurationSpecific := TRUE;
+		W_ElapsedTime := 0;
+	END_IF
+
+	IF KEY_ESC THEN
+		page_extern := 2; (*MAIN PAGE*)
+		ConfigSelectedLine := 0;
+		ScanIndexPointer := 0;
+		SelectedLine := 0;
+		B_SetSerialNumber := FALSE;
+	END_IF
+
+	TextL1 := ConfigTextList[ScanIndex[ScanIndexPointer]];
+	TextL2 := ConfigTextList[ScanIndex[ScanIndexPointer+1]];
+	TextL3 := ConfigTextList[ScanIndex[ScanIndexPointer+2]];
+	TextL4 := ConfigTextList[ScanIndex[ScanIndexPointer+3]];
+
+	IF SelectedLine = 0 THEN
+		FrameColorL1 := TRUE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 1 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := TRUE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 2 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := TRUE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 3 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := TRUE;
+	ELSE
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	END_IF
+
+ELSIF B_ConfigurationSpecific THEN
+
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+	LEDOK := FALSE;
+	LEDESC := TRUE;
+
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := TRUE;
+	B_InvisibleValue4 := TRUE;
+
+	FrameColorL1 := FALSE;
+	FrameColorL2 := FALSE;
+	FrameColorL3 := FALSE;
+	FrameColorL4 := FALSE;
+
+	TextL1 := ConfigTextList[ConfigSelectedLine];
+
+	IF KEY_ESC THEN
+		B_ConfigurationSpecific := FALSE;
+		W_ElapsedTime := 0;
+		B_SetSerialNumber := FALSE;
+		G_SideRollerBypassLeft := FALSE;
+		G_SideRollerBypassRight := FALSE;
+		B_HoldKeyUp := FALSE;
+		B_HoldKeyDown := FALSE;
+	END_IF
+
+	CASE ConfigSelectedLine OF
+
+		0:
+			LEDOK := TRUE;
+
+			TextL2 := TL_UnitSerialNumber;
+
+			Val1 := DWORD_TO_WORD(DW_SerialNumber);
+			Val2 := DWORD_TO_WORD(SHR(DW_SerialNumber, 16));
+
+			IF NOT B_SetSerialNumber THEN
+				TextL3 := TL_PressOkToSet;
+			ELSE
+				TextL3 := TL_Confirmed;
+			END_IF
+
+			IF KEY_LEFT THEN
+				IF BY_DigitSelected > 1 THEN
+					BY_DigitSelected := BY_DigitSelected - 1;
+				END_IF
+			END_IF
+
+			IF KEY_RIGHT THEN
+				IF BY_DigitSelected < 6 THEN
+					BY_DigitSelected := BY_DigitSelected + 1;
+				END_IF
+			END_IF
+
+			IF KEY_UP OR KEY_DOWN THEN
+				B_SetSerialNumber := FALSE;
+			END_IF
+
+			IF KEY_OK THEN
+				B_SetSerialNumber := TRUE;
+			END_IF
+
+			CASE BY_DigitSelected OF
+				1 : TextL4 := TL_SN100000;
+					IF KEY_UP THEN
+						IF DW_SerialNumber < 900000 THEN
+							DW_SerialNumber := DW_SerialNumber + 100000;
+						END_IF
+					END_IF
+
+					IF KEY_DOWN THEN
+						IF DW_SerialNumber > 100000 THEN
+							DW_SerialNumber := DW_SerialNumber - 100000;
+						END_IF
+					END_IF
+
+				2 :	TextL4 := TL_SN10000;
+					IF KEY_UP THEN
+						IF DW_SerialNumber < 990000 THEN
+							DW_SerialNumber := DW_SerialNumber + 10000;
+						END_IF
+					END_IF
+
+					IF KEY_DOWN THEN
+						IF DW_SerialNumber > 10000 THEN
+							DW_SerialNumber := DW_SerialNumber - 10000;
+						END_IF
+					END_IF
+
+				3 : TextL4 := TL_SN1000;
+					IF KEY_UP THEN
+						IF DW_SerialNumber < 999000 THEN
+							DW_SerialNumber := DW_SerialNumber + 1000;
+						END_IF
+					END_IF
+
+					IF KEY_DOWN THEN
+						IF DW_SerialNumber > 1000 THEN
+							DW_SerialNumber := DW_SerialNumber - 1000;
+						END_IF
+					END_IF
+
+				4 : TextL4 := TL_SN100;
+					IF KEY_UP THEN
+						IF DW_SerialNumber < 999900 THEN
+							DW_SerialNumber := DW_SerialNumber + 100;
+						END_IF
+					END_IF
+
+					IF KEY_DOWN THEN
+						IF DW_SerialNumber > 100 THEN
+							DW_SerialNumber := DW_SerialNumber - 100;
+						END_IF
+					END_IF
+
+				5 :  TextL4 := TL_SN10;
+					IF KEY_UP THEN
+						IF DW_SerialNumber < 999990 THEN
+							DW_SerialNumber := DW_SerialNumber + 10;
+						END_IF
+					END_IF
+
+					IF KEY_DOWN THEN
+						IF DW_SerialNumber > 10 THEN
+							DW_SerialNumber := DW_SerialNumber - 10;
+						END_IF
+					END_IF
+
+				 6: TextL4 := TL_SN1;
+					IF KEY_UP THEN
+						IF DW_SerialNumber < 999999 THEN
+							DW_SerialNumber := DW_SerialNumber + 1;
+						END_IF
+					END_IF
+
+					IF KEY_DOWN THEN
+						IF DW_SerialNumber > 1 THEN
+							DW_SerialNumber := DW_SerialNumber - 1;
+						END_IF
+					END_IF
+			END_CASE
+
+	1:
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+		TextL2 := TL_Speed01000;
+		 Val2 := G_BridgeUpMaxSpeed;
+		TextL3 := TL_TimeMS;
+		 Val3 := W_ElapsedTime;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_LEFT THEN
+			IF G_BridgeUpMaxSpeed > 0 THEN
+				G_BridgeUpMaxSpeed := G_BridgeUpMaxSpeed - 10;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_BridgeUpMaxSpeed < 1000 THEN
+				G_BridgeUpMaxSpeed := G_BridgeUpMaxSpeed + 10;
+			END_IF
+		END_IF
+
+		IF G_OutputsD[COutBridgeLiftEnable].B_Value THEN
+			W_ElapsedTime := TIME_TO_WORD(TIME() - T_StartTIme);
+		ELSE
+			T_StartTime := TIME();
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpBridgeUpFastCmd := TRUE;
+			OpBridgeUpCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpBridgeDownFastCmd := TRUE;
+			OpBridgeDownCmd := TRUE;
+		END_IF
+
+	2:
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+		TextL2 := TL_Speed01000;
+		 Val2 := G_BridgeDownMaxSpeed;
+		TextL3 := TL_TimeMS;
+		 Val3 := W_ElapsedTime;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_LEFT THEN
+			IF G_BridgeDownMaxSpeed > 0 THEN
+				G_BridgeDownMaxSpeed := G_BridgeDownMaxSpeed - 10;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_BridgeDownMaxSpeed < 1000 THEN
+				G_BridgeDownMaxSpeed := G_BridgeDownMaxSpeed + 10;
+			END_IF
+		END_IF
+
+		IF G_OutputsD[COutBridgeLiftEnable].B_Value THEN
+			W_ElapsedTime := TIME_TO_WORD(TIME() - T_StartTIme);
+		ELSE
+			T_StartTime := TIME();
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpBridgeUpFastCmd := TRUE;
+			OpBridgeUpCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpBridgeDownFastCmd := TRUE;
+			OpBridgeDownCmd := TRUE;
+		END_IF
+
+	3:
+		IF B_OPT_838 THEN
+			LEDLEFT := FALSE;
+			LEDRIGHT := FALSE;
+			B_InvisibleValue3 := FALSE;
+			TextL2 := TL_ManualAdjustment;
+			TextL3 := TL_TimeMS;
+			Val3 := W_ElapsedTime;
+			TextL4 := TL_Move;
+		ELSE (*929*)
+			B_InvisibleValue2 := FALSE;
+			TextL2 := TL_Speed0400;
+			Val2 := G_BridgeUpSlowSpeed;
+			TextL3 := TL_Blank;
+			TextL4 := TL_AdjustMove;
+		END_IF
+
+		IF B_OPT_929 THEN
+			IF KEY_LEFT THEN
+				IF G_BridgeUpSlowSpeed > 0 THEN
+					G_BridgeUpSlowSpeed := G_BridgeUpSlowSpeed - 10;
+				END_IF
+			END_IF
+
+			IF KEY_RIGHT THEN
+				IF G_BridgeUpSlowSpeed < 400 THEN
+					G_BridgeUpSlowSpeed := G_BridgeUpSlowSpeed + 10;
+				END_IF
+			END_IF
+		ELSE
+			IF G_OutputsD[COutBridgeUp].B_Value OR G_OutputsD[COutBridgeDown].B_Value THEN
+				W_ElapsedTime := TIME_TO_WORD(TIME() - T_StartTIme);
+			ELSE
+				T_StartTime := TIME();
+			END_IF
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpBridgeUpCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpBridgeDownCmd := TRUE;
+		END_IF
+
+	4:
+		IF B_OPT_838 THEN
+			LEDLEFT := FALSE;
+			LEDRIGHT := FALSE;
+			B_InvisibleValue3 := FALSE;
+			TextL2 := TL_ManualAdjustment;
+			TextL3 := TL_TimeMS;
+			Val3 := W_ElapsedTime;
+			TextL4 := TL_Move;
+		ELSE (*929*)
+			B_InvisibleValue2 := FALSE;
+			TextL2 := TL_Speed0400;
+			Val2 := G_BridgeDownSlowSpeed;
+			TextL3 := TL_TestBridgeLandingToTheFrame;
+			TextL4 := TL_AdjustMove;
+		END_IF
+
+		IF B_OPT_929 THEN
+			IF KEY_LEFT THEN
+				IF G_BridgeDownSlowSpeed > 0 THEN
+					G_BridgeDownSlowSpeed := G_BridgeDownSlowSpeed - 10;
+				END_IF
+			END_IF
+
+			IF KEY_RIGHT THEN
+				IF G_BridgeDownSlowSpeed < 400 THEN
+					G_BridgeDownSlowSpeed := G_BridgeDownSlowSpeed + 10;
+				END_IF
+			END_IF
+
+			IF KEY_UP_IN THEN
+				OpBridgeUpCmd := TRUE;
+			END_IF
+
+			IF KEY_DOWN_IN THEN
+				OpBridgeDownCmd := TRUE;
+			END_IF
+		ELSE
+			IF G_OutputsD[COutBridgeUpFast].B_Value OR G_OutputsD[COutBridgeDownFast].B_Value THEN
+				W_ElapsedTime := TIME_TO_WORD(TIME() - T_StartTIme);
+			ELSE
+				T_StartTime := TIME();
+			END_IF
+
+			IF KEY_UP_IN THEN
+				OpBridgeUpFastCmd := TRUE;
+				OpBridgeUpCmd := TRUE;
+			END_IF
+
+			IF KEY_DOWN_IN THEN
+				OpBridgeDownFastCmd := TRUE;
+				OpBridgeDownCmd := TRUE;
+			END_IF
+		END_IF
+
+	5:
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ElevatorUpMaxSpeed;
+		TextL3 := TL_TimeMS;
+		 Val3 := W_ElapsedTime;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_LEFT THEN
+			IF G_ElevatorUpMaxSpeed > 0 THEN
+				G_ElevatorUpMaxSpeed := G_ElevatorUpMaxSpeed - 10;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ElevatorUpMaxSpeed < 1000 THEN
+				G_ElevatorUpMaxSpeed := G_ElevatorUpMaxSpeed + 10;
+			END_IF
+		END_IF
+
+		IF G_OutputsD[COutLiftEnable].B_Value THEN
+			W_ElapsedTime := TIME_TO_WORD(TIME() - T_StartTIme);
+		ELSE
+			T_StartTime := TIME();
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpElevUpFastCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpElevDownFastCmd := TRUE;
+		END_IF
+
+	6:
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ElevatorDownMaxSpeed;
+		TextL3 := TL_TimeMS;
+		 Val3 := W_ElapsedTime;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_LEFT THEN
+			IF G_ElevatorDownMaxSpeed > 0 THEN
+				G_ElevatorDownMaxSpeed := G_ElevatorDownMaxSpeed - 10;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ElevatorDownMaxSpeed < 1000 THEN
+				G_ElevatorDownMaxSpeed := G_ElevatorDownMaxSpeed + 10;
+			END_IF
+		END_IF
+
+		IF G_OutputsD[COutLiftEnable].B_Value THEN
+			W_ElapsedTime := TIME_TO_WORD(TIME() - T_StartTIme) / 100;
+		ELSE
+			T_StartTime := TIME();
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpElevUpFastCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpElevDownFastCmd := TRUE;
+		END_IF
+
+	7:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed501000;
+		Val2 := G_ElevatorUpSlowSpeed;
+		TextL3 := TL_TestElevatorToBridgeInterface;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_LEFT THEN
+			IF G_ElevatorUpSlowSpeed > 50 THEN
+				G_ElevatorUpSlowSpeed := G_ElevatorUpSlowSpeed - 10;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ElevatorUpSlowSpeed < 1000 THEN
+				G_ElevatorUpSlowSpeed := G_ElevatorUpSlowSpeed + 10;
+			END_IF
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpElevUpFastCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpElevDownFastCmd := TRUE;
+		END_IF
+
+	8:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed0400;
+		Val2 := G_ElevatorDownSlowSpeed;
+		TextL3 := TL_TestElevatorLandingToTheFrame;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_LEFT THEN
+			IF G_ElevatorDownSlowSpeed > 0 THEN
+				G_ElevatorDownSlowSpeed := G_ElevatorDownSlowSpeed - 10;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ElevatorDownSlowSpeed < 400 THEN
+				G_ElevatorDownSlowSpeed := G_ElevatorDownSlowSpeed + 10;
+			END_IF
+		END_IF
+
+		IF KEY_UP_IN THEN
+			OpElevUpFastCmd := TRUE;
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			OpElevDownFastCmd := TRUE;
+		END_IF
+
+	9:
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+
+		TextL2 := TL_Blank;
+		TextL3 := TL_HoldKeyToActivatePumpRotation;
+		TextL4 := TL_Blank;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			G_ChargePressureSet := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			G_ChargePressureSet := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+	11:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ConveySpeedBridge;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpBridgeFwdCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpBridgeRevCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ConveySpeedBridge < 1000 THEN
+				G_ConveySpeedBridge := G_ConveySpeedBridge + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ConveySpeedBridge > 0 THEN
+				G_ConveySpeedBridge := G_ConveySpeedBridge - 10;
+			END_IF
+		END_IF
+
+
+	12:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ConveySpeedFrontElevator;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpElevFrontFwdCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpElevFrontRevCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ConveySpeedFrontElevator < 1000 THEN
+				G_ConveySpeedFrontElevator := G_ConveySpeedFrontElevator + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ConveySpeedFrontElevator > 0 THEN
+				G_ConveySpeedFrontElevator := G_ConveySpeedFrontElevator - 10;
+			END_IF
+		END_IF
+
+	13:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ConveySpeedRearElevator;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpElevRearFwdCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpElevRearRevCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ConveySpeedRearElevator < 1000 THEN
+				G_ConveySpeedRearElevator := G_ConveySpeedRearElevator + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ConveySpeedRearElevator > 0 THEN
+				G_ConveySpeedRearElevator := G_ConveySpeedRearElevator - 10;
+			END_IF
+		END_IF
+
+	14:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ConveySpeedBridgeSideShift;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpBridgeRightCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpBridgeLeftCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ConveySpeedBridgeSideShift < 1000 THEN
+				G_ConveySpeedBridgeSideShift := G_ConveySpeedBridgeSideShift + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ConveySpeedBridgeSideShift > 0 THEN
+				G_ConveySpeedBridgeSideShift := G_ConveySpeedBridgeSideShift - 10;
+			END_IF
+		END_IF
+
+	15:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ConveySpeedElevatorFrontSideShift;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpElevFrontRightCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpElevFrontLeftCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ConveySpeedElevatorFrontSideShift < 1000 THEN
+				G_ConveySpeedElevatorFrontSideShift := G_ConveySpeedElevatorFrontSideShift + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ConveySpeedElevatorFrontSideShift > 0 THEN
+				G_ConveySpeedElevatorFrontSideShift := G_ConveySpeedElevatorFrontSideShift - 10;
+			END_IF
+		END_IF
+
+	16:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ConveySpeedElevatorRearSideShift;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpElevRearRightCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpElevRearLeftCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ConveySpeedElevatorRearSideShift < 1000 THEN
+				G_ConveySpeedElevatorRearSideShift := G_ConveySpeedElevatorRearSideShift + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ConveySpeedElevatorRearSideShift > 0 THEN
+				G_ConveySpeedElevatorRearSideShift := G_ConveySpeedElevatorRearSideShift - 10;
+			END_IF
+		END_IF
+
+	17:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ElevatorCenterRotateSpeed;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpElevCenterRotateCWCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpElevCenterRotateCCWCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ElevatorCenterRotateSpeed < 1000 THEN
+				G_ElevatorCenterRotateSpeed := G_ElevatorCenterRotateSpeed + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ElevatorCenterRotateSpeed > 0 THEN
+				G_ElevatorCenterRotateSpeed := G_ElevatorCenterRotateSpeed - 10;
+			END_IF
+		END_IF
+
+	18:
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_Speed01000;
+		 Val2 := G_ElevatorRearRotateSpeed;
+		TextL3 := TL_Blank;
+		TextL4 := TL_AdjustMove;
+
+		IF KEY_UP_IN OR B_HoldKeyUp THEN
+			OpElevRearRotateCWCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyUp := TRUE;
+			END_IF
+			B_HoldKeyDown := FALSE;
+		END_IF
+
+		IF KEY_DOWN_IN OR B_HoldKeyDown THEN
+			OpElevRearRotateCCWCmd := TRUE;
+			IF F6 THEN
+				B_HoldKeyDown := TRUE;
+			END_IF
+			B_HoldKeyUp := FALSE;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF G_ElevatorRearRotateSpeed < 1000 THEN
+				G_ElevatorRearRotateSpeed := G_ElevatorRearRotateSpeed + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ElevatorRearRotateSpeed > 0 THEN
+				G_ElevatorRearRotateSpeed := G_ElevatorRearRotateSpeed - 10;
+			END_IF
+		END_IF
+
+	19:
+		B_InvisibleValue2 := FALSE;
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+
+		TextL2 := TL_Pressure5002500;
+		Val2 := G_MinTransferPressure;
+		TextL3 := TL_Blank;
+		TextL4 := TL_Adjust;
+
+		IF KEY_RIGHT THEN
+			IF G_MinTransferPressure < 2500 THEN
+				G_MinTransferPressure := G_MinTransferPressure + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_MinTransferPressure > 500 THEN
+				G_MinTransferPressure := G_MinTransferPressure - 10;
+			END_IF
+		END_IF
+
+	23:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+
+		IF T1s THEN
+			R_DriveSpeed5 := R_DriveSpeed4;
+			R_DriveSpeed4 := R_DriveSpeed3;
+			R_DriveSpeed3 := R_DriveSpeed2;
+			R_DriveSpeed2 := R_DriveSpeed1;
+			R_DriveSpeed1 := INT_TO_REAL(G_InputsA[CInDriveSpeed].I_Value);
+			R_DriveSpeed := REAL_TO_WORD((R_DriveSpeed1 + R_DriveSpeed2 + R_DriveSpeed3 + R_DriveSpeed4 + R_DriveSpeed5) / 5.0);
+		END_IF
+
+		TextL2 := TL_SpeedLess5000;
+		 Val2 := G_CreepSpeed;
+		TextL3 := TL_ActualSpeed;
+		 Val3 := R_DriveSpeed;
+		TextL4 := TL_PressESCToGoBack;
+
+		IF KEY_RIGHT THEN
+			IF G_CreepSpeed < 5000 THEN
+				G_CreepSpeed := G_CreepSpeed + 100;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_CreepSpeed > 100 THEN
+				G_CreepSpeed := G_CreepSpeed - 100;
+			END_IF
+		END_IF
+
+	24:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+
+		IF T1s THEN
+			R_DriveSpeed5 := R_DriveSpeed4;
+			R_DriveSpeed4 := R_DriveSpeed3;
+			R_DriveSpeed3 := R_DriveSpeed2;
+			R_DriveSpeed2 := R_DriveSpeed1;
+			R_DriveSpeed1 := INT_TO_REAL(G_InputsA[CInDriveSpeed].I_Value);
+			R_DriveSpeed := REAL_TO_WORD((R_DriveSpeed1 + R_DriveSpeed2 + R_DriveSpeed3 + R_DriveSpeed4 + R_DriveSpeed5) / 5.0);
+		END_IF
+
+		TextL2 := TL_SpeedLess7000;
+		 Val2 := G_ASDSpeed;
+		TextL3 := TL_ActualSpeed;
+		 Val3 := R_DriveSpeed;
+		TextL4 := TL_PressESCToGoBack;
+
+		IF KEY_RIGHT THEN
+			IF G_ASDSpeed < 7000 THEN
+				G_ASDSpeed := G_ASDSpeed + 100;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_ASDSpeed > 0 THEN
+				G_ASDSpeed := G_ASDSpeed - 100;
+			END_IF
+		END_IF
+
+		G_Force5kmh := TRUE;
+
+	26:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+
+		IF T1s THEN
+			R_DriveSpeed5 := R_DriveSpeed4;
+			R_DriveSpeed4 := R_DriveSpeed3;
+			R_DriveSpeed3 := R_DriveSpeed2;
+			R_DriveSpeed2 := R_DriveSpeed1;
+			R_DriveSpeed1 := INT_TO_REAL(G_InputsA[CInDriveSpeed].I_Value);
+			R_DriveSpeed := REAL_TO_WORD((R_DriveSpeed1 + R_DriveSpeed2 + R_DriveSpeed3 + R_DriveSpeed4 + R_DriveSpeed5) / 5.0);
+		END_IF
+
+		TextL2 := TL_SpeedLess15000;
+		 Val2 := G_DriveMaxSpeed;
+		TextL3 := TL_ActualSpeed;
+		 Val3 := R_DriveSpeed;
+		TextL4 := TL_PressESCToGoBack;
+
+		IF KEY_RIGHT THEN
+			IF G_DriveMaxSpeed < 15000 THEN
+				G_DriveMaxSpeed := G_DriveMaxSpeed + 100;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_DriveMaxSpeed > 300 THEN
+				G_DriveMaxSpeed := G_DriveMaxSpeed - 100;
+			END_IF
+		END_IF
+
+	29:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_SetPoint;
+		Val2 := G_EP1Threshold;
+		TextL3 := TL_MoveValueToMaximum;
+		TextL4 := TL_LowerValueUntilMovementStop;
+
+		IF KEY_RIGHT THEN
+			IF G_EP1Threshold < 300 THEN
+				G_EP1Threshold := G_EP1Threshold + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_EP1Threshold > 50 THEN
+				G_EP1Threshold := G_EP1Threshold - 5;
+			END_IF
+		END_IF
+
+		(* Force Bridge Forward *)
+		G_EP1ThresholdSet := TRUE;
+
+	30:
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		IF G_EP2Threshold > 500 THEN
+			G_EP2Threshold := 500;
+		END_IF
+
+		TextL2 := TL_SetPoint;
+		Val2 := G_EP2Threshold;
+		TextL3 := TL_MoveValueToMaximum;
+		TextL4 := TL_LowerValueUntilMovementStop;
+
+		IF KEY_RIGHT THEN
+			IF G_EP2Threshold < 500 THEN
+				G_EP2Threshold := G_EP2Threshold + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_EP2Threshold > 50 THEN
+				G_EP2Threshold := G_EP2Threshold - 5;
+			END_IF
+		END_IF
+		IF KEY_UP_IN THEN
+			(* Force Elevator Up *)
+			G_EP2ThresholdSet := TRUE;
+		END_IF
+
+	31:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_SetPoint;
+		Val2 := G_EP31Threshold;
+		TextL3 := TL_MoveValueToMaximum;
+		TextL4 := TL_LowerValueUntilMovementStop;
+
+		IF KEY_RIGHT THEN
+			IF G_EP31Threshold < 300 THEN
+				G_EP31Threshold := G_EP31Threshold + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_EP31Threshold > 50 THEN
+				G_EP31Threshold := G_EP31Threshold - 5;
+			END_IF
+		END_IF
+
+		G_EP31ThresholdSet := TRUE;
+
+	32:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_SetPoint;
+		Val2 := G_EP32Threshold;
+		TextL3 := TL_MoveValueToMaximum;
+		TextL4 := TL_LowerValueUntilMovementStop;
+
+		IF KEY_RIGHT THEN
+			IF G_EP32Threshold < 300 THEN
+				G_EP32Threshold := G_EP32Threshold + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_EP32Threshold > 50 THEN
+				G_EP32Threshold := G_EP32Threshold - 5;
+			END_IF
+		END_IF
+
+		(* Force elev rear fwd with speed 0 *)
+		G_EP32ThresholdSet := TRUE;
+
+	35:
+		LEDUP := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_SetPoint;
+		Val2 := G_EP61Threshold;
+		TextL3 := TL_MoveValueToMaximum;
+		TextL4 := TL_LowerValueUntilMovementStop;
+
+		IF KEY_RIGHT THEN
+			IF G_EP61Threshold < 400 THEN
+				G_EP61Threshold := G_EP61Threshold + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_EP61Threshold > 50 THEN
+				G_EP61Threshold := G_EP61Threshold - 5;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			(* Force elev down with speed 0 *)
+			G_EP61ThresholdSet := TRUE;
+		END_IF
+
+	37:
+		LEDUP := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_SetPoint;
+		Val2 := G_EP65Threshold;
+		TextL3 := TL_MoveValueToMaximum;
+		TextL4 := TL_LowerValueUntilMovementStop;
+
+		IF KEY_RIGHT THEN
+			IF G_EP65Threshold < 1000 THEN
+				G_EP65Threshold := G_EP65Threshold + 10;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_EP65Threshold > 0 THEN
+				G_EP65Threshold := G_EP65Threshold - 5;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN_IN THEN
+			G_EP65ThresholdSet := TRUE;
+		END_IF
+
+	40:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+		B_InvisibleValue3 := FALSE;
+
+		TextL2 := TL_Blank;
+		TextL3 := TL_AircraftDistance;
+		 Val3 := W_AircraftDistance;
+		TextL4 := TL_Blank;
+
+		IF W_AircraftDistance < 200 THEN
+			G_CameraAdjust := TRUE;
+		ELSE
+			G_CameraAdjust := FALSE;
+		END_IF
+
+	42:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+
+		TextL2 := TL_Blank;
+		TextL3 := TL_PressOkToSet;
+
+		CASE BY_Mode OF
+				0 : TextL4 := TL_ModeNoMode;
+					B_ForceDriveMode := FALSE;
+					B_ForceLoadMode := FALSE;
+					IF KEY_OK THEN
+						BY_Mode := BY_Mode +1 ;
+					END_IF
+
+				1:   TextL4 := TL_ModeDrive;
+					B_ForceDriveMode := TRUE;
+					B_ForceLoadMode := FALSE;
+					IF KEY_OK THEN
+						BY_Mode := BY_Mode +1 ;
+					END_IF
+
+				2:   TextL4 := TL_ModeLoad;
+					B_ForceDriveMode := FALSE;
+					B_ForceLoadMode := TRUE;
+					IF KEY_OK THEN
+						BY_Mode := 0 ;
+					END_IF
+		END_CASE
+
+	43:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+
+		TextL2 := TL_Blank;
+		TextL3 := TL_SV90ActivatedPressureDemand;
+		TextL4 := TL_Blank;
+
+		G_ForcePumpEnable := TRUE;
+		G_HighDemandRequest := TRUE;
+		B_SV90Bypass := TRUE;
+
+	44:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+
+		TextL2 := TL_Blank;
+		TextL3 := TL_PressLeftRightToForce;
+		TextL4 := TL_Blank;
+
+		IF KEY_LEFT_IN THEN
+			G_SideRollerBypassLeft := TRUE;
+			G_SideRollerBypassRight := FALSE;
+		END_IF
+
+		IF KEY_RIGHT_IN THEN
+			G_SideRollerBypassLeft := FALSE;
+			G_SideRollerBypassRight := TRUE;
+		END_IF
+
+	45:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue3 := FALSE;
+
+		TextL2 := TL_Blank;
+		TextL3 := TL_MaximumCurrent;
+		Val3 := MAX_Battery_Current;
+		TextL4 := TL_Adjust;
+
+		IF KEY_RIGHT THEN
+			IF MAX_Battery_Current < 1500 THEN
+				MAX_Battery_Current := MAX_Battery_Current + 50;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF MAX_Battery_Current > 100 THEN
+				MAX_Battery_Current := MAX_Battery_Current - 50;
+			END_IF
+		END_IF
+
+	46:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+		LEDOK := TRUE;
+		B_InvisibleValue3 := FALSE;
+
+		TextL2 := TL_PressOkToResetStateOfCharge;
+		TextL3 := TL_BatteryStateOfCharge;
+		Val3 := G_BatteryLevel;
+		TextL4 := TL_Blank;
+
+		IF KEY_OK THEN
+			B_ResetSOC := TRUE;
+		END_IF
+
+
+	48:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		LEDOK := TRUE;
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue4 := FALSE;
+
+		TextL2 := TL_PumpMotorRPM;
+		Val2 := I_PumpMotorRPM;
+		IF G_MotorPumpEnable THEN
+			TextL3 := TL_MotorActive;
+		ELSE
+			TextL3 := TL_MotorInactive;
+		END_IF
+		TextL4 := TL_PS7_MainPumpPressure;
+		Val4 := G_InputsA[CInMainPumpPressure].I_Value;
+
+		IF KEY_RIGHT THEN
+			G_MotorPumpEnable := TRUE;
+		END_IF
+
+		IF KEY_LEFT THEN
+			G_MotorPumpEnable := FALSE;
+		END_IF
+
+		IF KEY_OK_IN AND G_MotorPumpEnable THEN
+			B_JogPump := TRUE;
+		ELSE
+			B_JogPump := FALSE;
+		END_IF
+
+		B_PumpRotationCheck := TRUE;
+
+	49:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+
+		TextL2 := TL_Blank;
+		IF G_MotorTractionEnable THEN
+			TextL3 := TL_MotorActive;
+		ELSE
+			TextL3 := TL_MotorInactive;
+		END_IF
+		TextL4 := TL_Blank;
+
+		IF KEY_RIGHT THEN
+			G_MotorTractionEnable := TRUE;
+		END_IF
+
+		IF KEY_LEFT THEN
+			G_MotorTractionEnable := FALSE;
+		END_IF
+	50:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+
+		TextL2 := TL_Blank;
+		IF G_MotorRegenEnable THEN
+			TextL3 := TL_MotorActive;
+		ELSE
+			TextL3 := TL_MotorInactive;
+		END_IF
+		TextL4 := TL_Blank;
+
+		IF KEY_RIGHT THEN
+			G_MotorRegenEnable := TRUE;
+		END_IF
+
+		IF KEY_LEFT THEN
+			G_MotorRegenEnable := FALSE;
+		END_IF
+
+	51:
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_AutomaticShutownAfter;
+		Val2 := G_AutoShutdownTimer;
+		TextL3 := TL_MinutesOfIdleTime;
+		TextL4 := TL_Adjust;
+
+		IF KEY_RIGHT THEN
+			IF G_AutoShutdownTimer < 60 THEN
+				G_AutoShutdownTimer := G_AutoShutdownTimer + 1;
+			END_IF
+		END_IF
+
+		IF KEY_LEFT THEN
+			IF G_AutoShutdownTimer > 0 THEN
+				G_AutoShutdownTimer := G_AutoShutdownTimer - 1;
+			END_IF
+		END_IF
+
+
+	61 :
+		B_InvisibleValue2 := FALSE;
+
+		TextL2 := TL_ActualHour;
+		Val2 := DWORD_TO_WORD(DW_Hourmeter/60);
+		TextL3 := TL_UseTheArrowKeys;
+		TextL4 := TL_Blank;
+
+		IF KEY_LEFT THEN
+			IF DW_Hourmeter > 0 THEN
+				DW_Hourmeter := DW_Hourmeter - 60;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			DW_Hourmeter := DW_Hourmeter + 60;
+		END_IF
+
+		IF KEY_UP THEN
+			DW_Hourmeter := DW_Hourmeter + 600;
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF DW_Hourmeter > 9 THEN
+				DW_Hourmeter := DW_Hourmeter - 600;
+			END_IF
+		END_IF
+	END_CASE
+END_IF
+
+
+
+
+END_ACTION
+
+

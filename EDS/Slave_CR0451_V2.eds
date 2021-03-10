@@ -1,0 +1,545 @@
+[Comments]
+Lines=1
+Line1=Mandatory Comment.
+[FileInfo]
+FileName=E:\Valid - 250\Slave_CR0451_V2.eds
+FileVersion=1
+FileRevision=1
+Description=EDS for CoDeSys-Project: E:\Valid - 250\Test_PDO\Prog_CR0451\CR0451Slave_V01.pro
+CreationTime=11:06AM
+CreationDate=02-25-2015
+CreatedBy=CoDeSys
+ModificationTime=11:06AM
+ModificationDate=02-25-2015
+ModifiedBy=CoDeSys
+EDSVersion=4.0
+
+[DeviceInfo]
+VendorName=3S Smart Software Solutions GmbH
+ProductName=CR0451Slave_V01
+ProductNumber=0x33535F44
+ProductVersion=1
+ProductRevision=1
+OrderCode=xxxx.yyyy.zzzz
+LMT_ManufacturerName=3S GmbH
+LMT_ProductName=3S_Dev 
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_100=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=1
+BaudRate_1000=1
+SimpleBootUpMaster=1
+SimpleBootUpSlave=0
+ExtendedBootUpMaster=1
+ExtendedBootUpSlave=0
+VendorNumber=0x33535F44
+DynamicChannelsSupported=0
+Granularity=8
+LSS_Supported=0
+GroupMessaging=0
+NrOfRXPDO=2
+NrOfTXPDO=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device Type
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x191
+PDOMapping=0
+
+[1001]
+ParameterName=Error Register
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=15
+1=0x1003
+2=0x1005
+3=0x1006
+4=0x1008
+5=0x1009
+6=0x100A
+7=0x100C
+8=0x100D
+9=0x1014
+10=0x1016
+11=0x1017
+12=0x1400
+13=0x1401
+14=0x1600
+15=0x1601
+
+[ManufacturerObjects]
+SupportedObjects=2
+1=0x3000
+2=0x3001
+
+[1003]
+SubNumber=6
+ParameterName=Predefined error field
+ObjectType=0x8
+
+[1003sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1003sub1]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub2]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub3]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub4]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1003sub5]
+ParameterName=Predefined Error field
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1005]
+ParameterName=COBID Synch Message
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0xFFFFFFFF
+PDOMapping=0
+
+[1006]
+ParameterName=ComCyclePeriod
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1008]
+ParameterName=Objekt1xxxh.ManufacturerDeviceName
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=808858450
+PDOMapping=0
+
+[1009]
+ParameterName=Objekt1xxxh.ManufacturerHardwareVersion
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=808530006
+PDOMapping=0
+
+[100A]
+ParameterName=Objekt1xxxh.ManufacturerSoftwareVersion
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=808530006
+PDOMapping=0
+
+[100C]
+ParameterName=Guard Time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[100D]
+ParameterName=Lifetime Factor
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1014]
+ParameterName=COBId Emergency
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x80+$NodeId
+PDOMapping=0
+
+[1016]
+SubNumber=2
+ParameterName=Consumer heartbeat times
+ObjectType=0x8
+
+[1016sub0]
+ParameterName=Nums consumer heartbeat time
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1016sub1]
+ParameterName=Consumer heartbeat time
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x1E01F4
+PDOMapping=0
+
+[1017]
+ParameterName=Producer heartbeat time
+ObjectType=0x7
+DataType=0x6
+AccessType=rw
+DefaultValue=500
+PDOMapping=0
+
+[1018]
+SubNumber=3
+ParameterName=Receive PDO Communication Parameter
+ObjectType=0x8
+
+[1018sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1018sub1]
+ParameterName=VendorID
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x33535F44
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product Code
+ObjectType=0x7
+DataType=0x7
+AccessType=ro
+DefaultValue=0x33535F44
+PDOMapping=0
+
+[1400]
+SubNumber=3
+ParameterName=Receive PDO Communication Parameter
+ObjectType=0x9
+
+[1400sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1400sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 512
+PDOMapping=0
+
+[1400sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1401]
+SubNumber=3
+ParameterName=Receive PDO Communication Parameter
+ObjectType=0x9
+
+[1401sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[1401sub1]
+ParameterName=COBID used by PDO
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=$NodeId + 768
+PDOMapping=0
+
+[1401sub2]
+ParameterName=transmission type
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1600]
+SubNumber=5
+ParameterName=Receive PDO mapping
+ObjectType=0x8
+
+[1600sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=3
+PDOMapping=0
+
+[1600sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000110
+PDOMapping=0
+
+[1600sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000210
+PDOMapping=0
+
+[1600sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30000308
+PDOMapping=0
+
+[1600sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1600sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601]
+SubNumber=3
+ParameterName=Receive PDO mapping
+ObjectType=0x8
+
+[1601sub0]
+ParameterName=Number of mapped objects in PDO
+ObjectType=0x7
+DataType=0x5
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1601sub1]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x30010120
+PDOMapping=0
+
+[1601sub2]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub3]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub4]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub5]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub6]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub7]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[1601sub8]
+ParameterName=PDO mapping
+ObjectType=0x7
+DataType=0x7
+AccessType=rw
+DefaultValue=0x0
+PDOMapping=0
+
+[3000]
+SubNumber=4
+ParameterName=Application defined objects
+ObjectType=0x8
+
+[3000sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x3
+PDOMapping=0
+
+[3000sub1]
+ParameterName=.W_BatteryLevel
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3000sub2]
+ParameterName=.W_DriveSpeed
+ObjectType=0x7
+DataType=0x6
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3000sub3]
+ParameterName=.B_BatteryCharging
+ObjectType=0x7
+DataType=0x5
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[3001]
+SubNumber=2
+ParameterName=Application defined objects
+ObjectType=0x8
+
+[3001sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x5
+AccessType=ro
+DefaultValue=0x1
+PDOMapping=0
+
+[3001sub1]
+ParameterName=.DW_OdoMeter
+ObjectType=0x7
+DataType=0x7
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+

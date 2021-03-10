@@ -1,0 +1,8 @@
+DEBUG:can:can config: {'bitrate': 250000, 'channel': 'PCAN_USBBUS1', 'interface': 'pcan'}
+INFO:canopen.network:Connected to 'PCAN_USBBUS1'
+DEBUG:canopen.pdo:TPDO Map as 4
+DEBUG:canopen.pdo:RPDO Map as 4
+INFO:canopen.nmt:Changing NMT state from INITIALISING to INITIALISING
+INFO:canopen.nmt:Sending NMT command 0x82 to node 85
+DEBUG:can.pcan:Data: bytearray(b'\x82U')
+DEBUG:can.pcan:Type: <class 'bytearray'>

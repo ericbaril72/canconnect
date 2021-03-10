@@ -1,0 +1,56 @@
+In0 = IgnitionKeyStart
+
+in_voltage10 = G_InputsA[CInBridgeSafetySensor].W_Value
+
+IO2=G_InputsD[CInHydOilHighTemp].B_Value
+OPT_LowHydShutdown AND IO3 = G_InputsD[CInHydLowOilLevel].B_Value
+
+IN_Current4 = W_Inclinometer
+if W_Inclinometer LT 300 AND TON_Init
+    then G_InputsA[CInElevatorHeight].B_Open = W_Inclinometer
+	
+	Prog ElevatorHeight
+	
+	IO5 = G_InputsD[CInDayLights].B_Value
+	
+	IN_Current_6    min,max(2000,4000)  normalize 4000-20000 to 0-5800 in G_InputsA[CInMainPumpPressure].W_Value
+	mainpressure open or short
+	
+	
+	IN_Current_7 = parking brake pressure
+	Parkingbrakepressure - open or short
+	
+	IO8 = G_InputsD[CInBridgeRedundant].B_Value
+	IO9 = G_InputsD[CInChargerDoor].B_Value
+	
+	IN_Current_10 minmax(20000,4000) to normalize 4000,20000 to 0,5800 is G_InputsA[CInCounterbalancePressure].W_Value
+	opem or short test
+	
+	I11 = G_InputsD[CInManLiftUp].B_Value
+	IN_Digital_12 = G_InputsD[CInLowerStairwayPressureBar].B_Value
+	
+	I14 = G_InputsD[CInChassisRearHorn].B_Value
+	I15 = G_InputsD[CInManLiftRedundant].B_Value
+	
+	
+	G_Input sA[CInElevatorHeight].W_Value between 700 and 900 is G_InputsD[CInElevatorNearFrame].B_Value
+	
+	G_Input sA[CInElevatorHeight].W_Value Less then 1550 is G_InputsD[CInElevatorBelow60In].B_Value
+	
+	Node4 IW210 is G_InputsA[CInElevatorLeftCylinderPressure].W_Value
+	open or short
+	
+	Node4 and IW212 is G_InputsA[CInElevatorRightCylinderPressure].W_Value
+	after minmax and normalize
+	open or short
+	
+	chassis1.4 is G_InputsD[CInAllGuidesDownEnable].B_Value
+	chassis1.8 is G_InputsD[CInStabsUpSensor].B_Value
+	chassis1.9 is G_InputsD[CInStabsDownSensor].B_Value
+	
+	chassis1.10 is G_InputsD[CInBridgeAtFrame].B_Value
+	Node4 and IW216 minmax and curve rm is G_InputsA[CInSuperCap1Temp].W_Value
+	Node4 and IW218 minmax and curve rm is G_InputsA[CInSuperCap2Temp].W_Value
+	iw220 cap1fault
+   iw222 cap2fault	
+	

@@ -1,0 +1,52 @@
+{
+    "Traction": {
+                    "Inputs": {
+                        "Inputs":   {"Elevator UP":true,"RPM>100":true,"Badge Accepted":true,"Stab DOWN":false},
+                        "LimitsSwitch": {"At Frame":true,"at Max":true},
+                        "G_Variables" : {"RPM min demand":1200},
+                        "Parameters":{"OPT_has Elevator":true,"has limits":true}
+                    },
+                    "fcts": ["FWD","REV","Brake","Stab_UP","Stab_Down"],
+                    "Outputs": {
+                        "Outs":{"RPM":"1200","Cylinder-UP":true,"Redundant":true},
+                        "Global":{"vclRPM":1200}
+                    }
+                },
+    "Elevator": {
+                    "Inputs": {
+                        "Inputs":   {"Elevator UP":true,"RPM>100":true,"Badge Accepted":true,"Stab DOWN":false},
+                        "LimitsSwitch": {"At Frame":true,"at Max":true,"Straddle Interlock":true},
+                        "G_Variables" : {"CInRearElevManifoldPressure":1200,"CInRearElevTransferPressure":4000},
+                        "Parameters":{"OPT_has Elevator":true,"has limits":true}
+                    },
+                    "fcts": ["Elev_Up","Elev_Down","Elev_Rear_Transfer_FWD","Elev_Rear_Transfer_REV","Elev_Front_Transfer_FWD","Elev_Front_Transfer_REV","Rotagte-Left"],
+                    "Outputs": {
+                        "Outs":{"RPM":"1200","Cylinder-UP":false,"Redundant":false,"CInLeftSideGuideDownSensor":true},
+                        "Global":{"vclRPM":1200}
+                    }
+                },
+    "Bridge": {
+                    "Inputs": {
+                        "Inputs":   {"Bridge UP":true,"RPM>100":true,"Badge Accepted":true,"Stab DOWN":false},
+                        "LimitsSwitch": {"At Frame":true,"at Max":true},
+                        "G_Variables" : {"RPM min demand":1200},
+                        "Parameters":{"OPT_has Elevator":true,"has limits":true}
+                    },"fcts": ["Bridge_Up","Bridge_Down","Bridge_Transfer_FWD","Bridge_Transfer_REV"],
+                    "Outputs": {
+                        "Outs":{"RPM":"1200","Cylinder-UP":false,"Redundant":false},
+                        "Global":{"vclRPM":1200}
+                    }
+                },
+    "PUMP/REGEN": {
+                    "Inputs": {
+                        "Inputs":   {"RPM>100":true,"Badge Accepted":false,"PSI in":1200},
+                        "LimitsSwitch": {"Oil Cold":true,"Oil Full":true},
+                        "G_Variables" : {"SOC > 20% ":true},
+                        "Parameters":{"OPT_has Pump":true}
+                    },"fcts": ["Pump","Regen"],
+                    "Outputs": {
+                        "Outs":{"PSI out":"1200"},
+                        "Global":{"vclRPM":1200}
+                    }
+                }
+}

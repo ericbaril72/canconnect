@@ -1,0 +1,797 @@
+ACTION	F4_Fault:
+IF W_StaticID = TL_FaultLog THEN
+	LEDLEFT := FALSE;
+	LEDRIGHT := FALSE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDOK := (FaultLogSelectedLine = 0 AND BY_FaultLogEntriesCount > 0) OR
+			      (FaultLogSelectedLine = 1 AND BY_MotorFaultCount > 0) OR
+			      (FaultLogSelectedLine = 2 AND G_AircraftContactCounter > 0 AND OPT_ASD) OR
+				(FaultLogSelectedLine = 3 AND (G_AircraftContactCounter > 0 OR BY_MotorFaultCount > 0 OR BY_FaultLogEntriesCount > 0)) ;
+	LEDESC := TRUE;
+	B_InvisibleValue1 := FALSE;
+	B_InvisibleValue2 := FALSE;
+	B_InvisibleValue3 := FALSE;
+	B_InvisibleValue4 := TRUE;
+
+	Index := 0;
+	BY_FaultLogEntriesCount := 0;
+	BY_MotorFaultCount := 0 ;
+	WHILE (Index <= MaxIndexFaults) DO
+		IF G_FaultOccurence[Index] > 0 THEN
+			BY_FaultLogEntriesCount := BY_FaultLogEntriesCount + 1;
+		END_IF
+		Index := Index + 1;
+	END_WHILE
+	IF OPT_DCDCSystem AND OPT_LeadAcidBattery THEN
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsDCDC) DO
+			IF G_FaultOccurenceDCDC[Index] > 0 THEN
+				BY_FaultLogEntriesCount := BY_FaultLogEntriesCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+	END_IF
+	Index := 0;
+	WHILE (Index <= MaxIndexOutputsA) DO
+		IF G_FaultOutputsAShort[Index] > 0 OR G_FaultOutputsAOpen[Index] > 0 THEN
+			BY_FaultLogEntriesCount := BY_FaultLogEntriesCount + 1;
+		END_IF
+		Index := Index + 1;
+	END_WHILE
+	Index := 0;
+	WHILE (Index <= MaxIndexOutputsD) DO
+		IF G_FaultOutputsDShort[Index] > 0 OR G_FaultOutputsDOpen[Index] > 0 THEN
+			BY_FaultLogEntriesCount := BY_FaultLogEntriesCount + 1;
+		END_IF
+		Index := Index + 1;
+	END_WHILE
+	IF B_OPT_838 THEN
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsCurtisPump) DO
+			IF G_FaultOccurenceCurtisPump[Index] > 0  THEN
+				BY_MotorFaultCount := BY_MotorFaultCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsCurtisTraction) DO
+			IF G_FaultOccurenceCurtisTraction[Index] > 0  THEN
+				BY_MotorFaultCount := BY_MotorFaultCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsCurtisRegen) DO
+			IF G_FaultOccurenceCurtisRegen[Index] > 0  THEN
+				BY_MotorFaultCount := BY_MotorFaultCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+	ELSE (*929*)
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsPump) DO
+			IF G_FaultOccurencePump[Index] > 0  THEN
+				BY_MotorFaultCount := BY_MotorFaultCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsTraction) DO
+			IF G_FaultOccurenceTraction[Index] > 0  THEN
+				BY_MotorFaultCount := BY_MotorFaultCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		Index := 0;
+		WHILE (Index <= MaxIndexFaultsRegen) DO
+			IF G_FaultOccurenceRegen[Index] > 0  THEN
+				BY_MotorFaultCount := BY_MotorFaultCount + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+	END_IF
+
+	Val1 := BY_FaultLogEntriesCount;
+	Val2 := BY_MotorFaultCount;
+	IF OPT_ASD THEN
+		Val3 := G_AircraftContactCounter;
+	ELSE
+		FaultLogTextList[2] := TL_Blank;
+		B_InvisibleValue3 := TRUE;
+	END_IF
+
+	TextL1 := FaultLogTextList[FaultLogDisplayLine];
+	TextL2 := FaultLogTextList[FaultLogDisplayLine + 1];
+	TextL3 := FaultLogTextList[FaultLogDisplayLine + 2];
+	TextL4 := FaultLogTextList[FaultLogDisplayLine + 3];
+
+	IF KEY_UP THEN
+		IF (SelectedLine = 3 AND OPT_ASD) OR SelectedLine = 2 OR SelectedLine = 1 THEN
+			SelectedLine := SelectedLine - 1;
+		ELSIF (SelectedLine = 3 AND NOT OPT_ASD) THEN
+			SelectedLine := SelectedLine - 2;
+		END_IF
+	END_IF
+
+	IF KEY_DOWN THEN
+		IF SelectedLine = 0 OR (SelectedLine = 1 AND OPT_ASD) OR SelectedLine = 2 THEN
+			SelectedLine := SelectedLine + 1;
+		ELSIF (SelectedLine = 1 AND NOT OPT_ASD) THEN
+			SelectedLine := SelectedLine + 2;
+		END_IF
+	END_IF
+
+	IF KEY_OK THEN
+		CASE SelectedLine OF
+			0:	(* DISPLAY FaultS *)
+				IF BY_FaultLogEntriesCount > 0 THEN
+					W_StaticID := TL_DisplayFaults;
+					ScanIndexPointer := 0;
+					FaultLogDisplayLine := 0;
+				END_IF
+			1 :
+				IF BY_MotorFaultCount > 0 THEN
+					W_StaticID := TL_MotorFaults;
+					ScanIndexPointer := 0;
+					FaultLogDisplayLine := 0;
+				END_IF
+			2 :
+				IF G_AircraftContactCounter > 0 THEN
+					W_StaticID := TL_ASDEventLog;
+					ScanIndexPointer := 0;
+					ScanIndexPointer2 := 0;
+					FaultLogDisplayLine := 1;
+				END_IF
+			3 : (* ERASE ALL ENTRIES *)
+				IF BY_FaultLogEntriesCount > 0 OR G_AircraftContactCounter > 0 OR BY_MotorFaultCount > 0 THEN
+					W_StaticID := TL_EraseAllEntries;
+					ScanIndexPointer := 0;
+					FaultLogDisplayLine := 0;
+				END_IF
+		END_CASE
+	END_IF
+
+	IF KEY_ESC THEN
+		page_extern := 2; (*MAIN PAGE*)
+		FaultLogSelectedLine := 0;
+		FaultLogDisplayLine := 0;
+		SelectedLine := 0;
+	END_IF
+
+	IF SelectedLine = 0 THEN
+		FrameColorL1 := TRUE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 1 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := TRUE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 2 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := TRUE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 3 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := TRUE;
+	ELSE
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	END_IF
+
+ELSIF W_StaticID = TL_DisplayFaults OR W_StaticID = TL_MotorFaults OR W_StaticID = TL_ASDEventLog OR W_StaticID = TL_EraseAllEntries THEN
+	LEDESC := TRUE;
+	LEDOK := FALSE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+
+	FrameColorL1 := FALSE;
+	FrameColorL2 := FALSE;
+	FrameColorL3 := FALSE;
+	FrameColorL4 := FALSE;
+
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := FALSE;
+	B_InvisibleValue4 := TRUE;
+
+	CASE SelectedLine OF
+	0:		(* Faults list *)
+
+		(* Scan list of Faults *)
+		(* 0-99 : GENERAL FaultS, 99-198: DCDC FaultS, 198-328: OUTPUTSD FaultS, 329-359: OUTPUTSA FaultS *)
+		ScanIndexPointer2 := 0;
+		Index := 0;
+		WHILE (Index <= MaxIndexFaults) DO
+			IF G_FaultOccurence[Index] > 0 THEN
+				ScanIndex[ScanIndexPointer2] := Index;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		IF OPT_DCDCSystem AND OPT_LeadAcidBattery THEN
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsDCDC) DO
+				IF G_FaultOccurenceDCDC[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaults;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+		END_IF
+		Index := 0;
+		WHILE (Index <= MaxIndexOutputsD) DO
+			IF G_FaultOutputsDShort[Index] > 0 OR G_FaultOutputsDOpen[Index] > 0 THEN
+				ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaults + MaxIndexFaultsDCDC;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+
+		Index := 0;
+		WHILE (Index <= MaxIndexOutputsA) DO
+			IF G_FaultOutputsAShort[Index] > 0 OR G_FaultOutputsAOpen[Index] > 0 THEN
+				ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaults + MaxIndexFaultsDCDC + MaxIndexOutputsD;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		ScanIndexMax := ScanIndexPointer2 - 1;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax) THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax;
+			END_IF
+		END_IF
+
+		IF ScanIndex[ScanIndexPointer] < MaxIndexFaults THEN
+			TextL1 := G_FaultFlags[ScanIndex[ScanIndexPointer]].S_Name;
+			TextL2 := G_FaultFlags[ScanIndex[ScanIndexPointer]].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurence[ScanIndex[ScanIndexPointer]];
+			IF G_FaultFlags[ScanIndex[ScanIndexPointer]].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		ELSIF ScanIndex[ScanIndexPointer] < MaxIndexFaults + MaxIndexFaultsDCDC THEN
+			index := MaxIndexFaults;
+			TextL1 := G_FaultFlagsDCDC[ScanIndex[ScanIndexPointer]-index].S_Name;
+			TextL2 := G_FaultFlagsDCDC[ScanIndex[ScanIndexPointer]-index].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurenceDCDC[ScanIndex[ScanIndexPointer]-index];
+			IF G_FaultFlagsDCDC[ScanIndex[ScanIndexPointer]-index].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		ELSIF ScanIndex[ScanIndexPointer] < MaxIndexFaults + MaxIndexFaultsDCDC + MaxIndexOutputsD THEN
+			index := MaxIndexFaults + MaxIndexFaultsDCDC;
+			TextL1 := G_OutputsD[ScanIndex[ScanIndexPointer]-index].S_Name;
+			IF G_FaultOutputsDShort[ScanIndex[ScanIndexPointer]-index] > 0 AND G_FaultOutputsDOpen[ScanIndex[ScanIndexPointer]-index] > 0 THEN
+				IF T5s THEN
+					TextL2 := TL_OutputShort;
+					TextL3 := TL_Occurrence;
+					Val3 := G_FaultOutputsDShort[ScanIndex[ScanIndexPointer]-index];
+					IF G_OutputsD[ScanIndex[ScanIndexPointer]-index].B_Open THEN
+						TextL4 := TL_FaultActiveTrue;
+					ELSE
+						TextL4 := TL_FaultActiveFalse;
+					END_IF
+				ELSE
+					TextL2 := TL_OutputOpen;
+					TextL3 := TL_Occurrence;
+					Val3 := G_FaultOutputsDOpen[ScanIndex[ScanIndexPointer]-index];
+					IF G_OutputsD[ScanIndex[ScanIndexPointer]-index].B_Open THEN
+						TextL4 := TL_FaultActiveTrue;
+					ELSE
+						TextL4 := TL_FaultActiveFalse;
+					END_IF
+				END_IF
+			ELSIF G_FaultOutputsDShort[ScanIndex[ScanIndexPointer]-index] > 0 THEN
+				TextL2 := TL_OutputShort;
+				TextL3 := TL_Occurrence;
+				Val3 := G_FaultOutputsDShort[ScanIndex[ScanIndexPointer]-index];
+				IF G_OutputsD[ScanIndex[ScanIndexPointer]-index].B_Short THEN
+					TextL4 := TL_FaultActiveTrue;
+				ELSE
+					TextL4 := TL_FaultActiveFalse;
+				END_IF
+			ELSIF G_FaultOutputsDOpen[ScanIndex[ScanIndexPointer]-index] > 0 THEN
+				TextL2 := TL_OutputOpen;
+				TextL3 := TL_Occurrence;
+				Val3 := G_FaultOutputsDOpen[ScanIndex[ScanIndexPointer]-index];
+				IF G_OutputsD[ScanIndex[ScanIndexPointer]-index].B_Open THEN
+					TextL4 := TL_FaultActiveTrue;
+				ELSE
+					TextL4 := TL_FaultActiveFalse;
+				END_IF
+			END_IF
+		ELSE
+			index := MaxIndexFaults + MaxIndexFaultsDCDC + MaxIndexOutputsD;
+			TextL1 := G_OutputsA[ScanIndex[ScanIndexPointer]-index].S_Name;
+			IF G_FaultOutputsAShort[ScanIndex[ScanIndexPointer]-index] > 0 AND G_FaultOutputsAOpen[ScanIndex[ScanIndexPointer]-index] > 0 THEN
+				IF T5s THEN
+					TextL2 := TL_OutputShort;
+					TextL3 := TL_Occurrence;
+					Val3 := G_FaultOutputsAShort[ScanIndex[ScanIndexPointer]-index];
+					IF G_OutputsA[ScanIndex[ScanIndexPointer]-index].B_Short THEN
+						TextL4 := TL_FaultActiveTrue;
+					ELSE
+						TextL4 := TL_FaultActiveFalse;
+					END_IF
+				ELSE
+					TextL2 := TL_OutputOpen;
+					TextL3 := TL_Occurrence;
+					Val3 := G_FaultOutputsAOpen[ScanIndex[ScanIndexPointer]-index];
+					IF G_OutputsA[ScanIndex[ScanIndexPointer]-index].B_Open THEN
+						TextL4 := TL_FaultActiveTrue;
+					ELSE
+						TextL4 := TL_FaultActiveFalse;
+					END_IF
+				END_IF
+			ELSIF G_FaultOutputsAShort[ScanIndex[ScanIndexPointer]-index] > 0 THEN
+				TextL2 := TL_OutputShort;
+				TextL3 := TL_Occurrence;
+				Val3 := G_FaultOutputsAShort[ScanIndex[ScanIndexPointer]-index];
+				IF G_OutputsA[ScanIndex[ScanIndexPointer]-index].B_Short THEN
+					TextL4 := TL_FaultActiveTrue;
+				ELSE
+					TextL4 := TL_FaultActiveFalse;
+				END_IF
+			ELSIF G_FaultOutputsAOpen[ScanIndex[ScanIndexPointer]-index] > 0 THEN
+				TextL2 := TL_OutputOpen;
+				TextL3 := TL_Occurrence;
+				Val3 := G_FaultOutputsAOpen[ScanIndex[ScanIndexPointer]-index];
+				IF G_OutputsA[ScanIndex[ScanIndexPointer]-index].B_Open THEN
+					TextL4 := TL_FaultActiveTrue;
+				ELSE
+					TextL4 := TL_FaultActiveFalse;
+				END_IF
+			END_IF
+		END_IF
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_FaultLog;
+			SelectedLine := 0;
+			FaultLogSelectedLine := 0;
+			FaultLogDisplayLine := 0;
+		END_IF
+
+	1:		(* Motors  Faults list *)
+
+		ScanIndexPointer2 := 0;
+		IF B_OPT_838 THEN
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsCurtisPump) DO
+				IF G_FaultOccurenceCurtisPump[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsCurtisTraction) DO
+				IF G_FaultOccurenceCurtisTraction[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaultsCurtisPump;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsCurtisRegen) DO
+				IF G_FaultOccurenceCurtisRegen[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaultsCurtisPump + MaxIndexFaultsCurtisTraction ;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+		ELSE (*929*)
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsPump) DO
+				IF G_FaultOccurencePump[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsTraction) DO
+				IF G_FaultOccurenceTraction[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaultsPump;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+
+			Index := 0;
+			WHILE (Index <= MaxIndexFaultsRegen) DO
+				IF G_FaultOccurenceRegen[Index] > 0 THEN
+					ScanIndex[ScanIndexPointer2] := Index + MaxIndexFaultsPump + MaxIndexFaultsTraction;
+					ScanIndexPointer2 := ScanIndexPointer2 + 1;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+		END_IF
+
+		ScanIndexMax := ScanIndexPointer2 - 1;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax) THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax;
+			END_IF
+		END_IF
+	IF B_OPT_838 THEN
+		IF ScanIndex[ScanIndexPointer] < MaxIndexFaultsCurtisPump THEN
+			TextL1 := G_FaultFlagsCurtisPump[ScanIndex[ScanIndexPointer]].S_Name;
+			TextL2 := G_FaultFlagsCurtisPump[ScanIndex[ScanIndexPointer]].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurenceCurtisPump[ScanIndex[ScanIndexPointer]];
+			IF G_FaultFlagsCurtisPump[ScanIndex[ScanIndexPointer]].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		ELSIF ScanIndex[ScanIndexPointer] < MaxIndexFaultsCurtisPump + MaxIndexFaultsCurtisTraction THEN
+			index := MaxIndexFaultsCurtisPump;
+			TextL1 := G_FaultFlagsCurtisTraction[ScanIndex[ScanIndexPointer]-index].S_Name;
+			TextL2 := G_FaultFlagsCurtisTraction[ScanIndex[ScanIndexPointer]-index].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurenceCurtisTraction[ScanIndex[ScanIndexPointer]-index];
+			IF G_FaultFlagsCurtisTraction[ScanIndex[ScanIndexPointer]-index].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		ELSIF ScanIndex[ScanIndexPointer] < MaxIndexFaultsCurtisPump + MaxIndexFaultsCurtisTraction + MaxIndexFaultsCurtisRegen THEN
+			index := MaxIndexFaultsCurtisPump + MaxIndexFaultsCurtisTraction ;
+			TextL1 := G_FaultFlagsCurtisRegen[ScanIndex[ScanIndexPointer]-index].S_Name;
+			TextL2 := G_FaultFlagsCurtisRegen[ScanIndex[ScanIndexPointer]-index].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurenceCurtisRegen[ScanIndex[ScanIndexPointer]-index];
+			IF G_FaultFlagsCurtisRegen[ScanIndex[ScanIndexPointer]-index].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		END_IF
+	ELSE (*929*)
+		IF ScanIndex[ScanIndexPointer] < MaxIndexFaultsPump THEN
+			TextL1 := G_FaultFlagsPump[ScanIndex[ScanIndexPointer]].S_Name;
+			TextL2 := G_FaultFlagsPump[ScanIndex[ScanIndexPointer]].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurencePump[ScanIndex[ScanIndexPointer]];
+			IF G_FaultFlagsPump[ScanIndex[ScanIndexPointer]].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		ELSIF ScanIndex[ScanIndexPointer] < MaxIndexFaultsPump + MaxIndexFaultsTraction THEN
+			index := MaxIndexFaultsPump;
+			TextL1 := G_FaultFlagsTraction[ScanIndex[ScanIndexPointer]-index].S_Name;
+			TextL2 := G_FaultFlagsTraction[ScanIndex[ScanIndexPointer]-index].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurenceTraction[ScanIndex[ScanIndexPointer]-index];
+			IF G_FaultFlagsTraction[ScanIndex[ScanIndexPointer]-index].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		ELSIF ScanIndex[ScanIndexPointer] < MaxIndexFaultsPump + MaxIndexFaultsTraction + MaxIndexFaultsRegen THEN
+			index := MaxIndexFaultsPump + MaxIndexFaultsTraction ;
+			TextL1 := G_FaultFlagsRegen[ScanIndex[ScanIndexPointer]-index].S_Name;
+			TextL2 := G_FaultFlagsRegen[ScanIndex[ScanIndexPointer]-index].S_Description;
+			TextL3 := TL_Occurrence;
+			Val3 := G_FaultOccurenceRegen[ScanIndex[ScanIndexPointer]-index];
+			IF G_FaultFlagsRegen[ScanIndex[ScanIndexPointer]-index].B_Active THEN
+				TextL4 := TL_FaultActiveTrue;
+			ELSE
+				TextL4 := TL_FaultActiveFalse;
+			END_IF
+		END_IF
+	END_IF
+
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_FaultLog;
+			SelectedLine := 0;
+			FaultLogSelectedLine := 0;
+			FaultLogDisplayLine := 0;
+		END_IF
+
+	2: (*ASD Event*)
+
+		B_InvisibleValue1 := FALSE;
+		B_InvisibleValue2 := FALSE;
+		B_InvisibleValue3 := FALSE;
+		B_InvisibleValue4 := FALSE;
+
+		Index := 0;
+
+		IF G_AircraftContactCounter > 0 THEN
+			ScanIndexMax := G_AircraftContactCounter - 1;
+		ELSE
+			ScanIndexMax := 0;
+		END_IF
+
+		IF FaultLogDisplayLine = 1 THEN
+			FrameColorL1 := FALSE;
+			FrameColorL2 := TRUE;
+			FrameColorL3 := FALSE;
+			FrameColorL4 := FALSE;
+		ELSIF FaultLogDisplayLine = 2 THEN
+			FrameColorL1 := FALSE;
+			FrameColorL2 := FALSE;
+			FrameColorL3 := TRUE;
+			FrameColorL4 := FALSE;
+		ELSIF FaultLogDisplayLine = 3 THEN
+			FrameColorL1 := FALSE;
+			FrameColorL2 := FALSE;
+			FrameColorL3 := FALSE;
+			FrameColorL4 := TRUE;
+		END_IF
+
+		IF KEY_LEFT THEN
+			ScanIndexPointer2 := 0;
+			FaultLogDisplayLine := 1;
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+				B_ASDLoaded := FALSE;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			ScanIndexPointer2 := 0;
+			FaultLogDisplayLine := 1;
+			IF (ScanIndexPointer < ScanIndexMax) THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+				B_ASDLoaded := FALSE;
+			ELSE
+				ScanIndexPointer := ScanIndexMax;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF (ScanIndexPointer2 > 0) AND FaultLogDisplayLine = 1 THEN
+				ScanIndexPointer2 := ScanIndexPointer2 - 1;
+			END_IF
+			IF FaultLogDisplayLine > 1 THEN
+				FaultLogDisplayLine := FaultLogDisplayLine -1;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF (ScanIndexPointer2 < B_ASDFaultsIndex - 3) AND FaultLogDisplayLine = 3  THEN
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			IF FaultLogDisplayLine < 3 THEN
+				FaultLogDisplayLine := FaultLogDisplayLine +1;
+			END_IF
+		END_IF
+
+		(* AircraftContact in an array of string for simpler display method *)
+		IF NOT B_ASDLoaded THEN
+			S_ASDFaultsIndex[0] := TL_Hourmeter;
+			S_ASDFaultsIndexValue[0] := G_ASDFaults[ScanIndexPointer].W_HourMeter;
+			S_ASDFaultsIndex[1] := TL_AircraftDistance;
+			S_ASDFaultsIndexValue[1] := G_ASDFaults[ScanIndexPointer].W_AircraftDistance;
+			S_ASDFaultsIndex[2] := TL_DriveSpeed;
+			S_ASDFaultsIndexValue[2] := G_ASDFaults[ScanIndexPointer].W_Speed;
+			S_ASDFaultsIndex[3] := TL_SpeedSensorFault;
+			S_ASDFaultsIndexValue[3] := BOOL_TO_WORD(G_ASDFaults[ScanIndexPointer].B_SpeedSensorFaults);
+			IF G_ASDFaults[ScanIndexPointer].BY_DriveDirection = 0 THEN (*0 = FWD, 1= REV, 2=NEUTRAL *)
+				S_ASDFaultsIndex[4] := TL_DriveDirectionForward;
+			ELSIF G_ASDFaults[ScanIndexPointer].BY_DriveDirection = 1 THEN
+				S_ASDFaultsIndex[4] := TL_DriveDirectionReverse;
+			ELSE
+				S_ASDFaultsIndex[4] := TL_DriveDirectionNeutral;
+			END_IF
+			S_ASDFaultsIndex[5] := TL_BridgeSensitiveBumper;
+			S_ASDFaultsIndexValue[5] := BOOL_TO_WORD(G_ASDFaults[ScanIndexPointer].B_SensitiveBumper);
+			S_ASDFaultsIndex[6] := TL_LeftHandrailSensitiveBumper;
+			S_ASDFaultsIndexValue[6] := BOOL_TO_WORD(G_ASDFaults[ScanIndexPointer].B_LeftHandSensBump);
+			S_ASDFaultsIndex[7] := TL_RightHandrailSensitiveBumper;
+			S_ASDFaultsIndexValue[7] := BOOL_TO_WORD(G_ASDFaults[ScanIndexPointer].B_RightHandSensBump);
+			B_ASDLoaded := TRUE;
+		END_IF
+
+		TextL1 := TL_AircraftContact;
+		Val1:= ScanIndexPointer + 1 ;
+		IF ScanIndexPointer2 = 4 THEN
+			B_InvisibleValue2 := TRUE;
+		END_IF
+		IF ScanIndexPointer2+1 = 4 THEN
+			B_InvisibleValue3 := TRUE;
+		END_IF
+		IF ScanIndexPointer2+2 = 4 THEN
+			B_InvisibleValue4 := TRUE;
+		END_IF
+		TextL2 := S_ASDFaultsIndex[ScanIndexPointer2];
+		Val2 := S_ASDFaultsIndexValue[ScanIndexPointer2];
+		TextL3 := S_ASDFaultsIndex[ScanIndexPointer2+1];
+		Val3 := S_ASDFaultsIndexValue[ScanIndexPointer2+1];
+		TextL4 := S_ASDFaultsIndex[ScanIndexPointer2+2];
+		Val4 := S_ASDFaultsIndexValue[ScanIndexPointer2+2];
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_FaultLog;
+			SelectedLine := 0;
+			FaultLogSelectedLine := 0;
+			FaultLogDisplayLine := 0;
+			ScanIndexPointer2 := 0;
+		END_IF
+
+	3:		(* Erase all Faults entries *)
+		LEDLEFT := FALSE;
+		LEDRIGHT := FALSE;
+		LEDUP := FALSE;
+		LEDDOWN := FALSE;
+		LEDOK := TRUE;
+		LEDESC := TRUE;
+
+		TextL1 := TL_Blank;
+		TextL2 := TL_AllEntriesWillBeErased;
+		TextL3 := TL_Blank;
+		TextL4 := TL_PressOkToConfirm;
+
+		IF KEY_OK THEN
+			(* Scan list of Faults *)
+			G_AircraftContactCounter := 0;
+			Index := 0;
+			WHILE (Index <= MaxIndexFaults) DO
+				IF NOT G_FaultFlags[Index].B_Active THEN
+					G_FaultOccurence[Index] := 0;
+				END_IF
+				Index := Index + 1;
+			END_WHILE
+			IF OPT_DCDCSystem AND OPT_LeadAcidBattery THEN
+				Index := 0;
+				WHILE (Index <= MaxIndexFaultsDCDC) DO
+					IF NOT G_FaultFlagsDCDC[Index].B_Active THEN
+						G_FaultOccurenceDCDC[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+			END_IF
+			Index := 0;
+			WHILE (Index <= MaxIndexOutputsA) DO
+				G_FaultOutputsAShort[Index] := 0;
+				G_FaultOutputsAOpen[Index] := 0;
+				Index := Index + 1;
+			END_WHILE
+			Index := 0;
+			WHILE (Index <= MaxIndexOutputsD) DO
+				G_FaultOutputsDShort[Index] := 0;
+				G_FaultOutputsDOpen[Index] := 0;
+				Index := Index + 1;
+			END_WHILE
+			IF B_OPT_838 THEN
+				Index := 0;
+				WHILE (Index <= MaxIndexFaultsCurtisPump) DO
+					IF NOT G_FaultFlagsCurtisPump[Index].B_Active THEN
+						G_FaultOccurenceCurtisPump[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+				Index := 0;
+				WHILE (Index <= MaxIndexFaultsCurtisTraction) DO
+					IF NOT G_FaultFlagsCurtisTraction[Index].B_Active THEN
+						G_FaultOccurenceCurtisTraction[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+					Index := 0;
+				WHILE (Index <= MaxIndexFaultsCurtisRegen) DO
+					IF NOT G_FaultFlagsCurtisRegen[Index].B_Active THEN
+						G_FaultOccurenceCurtisRegen[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+			ELSE (*929*)
+				Index := 0;
+				WHILE (Index <= MaxIndexFaultsPump) DO
+					IF NOT G_FaultFlagsPump[Index].B_Active THEN
+						G_FaultOccurencePump[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+				Index := 0;
+				WHILE (Index <= MaxIndexFaultsTraction) DO
+					IF NOT G_FaultFlagsTraction[Index].B_Active THEN
+						G_FaultOccurenceTraction[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+					Index := 0;
+				WHILE (Index <= MaxIndexFaultsRegen) DO
+					IF NOT G_FaultFlagsRegen[Index].B_Active THEN
+						G_FaultOccurenceRegen[Index] := 0;
+					END_IF
+					Index := Index + 1;
+				END_WHILE
+			END_IF
+
+
+			W_StaticID := TL_FaultLog;
+			SelectedLine := 0;
+			FaultLogSelectedLine := 0;
+			FaultLogDisplayLine := 0;
+
+			G_DCDC_clear_all_faults := TRUE;
+		END_IF
+
+		IF KEY_ESC THEN
+			W_StaticID := TL_FaultLog;
+			SelectedLine := 0;
+			FaultLogSelectedLine := 0;
+			FaultLogDisplayLine := 0;
+		END_IF
+	END_CASE
+END_IF
+END_ACTION

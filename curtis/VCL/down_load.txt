@@ -1,0 +1,10 @@
+Copyright (c) 1998-2014 - Curtis Instruments, Inc. - Application Distribution, 01Oct20_load
+os123xes os123xes_150917_26_0_1249565_B_101
+
+WinVCL 7.1.12
+os123xes 101
+Current_Version
+ST276 2 yes Startmanager_123xes_Primary_2_0.H86
+12/Aou/2020 : New release with CAN command developped
+17/Aou/2020 : Some ajustements asked by TLD
+30/Sept/2020 : P101 New release for TLD Canada with CAN-Open enabled

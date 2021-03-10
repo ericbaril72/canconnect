@@ -1,0 +1,100 @@
+
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '\/2- CONFIG AND DIAGNOSTIC' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+PROGRAM DiagnosticCtrl
+VAR CONSTANT
+	MaxLines : BYTE := 4;
+END_VAR
+VAR
+	B_Init : BOOL := TRUE;
+	MEMORY_RETAIN_PARAM1: MEMORY_RETAIN_PARAM;
+
+	F1 : BOOL;			(* Key *)
+	F2 : BOOL;			(* Key *)
+	F3 : BOOL;			(* Key *)
+	F4 : BOOL;			(* Key *)
+	F5 : BOOL;			(* Key *)
+	F6 : BOOL;			(* Key *)
+	F7: BOOL;			(* Key *)
+	F8 : BOOL;			(* Key *)
+	KEY_OK: BOOL;	(* Key *)
+	KEY_ESC: BOOL;	(* Key *)
+	KEY_UP: BOOL;	(* Key *)
+	KEY_DOWN: BOOL;	(* Key *)
+	KEY_LEFT: BOOL;	(* Key *)
+	KEY_RIGHT: BOOL;	(* Key *)
+
+	RT_F1: KeyDebounce;
+	RT_F2: KeyDebounce;
+	RT_F3: KeyDebounce;
+	RT_F4: KeyDebounce;
+	RT_F5: KeyDebounce;
+	RT_F6: KeyDebounce;
+	RT_F7: KeyDebounce;
+	RT_F8: KeyDebounce;
+	RT_KEY_OK: KeyDebounce;
+	RT_KEY_ESC: KeyDebounce;
+	RT_KEY_LEFT: KeyDebounce;
+	RT_KEY_RIGHT: KeyDebounce;
+	RT_KEY_UP: KeyDebounce;
+	RT_KEY_DOWN: KeyDebounce;
+
+	OperationsEnable : ARRAY [0..25] OF BOOL;
+	ConfigEnable : ARRAY [0..70] OF BOOL;
+
+	OperationsTextList : ARRAY [0..25] OF WORD;
+	DiagnosticTextList : ARRAY [0..7] OF WORD;
+	ConfigTextList : ARRAY [0..70] OF WORD;
+	FaultLogTextList : ARRAY [0..4] OF WORD;
+	InformationTextList : ARRAY [0..4] OF WORD;
+
+	Index : WORD;
+	SelectedLine : BYTE := 0;
+	ScanIndex : ARRAY [0..400] OF WORD;
+	ScanIndexPointer : WORD := 0;
+	ScanIndexPointer2 : WORD;
+	ScanIndexMax : WORD;
+
+	OperationsSelectedLine: WORD;
+	DiagnosticSelectedLine: BYTE;
+	DiagnosticDisplayLine : BYTE;
+	ConfigSelectedLine: WORD;
+	FaultLogSelectedLine: BYTE;
+	FaultLogDisplayLine : BYTE;
+	BY_FaultLogEntriesCount: BYTE;			(* Number of log entries *)
+	InformationSelectedLine: BYTE;
+	InformationDisplayLine : BYTE;
+
+	TONInitDelay: TON;
+	TONInitDelay2: TON;
+	T_StartTime: TIME;
+	W_ElapsedTime : WORD;
+	B_HoldKeyUp : BOOL;
+	B_HoldKeyDown : BOOL;
+	R_DriveSpeed : WORD;
+	R_DriveSpeed1 : REAL;
+	R_DriveSpeed2 : REAL;
+	R_DriveSpeed3 : REAL;
+	R_DriveSpeed4 : REAL;
+	R_DriveSpeed5 : REAL;
+	BY_DigitSelected: BYTE :=1;
+	B_SkipLine : BOOL;
+	B_TmpVal : BOOL;
+	W_SelectedIndex : WORD;
+	W_DisplayedIndex : ARRAY [0..3] OF WORD;
+	BY_CurrentLine : BYTE;
+	B_SpecialMenu: BOOL;
+	B_ASDLoaded : BOOL;
+	BY_LoadTestCode : BYTE;
+	B_LoadTestOK: BOOL;
+	DW_LoadTestCycle: DWORD;
+	RT_Cycles: R_TRIG;
+	BY_OptionCode: BYTE;
+	BY_F3Code: BYTE;
+	B_F3SpecialBypass: BOOL;
+	B_OptionBypass: BOOL;
+	BY_Mode: BYTE;
+END_VAR
+(* @END_DECLARATION := '0' *)

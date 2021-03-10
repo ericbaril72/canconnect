@@ -1,0 +1,545 @@
+ACTION	F2_Diagnostic:
+IF W_StaticID =  TL_Diagnostic THEN
+	LEDLEFT := FALSE;
+	LEDRIGHT := FALSE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	LEDOK := TRUE;
+	LEDESC := TRUE;
+	B_InvisibleValue1 := TRUE;
+	B_InvisibleValue2 := TRUE;
+	B_InvisibleValue3 := TRUE;
+	B_InvisibleValue4 := TRUE;
+
+	TextL1 := DiagnosticTextList[DiagnosticDisplayLine];
+	TextL2 := DiagnosticTextList[DiagnosticDisplayLine + 1];
+	TextL3 := DiagnosticTextList[DiagnosticDisplayLine + 2];
+	TextL4 := DiagnosticTextList[DiagnosticDisplayLine + 3];
+
+	IF KEY_UP THEN
+		IF DiagnosticSelectedLine > 0 THEN
+			DiagnosticSelectedLine := DiagnosticSelectedLine - 1;
+			IF SelectedLine = 0 THEN
+				DiagnosticDisplayLine := DiagnosticDisplayLine - 1;
+			ELSE
+				SelectedLine := SelectedLine - 1;
+			END_IF
+		ELSE
+			DiagnosticSelectedLine := 0;
+			DiagnosticDisplayLine := 0;
+			SelectedLine := 0;
+		END_IF
+	END_IF
+
+	IF KEY_DOWN THEN
+		IF NOT(DiagnosticTextList[DiagnosticSelectedLine+1] = 0) THEN
+			DiagnosticSelectedLine := DiagnosticSelectedLine + 1;
+			IF SelectedLine = 3 THEN
+				DiagnosticDisplayLine := DiagnosticDisplayLine + 1;
+			ELSE
+				SelectedLine := SelectedLine + 1;
+			END_IF
+		END_IF
+	END_IF
+
+	IF KEY_OK THEN
+		ScanIndexPointer := 0;
+		DiagnosticDisplayLine := 0;
+		SelectedLine := 0;
+		CASE DiagnosticSelectedLine OF
+			0:	W_StaticID := TL_InputsAnalog;				(* INPUTS ANALOG *)
+			1 :	W_StaticID := TL_InputsDigital;				(* INPUTS DIGITAL *)
+			2 : 	W_StaticID := TL_OutputsAnalog;			(* OUTPUTS ANALOG *)
+			3 : 	W_StaticID := TL_OutputsDigital;				(* OUTPUTS DIGITAL *)
+			4 : 	W_StaticID := TL_Network;					(* NETWORK *)
+		END_CASE
+	END_IF
+
+	IF KEY_ESC THEN
+		page_extern := 2; (*MAIN PAGE*)
+		DiagnosticSelectedLine := 0;
+		DiagnosticDisplayLine := 0;
+		SelectedLine := 0;
+	END_IF
+
+	IF SelectedLine = 0 THEN
+		FrameColorL1 := TRUE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 1 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := TRUE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 2 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := TRUE;
+		FrameColorL4 := FALSE;
+	ELSIF SelectedLine = 3 THEN
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := TRUE;
+	ELSE
+		FrameColorL1 := FALSE;
+		FrameColorL2 := FALSE;
+		FrameColorL3 := FALSE;
+		FrameColorL4 := FALSE;
+	END_IF
+
+ELSIF W_StaticID = TL_InputsAnalog OR W_StaticID = TL_InputsDigital OR W_StaticID = TL_OutputsAnalog OR W_StaticID = TL_OutputsDigital OR W_StaticID = TL_Network THEN
+	LEDESC := TRUE;
+	LEDLEFT := TRUE;
+	LEDRIGHT := TRUE;
+	LEDUP := TRUE;
+	LEDDOWN := TRUE;
+	B_InvisibleValue1 := FALSE;
+	B_InvisibleValue2 := FALSE;
+	B_InvisibleValue3 := FALSE;
+	B_InvisibleValue4 := FALSE;
+	FrameColorL1 := FALSE;
+	FrameColorL2 := FALSE;
+	FrameColorL3 := FALSE;
+	FrameColorL4 := FALSE;
+
+	CASE DiagnosticSelectedLine OF
+	0:					(* ******************* DIAGNOSTIC ANALOG INPUTS ******************** *)
+		(* Scan list of inputs *)
+		ScanIndexPointer2 := 0;
+		Index := 0;
+		WHILE (Index <= MaxIndexInputsA) DO
+			IF G_InputsA[Index].B_Active AND G_InputsA[Index].B_Diagnostic THEN
+				ScanIndex[ScanIndexPointer2] := Index;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		ScanIndexMax := ScanIndexPointer2 - 1;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+			SelectedLine := 0;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		TextL1 := G_InputsA[ScanIndex[ScanIndexPointer]].S_Name;
+		IF G_InputsA[ScanIndex[ScanIndexPointer]].B_Analog0Digital1 THEN
+			 Val1 := BOOL_TO_WORD(G_InputsA[ScanIndex[ScanIndexPointer]].B_Value);
+		ELSE
+			 Val1 := (G_InputsA[ScanIndex[ScanIndexPointer]].I_Value);
+		END_IF
+		TextL2 := G_InputsA[ScanIndex[ScanIndexPointer+1] ].S_Name;
+		IF G_InputsA[ScanIndex[ScanIndexPointer+1]].B_Analog0Digital1 THEN
+			 Val2 := BOOL_TO_WORD(G_InputsA[ScanIndex[ScanIndexPointer+1]].B_Value);
+		ELSE
+			 Val2 := (G_InputsA[ScanIndex[ScanIndexPointer+1]].I_Value);
+		END_IF
+		TextL3 := G_InputsA[ScanIndex[ScanIndexPointer+2]].S_Name;
+		IF G_InputsA[ScanIndex[ScanIndexPointer+2]].B_Analog0Digital1 THEN
+			 Val3 := BOOL_TO_WORD(G_InputsA[ScanIndex[ScanIndexPointer+2]].B_Value);
+		ELSE
+			 Val3 := (G_InputsA[ScanIndex[ScanIndexPointer+2]].I_Value);
+		END_IF
+		TextL4 := G_InputsA[ScanIndex[ScanIndexPointer+3]].S_Name;
+		IF G_InputsA[ScanIndex[ScanIndexPointer+3]].B_Analog0Digital1 THEN
+			 Val4 := BOOL_TO_WORD(G_InputsA[ScanIndex[ScanIndexPointer+3]].B_Value);
+		ELSE
+			 Val4 := (G_InputsA[ScanIndex[ScanIndexPointer+3]].I_Value);
+		END_IF
+
+		IF KEY_ESC THEN
+			W_StaticID :=  TL_Diagnostic;
+			SelectedLine := 0;
+			DiagnosticSelectedLine := 0;
+			DiagnosticDisplayLine := 0;
+		END_IF
+
+	1:					(* ******************* DIAGNOSTIC DIGITAL INPUTS ******************** *)
+		(* Scan list of inputs *)
+		ScanIndexPointer2 := 0;
+		Index := 0;
+		WHILE (Index <= MaxIndexInputsD) DO
+			IF G_InputsD[Index].B_Active AND G_InputsD[Index].B_Diagnostic THEN
+				ScanIndex[ScanIndexPointer2] := Index;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		ScanIndexMax := ScanIndexPointer2 - 1;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+			SelectedLine := 0;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		TextL1 := G_InputsD[ScanIndex[ScanIndexPointer]].S_Name;
+		IF G_InputsD[ScanIndex[ScanIndexPointer]].B_Analog0Digital1 THEN
+			 Val1 := BOOL_TO_WORD(G_InputsD[ScanIndex[ScanIndexPointer]].B_Value);
+		ELSE
+			 Val1 := (G_InputsD[ScanIndex[ScanIndexPointer]].I_Value);
+		END_IF
+		TextL2 := G_InputsD[ScanIndex[ScanIndexPointer+1] ].S_Name;
+		IF G_InputsD[ScanIndex[ScanIndexPointer+1]].B_Analog0Digital1 THEN
+			 Val2 := BOOL_TO_WORD(G_InputsD[ScanIndex[ScanIndexPointer+1]].B_Value);
+		ELSE
+			 Val2 := (G_InputsD[ScanIndex[ScanIndexPointer+1]].I_Value);
+		END_IF
+		TextL3 := G_InputsD[ScanIndex[ScanIndexPointer+2]].S_Name;
+		IF G_InputsD[ScanIndex[ScanIndexPointer+2]].B_Analog0Digital1 THEN
+			 Val3 := BOOL_TO_WORD(G_InputsD[ScanIndex[ScanIndexPointer+2]].B_Value);
+		ELSE
+			 Val3 := (G_InputsD[ScanIndex[ScanIndexPointer+2]].I_Value);
+		END_IF
+		TextL4 := G_InputsD[ScanIndex[ScanIndexPointer+3]].S_Name;
+		IF G_InputsD[ScanIndex[ScanIndexPointer+3]].B_Analog0Digital1 THEN
+			 Val4 := BOOL_TO_WORD(G_InputsD[ScanIndex[ScanIndexPointer+3]].B_Value);
+		ELSE
+			 Val4 := (G_InputsD[ScanIndex[ScanIndexPointer+3]].I_Value);
+		END_IF
+
+		IF KEY_ESC THEN
+			W_StaticID :=  TL_Diagnostic;
+			SelectedLine := 0;
+			DiagnosticSelectedLine := 0;
+			DiagnosticDisplayLine := 0;
+		END_IF
+
+	2:					(* ******************* DIAGNOSTIC ANALOG OUTPUTS ******************** *)
+		(* Scan list of outputs *)
+		ScanIndexPointer2 := 0;
+		Index := 0;
+		WHILE (Index <= MaxIndexOutputsA) DO
+			IF G_OutputsA[Index].B_Active AND G_OutputsA[Index].B_Diagnostic THEN
+				ScanIndex[ScanIndexPointer2] := Index;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		ScanIndexMax := ScanIndexPointer2 - 1;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+			SelectedLine := 0;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		TextL1 := G_OutputsA[ScanIndex[ScanIndexPointer]].S_Name;
+		 Val1 := (G_OutputsA[ScanIndex[ScanIndexPointer]].I_Value);
+		TextL2 := G_OutputsA[ScanIndex[ScanIndexPointer+1] ].S_Name;
+		 Val2 := (G_OutputsA[ScanIndex[ScanIndexPointer+1]].I_Value);
+		TextL3 := G_OutputsA[ScanIndex[ScanIndexPointer+2]].S_Name;
+		 Val3 := (G_OutputsA[ScanIndex[ScanIndexPointer+2]].I_Value);
+		TextL4 := G_OutputsA[ScanIndex[ScanIndexPointer+3]].S_Name;
+		 Val4 := (G_OutputsA[ScanIndex[ScanIndexPointer+3]].I_Value);
+
+		IF KEY_ESC THEN
+			W_StaticID :=  TL_Diagnostic;
+			SelectedLine := 0;
+			DiagnosticSelectedLine := 0;
+			DiagnosticDisplayLine := 0;
+		END_IF
+
+	3:					(* ******************* DIAGNOSTIC DIGITAL OUTPUTS ******************** *)
+		(* Scan list of outputs *)
+		ScanIndexPointer2 := 0;
+		Index := 0;
+		WHILE (Index <= MaxIndexOutputsD) DO
+			IF G_OutputsD[Index].B_Active AND G_OutputsD[Index].B_Diagnostic THEN
+				ScanIndex[ScanIndexPointer2] := Index;
+				ScanIndexPointer2 := ScanIndexPointer2 + 1;
+			END_IF
+			Index := Index + 1;
+		END_WHILE
+		ScanIndexMax := ScanIndexPointer2 - 1;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+			SelectedLine := 0;
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		TextL1 := G_OutputsD[ScanIndex[ScanIndexPointer]].S_Name;
+		 Val1 := BOOL_TO_WORD(G_OutputsD[ScanIndex[ScanIndexPointer]].B_Value);
+		TextL2 := G_OutputsD[ScanIndex[ScanIndexPointer+1]].S_Name;
+		 Val2 := BOOL_TO_WORD(G_OutputsD[ScanIndex[ScanIndexPointer+1]].B_Value);
+		TextL3 := G_OutputsD[ScanIndex[ScanIndexPointer+2]].S_Name;
+		 Val3 := BOOL_TO_WORD(G_OutputsD[ScanIndex[ScanIndexPointer+2]].B_Value);
+		TextL4 := G_OutputsD[ScanIndex[ScanIndexPointer+3]].S_Name;
+		 Val4 := BOOL_TO_WORD(G_OutputsD[ScanIndex[ScanIndexPointer+3]].B_Value);
+
+		IF KEY_ESC THEN
+			W_StaticID :=  TL_Diagnostic;
+			SelectedLine := 0;
+			DiagnosticSelectedLine := 0;
+			DiagnosticDisplayLine := 0;
+		END_IF
+
+	4:					(* ******************* NETWORK STATUS ******************** *)
+
+		ScanIndexMax := 21;
+
+		IF KEY_LEFT THEN
+			IF ScanIndexPointer > MaxLines - 1 THEN
+				ScanIndexPointer := ScanIndexPointer - MaxLines;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_RIGHT THEN
+			IF (ScanIndexPointer < ScanIndexMax - MaxLines - MaxLines + 1) AND NOT (ScanIndexMax < 2*MaxLines) THEN
+				ScanIndexPointer := ScanIndexPointer + MaxLines;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - MaxLines + 1;
+			END_IF
+		END_IF
+
+		IF KEY_UP THEN
+			IF ScanIndexPointer > 0 THEN
+				ScanIndexPointer := ScanIndexPointer - 1;
+			ELSE
+				ScanIndexPointer := 0;
+			END_IF
+		END_IF
+
+		IF KEY_DOWN THEN
+			IF ScanIndexPointer < ScanIndexMax - 3 THEN
+				ScanIndexPointer := ScanIndexPointer + 1;
+			ELSE
+				ScanIndexPointer := ScanIndexMax - 3;
+			END_IF
+		END_IF
+
+		(* Network modules list, display the right values *)
+		index := 0;
+ 		WHILE index <= ScanIndexPointer DO
+			B_SkipLine := FALSE;
+			IF NOT B_OPT_838 AND index = 3 THEN
+				B_SkipLine := TRUE;
+			END_IF
+			IF NOT OPT_ElevatorLiftJoystick AND index = 9 THEN
+				B_SkipLine := TRUE;
+			END_IF
+			IF NOT OPT_BridgeLiftJoystick AND index = 10 THEN
+				B_SkipLine := TRUE;
+			END_IF
+			IF NOT OPT_DriveJoystick AND index = 11 THEN
+				B_SkipLine := TRUE;
+			END_IF
+			IF (NOT OPT_DCDCSystem OR NOT OPT_LeadAcidBattery) AND index = 15 THEN
+				B_SkipLine := TRUE;
+			END_IF
+			IF NOT OPT_ASD AND index = 18 THEN
+				B_Skipline := TRUE;
+			END_IF
+
+			(* Shift lines to be displayed *)
+			IF index > 0 AND NOT B_SkipLine THEN
+				TextL1 := TextL2;
+				Val1 := Val2;
+				TextL2 := TextL3;
+				Val2 := Val3;
+				TextL3 := TextL4;
+				Val3 := Val4;
+			END_IF
+
+			IF NOT B_SkipLine THEN
+				CASE index OF
+				0:
+					TextL1 := TL_ChassisModule1ID4;
+					Val1 := BOOL_TO_WORD(Node4Operational);
+					TextL2 := TL_BridgeModule1ID16;
+					Val2 := BOOL_TO_WORD(Node16Operational);
+					TextL3 := TL_BridgeModule2ID17;
+					Val3 := BOOL_TO_WORD(Node17Operational);
+					TextL4 := TL_ElevatorModule1ID20;
+					Val4 := BOOL_TO_WORD(Node20Operational);
+				1:
+					TextL4 := TL_ElevatorModule2ID21;
+					Val4 := BOOL_TO_WORD(Node21Operational);
+				2:
+					TextL4 := TL_ElevatorModule3ID24;
+					Val4 := BOOL_TO_WORD(Node24Operational);
+				3:
+					TextL4 := TL_InclinometerID10;
+					Val4 := BOOL_TO_WORD(Node10Operational);
+				4:
+					TextL4 := TL_SM1CargoSwitchModule;
+					Val4 := BOOL_TO_WORD(NOT Cargo_Console.SwitchModule.B_ModuleFault);
+				5:
+					TextL4 := TL_SM2DriverSwitchModule;
+					Val4 := BOOL_TO_WORD(NOT Driver_Console.SwitchModule.B_ModuleFault);
+				6:
+					TextL4 := TL_RearElevatorJoystick;
+					Val4 := BOOL_TO_WORD(NOT Joystick.ElevatorRearCargo.B_JoystickFault);
+				7:
+					TextL4 := TL_FrontElevatorJoystick;
+					Val4 := BOOL_TO_WORD(NOT Joystick.ElevatorFrontCargo.B_JoystickFault);
+				8:
+					TextL4 := TL_BridgeCargoJoystick;
+					Val4 := BOOL_TO_WORD(NOT Joystick.BridgeCargo.B_JoystickFault);
+				9:
+					TextL4 :=  TL_J4_ElevatorLiftJoystick;
+					Val4 := BOOL_TO_WORD(NOT Joystick.ElevatorLift.B_JoystickFault);
+				10:
+					TextL4 :=  TL_J5_BridgeLiftJoystick;
+					Val4 := BOOL_TO_WORD(NOT Joystick.BridgeLift.B_JoystickFault);
+				11:
+					TextL4 := TL_J10_DriveJoystick;
+					Val4 := BOOL_TO_WORD(NOT Joystick.DriveJoystick.B_JoystickFault);
+				12:
+					TextL4 := TL_PumpControllerID11;
+					Val4 := BOOL_TO_WORD(Node11Operational_3);
+				13:
+					TextL4 := TL_TractionControllerID12;
+					Val4 := BOOL_TO_WORD(Node12Operational_3);
+				14:
+					TextL4 := TL_RegenControllerID13;
+					Val4 := BOOL_TO_WORD(Node13Operational_3);
+				15:
+					TextL4 := TL_DCDCSystemID31;
+					Val4 := BOOL_TO_WORD(Node31Operational_4);
+				16:
+					IF OPT_LeadAcidBattery THEN
+						TextL4 := TL_AcuityModuleID42;
+						Val4 := BOOL_TO_WORD(Node42Operational_3);
+					ELSIF OPT_GreenCubeBattery THEN
+						TextL4 := TL_BMSModuleID28;
+						Val4 := BOOL_TO_WORD(Node28Operational_4);
+					ELSIF OPT_TLDiBSBattery THEN
+						TextL4 :=  TL_IBSBatteryID;
+						Val4 := BOOL_TO_WORD(NodeIBSOperational_4);
+					END_IF
+				17:
+					TextL4 := TL_ConsoleModuleID91;
+					Val4 := BOOL_TO_WORD(Node91Operational);
+				18:
+					TextL4 := TL_ASDCameraNetwork;
+					Val4 := BOOL_TO_WORD(ConsoleDisplay.TOF_CameraAlive.Q) ;
+				END_CASE
+			END_IF
+
+			(* Increment index until last line *)
+			index := index + 1;
+		END_WHILE
+
+		IF KEY_ESC THEN
+			W_StaticID :=  TL_Diagnostic;
+			SelectedLine := 0;
+			DiagnosticSelectedLine := 0;
+			DiagnosticDisplayLine := 0;
+		END_IF
+	END_CASE
+END_IF
+END_ACTION
